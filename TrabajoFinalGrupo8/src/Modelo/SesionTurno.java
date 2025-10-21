@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class SesionTurno {
-    
+    //Atributos
     private int codSesion;
     private LocalDateTime fechaHoraInicio;
     private LocalDateTime fechaHoraFin;
@@ -20,7 +20,7 @@ public class SesionTurno {
 
 
 
-
+//Constructor
     public SesionTurno(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, String tratamiento, String consultorio, String masajista, List<Instalacion> instalaciones, LocalDate diaDeSpa) {
         this.codSesion = codSesion;
         this.fechaHoraInicio = fechaHoraInicio;
@@ -31,7 +31,7 @@ public class SesionTurno {
         this.instalacionesList = instalaciones;
         this.DiaDeSpa = diaDeSpa;
     }
-
+//Getter and setter
     public int getCodSesion() {
         return codSesion;
     }
@@ -95,7 +95,7 @@ public class SesionTurno {
     public void setDiaDeSpa(LocalDate diaDeSpa) {
         this.DiaDeSpa = diaDeSpa;
     }
-
+//toString
     @Override
     public String toString() {
         return "Sesion-Turno" + "codSesion=" + codSesion + " fechaHoraInicio=" + fechaHoraInicio + " fechaHoraFin = "  + fechaHoraFin + " tratamiento = " + tratamiento + " consultorio = " + consultorio + " masajista = " + masajista + " instalaciones = " + instalacionesList + "  diaDeSpa = " + DiaDeSpa ;
