@@ -40,53 +40,6 @@ public class InstalacionData {
 //    public void ModificarInstalacion(){
 //        
 //    }
-public void CrearSesionIns(SesionTurno ses) {
-    String sql = "INSERT INTO sesion (fechaHoraInicio, fechaHoraFin, tratamiento, consultorio, masajista, instalaciones, diaDeSpa, estado) "
-               + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-       
-        ps.setTimestamp(1, Timestamp.valueOf(ses.getFechaHoraInicio())); 
-        ps.setTimestamp(2, Timestamp.valueOf(ses.getFechaHoraFin()));
-        ps.setString(3, ses.getTratamiento());
-        ps.setString(4, ses.getConsultorio());
-        ps.setString(5, ses.getMasajista());
-
-      
-        if (ses.getInstalacionesList() != null && !ses.getInstalacionesList().isEmpty()) {
-            List<String> nombresInst = new ArrayList<>();
-            for (Instalacion i : ses.getInstalacionesList()) {
-                nombresInst.add(i.getNombre());
-            }
-            ps.setString(6, String.join(",", nombresInst));
-        } else {
-            ps.setString(6, "");
-        }
-
-        // 3️⃣ Día del spa (LocalDate → SQL DATE)
-        ps.setDate(7, Date.valueOf(ses.getDiaDeSpa()));
-
-        // 4️⃣ Estado
-        ps.setBoolean(8, ses.isEstado());
-
-        // 5️⃣ Ejecutamos la inserción
-        ps.executeUpdate();
-
-        // 6️⃣ Obtenemos la clave generada (si la tabla tiene autoincremento)
-        try (ResultSet rs = ps.getGeneratedKeys()) {
-            if (rs.next()) {
-                ses.setCodSesion(rs.getInt(1));
-            }
-        }
-
-        System.out.println("Sesión registrada correctamente.");
-
-    } catch (SQLException ex) {
-        System.out.println("Error al registrar la sesión: " + ex.getMessage());
-    }
-}
-
 //
 //    public List<Instalacion> ListarInstalaciones() {
 //
