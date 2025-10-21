@@ -1,25 +1,26 @@
-
 package Modelo;
 
 import java.time.LocalTime;
 import java.util.List;
 
+public class Tratamiento {
 
-public class Tratamiento_Masaje {
-    private int codTratam; 
+    private int codTratam;
     private String nombre;
+    private String tipo;
     private String detalle;
     private List<String> Productos;
     private LocalTime Duracion; //Minutos
     private double costo;
     private boolean activo;
 
-    public Tratamiento_Masaje() {
+    public Tratamiento() {
     }
 
-    public Tratamiento_Masaje(int codTratam, String nombre, String detalle, List<String> Productos, LocalTime Duracion, double costo, boolean activo) {
+    public Tratamiento(int codTratam, String nombre, String tipo, String detalle, List<String> Productos, LocalTime Duracion, double costo, boolean activo) {
         this.codTratam = codTratam;
         this.nombre = nombre;
+        this.tipo = tipo;
         this.detalle = detalle;
         this.Productos = Productos;
         this.Duracion = Duracion;
@@ -27,7 +28,6 @@ public class Tratamiento_Masaje {
         this.activo = activo;
     }
 
-    
     public int getCodTratam() {
         return codTratam;
     }
@@ -84,5 +84,12 @@ public class Tratamiento_Masaje {
         this.activo = activo;
     }
 
-   
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
 }
