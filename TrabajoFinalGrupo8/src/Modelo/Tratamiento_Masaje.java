@@ -2,7 +2,6 @@
 package Modelo;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -61,11 +60,11 @@ public class Tratamiento_Masaje {
         this.Productos = Productos;
     }
 
-    public int getDuracion() {
+    public LocalTime getDuracion() {
         return Duracion;
     }
 
-    public void setDuracion(int Duracion) {
+    public void setDuracion(LocalTime Duracion) {
         this.Duracion = Duracion;
     }
 
