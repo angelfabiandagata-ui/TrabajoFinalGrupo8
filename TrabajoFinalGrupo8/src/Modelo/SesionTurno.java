@@ -14,11 +14,12 @@ public class SesionTurno {
     private String tratamiento; 
     private String consultorio;
     private String masajista;
-    private List<Instalacion>instalacion;
+    private List<Instalacion> instalacionesList;
+    private LocalDate DiaDeSpa;
 
 
 
-/*
+
 
     public SesionTurno(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, String tratamiento, String consultorio, String masajista, List<Instalacion> instalaciones, LocalDate diaDeSpa) {
         this.codSesion = codSesion;
@@ -27,8 +28,8 @@ public class SesionTurno {
         this.tratamiento = tratamiento;
         this.consultorio = consultorio;
         this.masajista = masajista;
-        this.instalaciones = instalaciones;
-        this.diaDeSpa = diaDeSpa;
+        this.instalacionesList = instalaciones;
+        this.DiaDeSpa = diaDeSpa;
     }
 
     public int getCodSesion() {
@@ -80,27 +81,27 @@ public class SesionTurno {
     }
 
     public List<Instalacion> getInstalacioneslist() {
-        return instalaciones;
+        return instalacionesList;
     }
 
     public void setInstalacioneslist(List<Instalacion> instalacioneslist) {
-        this.instalaciones = instalacioneslist;
+        this.instalacionesList = instalacioneslist;
     }
 
     public LocalDate getDiaDeSpa() {
-        return diaDeSpa;
+        return DiaDeSpa;
     }
 
     public void setDiaDeSpa(LocalDate diaDeSpa) {
-        this.diaDeSpa = diaDeSpa;
+        this.DiaDeSpa = diaDeSpa;
     }
 
     @Override
     public String toString() {
-        return "Sesion-Turno" + "codSesion=" + codSesion + " fechaHoraInicio=" + fechaHoraInicio + " fechaHoraFin = "  + fechaHoraFin + " tratamiento = " + tratamiento + " consultorio = " + consultorio + " masajista = " + masajista + " instalaciones = " + instalaciones + "  diaDeSpa = " + diaDeSpa ;
+        return "Sesion-Turno" + "codSesion=" + codSesion + " fechaHoraInicio=" + fechaHoraInicio + " fechaHoraFin = "  + fechaHoraFin + " tratamiento = " + tratamiento + " consultorio = " + consultorio + " masajista = " + masajista + " instalaciones = " + instalacionesList + "  diaDeSpa = " + DiaDeSpa ;
     }
      
             
     
-}*/
+}
 
