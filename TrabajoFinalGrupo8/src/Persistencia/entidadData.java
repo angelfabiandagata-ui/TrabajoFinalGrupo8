@@ -5,7 +5,8 @@
 package Persistencia;
 
 import Modelo.Conexion;
-import org.mariadb.jdbc.Connection;
+import com.sun.jdi.connect.spi.Connection;
+import org.mariadb.jdbc.Driver;
 
 /**
  *
