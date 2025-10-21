@@ -11,11 +11,11 @@ package Modelo;
 public class Masajista {  
     
     //ATRIBUTOS
-    long matricula;
-    String nombreyapellido;
-    long telefono;
-    String especialidad;
-    boolean estado;  
+    private long matricula;
+    private String nombreyapellido;
+    private long telefono;
+    private String especialidad;
+    private boolean estado;  
     
     //CONSTRUCTOR
     public Masajista(long matricula, String nombreyapellido, long telefono, String especialidad, boolean estado) {

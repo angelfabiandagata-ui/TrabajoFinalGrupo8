@@ -7,13 +7,13 @@ package Modelo;
 public class Cliente {
        
     //ATRIBUTOS
-    int codCli;
-    long dni;
-    String nombrecompleto;
-    long telefono;
-    int edad;
-    String afeciones;
-    boolean estado;
+    private int codCli;
+    private long dni;
+    private String nombrecompleto;
+    private long telefono;
+    private int edad;
+    private String afeciones;
+    private boolean estado;
     
     //CONSTRUCTOR
     public Cliente(int codCli, long dni, String nombrecompleto, long telefono, int edad, String afeciones, boolean estado) {

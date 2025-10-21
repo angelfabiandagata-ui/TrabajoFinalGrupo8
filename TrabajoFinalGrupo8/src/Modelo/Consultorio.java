@@ -5,10 +5,10 @@ public class Consultorio {
     
     
     //ATRIBUTOS
-    int nroConsultorio;
-    String usos;
-    String equipamiento;
-    boolean apto;
+    private int nroConsultorio;
+    private String usos;
+    private String equipamiento;
+    private boolean apto;
     
     //CONSTRUCTOR
     public Consultorio(int nroConsultorio, String usos, String equipamiento, boolean apto) {

@@ -16,6 +16,7 @@ public class SesionTurno {
     private String masajista;
     private List<Instalacion> instalacionesList;
     private LocalDate DiaDeSpa;
+    private boolean estado;
 
 
 
