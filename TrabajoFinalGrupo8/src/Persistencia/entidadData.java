@@ -4,10 +4,34 @@
  */
 package Persistencia;
 
+import Modelo.Conexion;
+import org.mariadb.jdbc.Connection;
+
 /**
  *
  * @author angel
  */
 public class entidadData {
     
+    //atributos para la conexion
+    String url = "localhost/phpmyadmin/index.php?route=database/structure&db=sgulp_equipo_8";
+    String usuario ="root";
+    String password= "";
+    
+    //conexion nula
+    Connection con = null;
+    
+    //entidad data crea una conexion cuando se instancia
+    public entidadData() {  
+        try {
+                Conexion conclase = new Conexion(url, usuario, password);
+                con = (Connection) conclase.buscarConexion();
+        } catch (Exception e) {
+            System.err.print("Error");
+        }
+        
+        
+    }
+    
+//final clase    
 }

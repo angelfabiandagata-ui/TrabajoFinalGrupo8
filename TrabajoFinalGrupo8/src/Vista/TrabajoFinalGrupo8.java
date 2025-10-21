@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import Modelo.Conexion;
+
 /**
  *
  * @author angel
@@ -17,4 +19,5 @@ public class TrabajoFinalGrupo8 {
         // TODO code application logic here
     }
     
+    Conexion con = new Conexion("jdbc:mysql://localhost:3306/mi_basedatos","root","");
 }

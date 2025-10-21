@@ -8,12 +8,15 @@ import javax.swing.JOptionPane;
 
 public class Conexion {
 
+    //ATRIBUTOS
     private String url;
     private String usuario;
     private String password;
 
+    //CONEXION NULA
     private static Connection conexion = null;
 
+    //PARA INSTANCIAR UNA CONEXION SE NESESITAN URL,USU,PASW
     public Conexion(String url, String usuario, String password) {
         this.url = url;
         this.usuario = usuario;
@@ -23,7 +26,9 @@ public class Conexion {
     public Connection buscarConexion() {
         if (conexion == null) {
             try {
+                //CARGA EL MARIADB DRIVER
                 Class.forName("org.mariadb.jdbc.Driver");
+                //CREA UNA CONEXION CON LOS ARGUMENTOS PASADOS
                 conexion = DriverManager.getConnection(url, usuario, password);
                 
             } catch (ClassNotFoundException ex) {
