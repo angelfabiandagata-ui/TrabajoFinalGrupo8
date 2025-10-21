@@ -19,5 +19,5 @@ public class TrabajoFinalGrupo8 {
         // TODO code application logic here
     }
     
-    Conexion con = new Conexion("jdbc:mysql://localhost:3306/mi_basedatos","root","");
+    Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8","root","");
 }
