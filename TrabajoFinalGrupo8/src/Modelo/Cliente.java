@@ -25,6 +25,10 @@ public class Cliente {
         this.afeciones = afeciones;
         this.estado = estado;
     }    
+
+    public Cliente() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     //GETTERS AND SETTERS
     public int getCodCli() {

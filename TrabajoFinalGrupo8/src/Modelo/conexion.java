@@ -1,7 +1,6 @@
 package Modelo;
 
 import java.sql.Connection;
-import org.mariadb.jdbc.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
