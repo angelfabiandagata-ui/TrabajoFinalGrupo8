@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2025 a las 00:16:18
+-- Tiempo de generación: 22-10-2025 a las 01:03:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -68,7 +68,7 @@ CREATE TABLE `dia_de_spa` (
   `preferencias` varchar(60) DEFAULT NULL,
   `codCliente` int(15) DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL,
-  `sesiones` varchar(60) DEFAULT NULL,
+  `codSesion` int(15) DEFAULT NULL,
   `monto` double(30,2) DEFAULT NULL,
   `estadoPago` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -82,7 +82,7 @@ CREATE TABLE `dia_de_spa` (
 DROP TABLE IF EXISTS `instalacion`;
 CREATE TABLE `instalacion` (
   `codInstalacion` int(10) NOT NULL,
-  `nombre` datetime DEFAULT NULL,
+  `nombre` varchar(60) DEFAULT NULL,
   `detalle_uso` varchar(60) DEFAULT NULL,
   `precio30m` double(30,2) DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL
@@ -118,7 +118,7 @@ CREATE TABLE `sesion` (
   `codTratamiento` int(15) NOT NULL,
   `nroConsultorio` int(10) NOT NULL,
   `matricula` int(10) NOT NULL,
-  `list<instalacion>` int(10) NOT NULL,
+  `codInstalacion` int(10) NOT NULL,
   `codPack` int(10) NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -135,7 +135,7 @@ CREATE TABLE `tratamiento` (
   `nombre` varchar(60) DEFAULT NULL,
   `detalle` varchar(60) DEFAULT NULL,
   `productos` varchar(60) DEFAULT NULL,
-  `duracion` double(30,2) DEFAULT NULL,
+  `duracion` time(6) DEFAULT NULL,
   `costo` double(30,2) DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -161,7 +161,8 @@ ALTER TABLE `consultorio`
 --
 ALTER TABLE `dia_de_spa`
   ADD PRIMARY KEY (`codPack`),
-  ADD KEY `fk_dia_de_spa_cliente` (`codCliente`);
+  ADD KEY `fk_dia_de_spa_cliente` (`codCliente`),
+  ADD KEY `codSesion` (`codSesion`);
 
 --
 -- Indices de la tabla `instalacion`
@@ -182,7 +183,8 @@ ALTER TABLE `sesion`
   ADD PRIMARY KEY (`codSesion`),
   ADD KEY `fk_sesion_consultorio` (`nroConsultorio`),
   ADD KEY `fk_sesion_masajista` (`matricula`),
-  ADD KEY `fk_sesion_tratamiento` (`codTratamiento`);
+  ADD KEY `fk_sesion_tratamiento` (`codTratamiento`),
+  ADD KEY `fk_sesion_instalacion` (`codInstalacion`);
 
 --
 -- Indices de la tabla `tratamiento`
@@ -198,6 +200,7 @@ ALTER TABLE `tratamiento`
 -- Filtros para la tabla `dia_de_spa`
 --
 ALTER TABLE `dia_de_spa`
+  ADD CONSTRAINT `dia_de_spa_ibfk_1` FOREIGN KEY (`codSesion`) REFERENCES `sesion` (`codSesion`),
   ADD CONSTRAINT `fk_dia_de_spa_cliente` FOREIGN KEY (`codCliente`) REFERENCES `cliente` (`codCliente`);
 
 --
@@ -205,6 +208,7 @@ ALTER TABLE `dia_de_spa`
 --
 ALTER TABLE `sesion`
   ADD CONSTRAINT `fk_sesion_consultorio` FOREIGN KEY (`nroConsultorio`) REFERENCES `consultorio` (`nroConsultorio`),
+  ADD CONSTRAINT `fk_sesion_instalacion` FOREIGN KEY (`codInstalacion`) REFERENCES `instalacion` (`codInstalacion`),
   ADD CONSTRAINT `fk_sesion_masajista` FOREIGN KEY (`matricula`) REFERENCES `masajista` (`matricula`),
   ADD CONSTRAINT `fk_sesion_tratamiento` FOREIGN KEY (`codTratamiento`) REFERENCES `tratamiento` (`codTratamiento`);
 COMMIT;
