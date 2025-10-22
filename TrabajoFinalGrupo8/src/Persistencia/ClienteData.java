@@ -24,9 +24,9 @@ public class ClienteData {
     }
 
     public ClienteData() {
-        String url = "localhost/phpmyadmin/index.php?route=database/structure&db=sgulp_equipo_8";
+        String url = "jdbc:mariadb://localhost:3306/spa_grupo_8";
         String usuario = "root";
-        String password = "1234";
+        String password = "";
 
         try {
             Conexion conAux = new Conexion(url, usuario, password);
@@ -39,7 +39,7 @@ public class ClienteData {
     public void guardarCliente(Cliente cliente){
         String sql = "INSERT INTO cliente (dni, nombre, telefono, edad, afecciones, estado) VALUES (?,?,?,?,?,?)";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             
             ps.setLong(1, cliente.getDni());
             ps.setString(2, cliente.getNombrecompleto());
@@ -48,13 +48,16 @@ public class ClienteData {
             ps.setString(5, cliente.getAfeciones());
             ps.setBoolean(6, cliente.isEstado());
             ps.executeUpdate();
-            ps.close();
+            
             
              ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 cliente.setCodCli(rs.getInt(1)); 
             }
             System.out.println("Cliente guardado correctamente.");
+            
+            ps.close();
+            rs.close();
         } catch (SQLException e) {
             System.out.println("Error al guardar cliente: " + e.getMessage());
         }
@@ -79,7 +82,7 @@ public class ClienteData {
     }
     
      public void eliminarCliente(int codCli) {
-        String sql = "UPDATE cliente SET estado='inactivo' WHERE codCli=?";
+        String sql = "UPDATE cliente SET estado='0' WHERE codCli=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, codCli);
             ps.executeUpdate();
@@ -137,14 +140,15 @@ public class ClienteData {
    
     public List<Cliente> listarClientesActivos() {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM cliente WHERE estado='activo'";
+        String sql = "SELECT * FROM cliente WHERE estado='1'";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Cliente c = new Cliente();
-                c.setCodCli(rs.getInt("codCli"));
+                c.setCodCli(rs.getInt("codcliente"));
                 c.setDni(rs.getLong("dni"));
                 c.setNombrecompleto(rs.getString("nombre"));
+                
                 c.setTelefono(rs.getLong("telefono"));
                 c.setEdad(rs.getInt("edad"));
                 c.setAfeciones(rs.getString("afecciones"));

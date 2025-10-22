@@ -29,11 +29,11 @@ public class Conexion {
                 Class.forName("org.mariadb.jdbc.Driver");
                 //CREA UNA CONEXION CON LOS ARGUMENTOS PASADOS
                 conexion = DriverManager.getConnection(url, usuario, password);
-                
+
             } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "No se pudo cargar el driver" + ex.getMessage());
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"No se puede conectar" + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "No se puede conectar" + ex.getMessage());
 
             }
 

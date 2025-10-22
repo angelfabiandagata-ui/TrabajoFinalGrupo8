@@ -10,7 +10,7 @@ public class Tratamiento {
     private String tipo;
     private String detalle;
     private List<String> Productos;
-    private LocalTime Duracion; //Minutos
+    private LocalTime Duracion; 
     private double costo;
     private boolean activo;
 

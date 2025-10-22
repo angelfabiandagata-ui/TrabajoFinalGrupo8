@@ -1,22 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package Vista;
 
+import Modelo.Cliente;
 import Modelo.Conexion;
+import Persistencia.ClienteData;
+import java.util.List;
 
-/**
- *
- * @author angel
- */
 public class TrabajoFinalGrupo8 {
 
-    /**
-     * @param args the command line arguments
-     */
+  
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        System.out.println("Iniciando Programa");
+//        
+        ClienteData cData = new ClienteData();
+//        
+//        Cliente cliente1 = new Cliente();
+//        cliente1.setDni(47267078);
+//        cliente1.setNombrecompleto("Lucas Serrano");
+//        cliente1.setTelefono(2665068929L);
+//        cliente1.setEdad(19);
+//        cliente1.setAfeciones("Ninguhna");
+//        cliente1.setEstado(true);
+//        
+//        
+//        cData.guardarCliente(cliente1);
+//        
+//        if (cliente1.getCodCli() > 0) {
+//            System.out.println("Se guardo el cliente con el ID: " + cliente1.getCodCli());
+//        } else {
+//            System.out.println("FAllo al guardar un cliente");
+//        }
+       
+        System.out.println("Lista de clientes");
+        
+        List<Cliente> listaClentes = cData.listarClientesActivos();
+        
+        for (Cliente c : listaClentes) {
+            System.out.println("------------------");
+            System.out.println("Id: " + c.getCodCli());
+            System.out.println("Nombre Completo: " + c.getNombrecompleto());
+        }
+        
     }
     
     Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8","root","");
