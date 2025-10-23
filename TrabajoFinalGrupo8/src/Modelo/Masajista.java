@@ -8,15 +8,15 @@ package Modelo;
  *
  * @author Ema
  */
-public class Masajista {  
-    
+public class Masajista {
+
     //ATRIBUTOS
     private long matricula;
     private String nombreyapellido;
     private long telefono;
     private String especialidad;
-    private boolean estado;  
-    
+    private boolean estado;
+
     //CONSTRUCTOR
     public Masajista(long matricula, String nombreyapellido, long telefono, String especialidad, boolean estado) {
         this.matricula = matricula;
@@ -25,7 +25,7 @@ public class Masajista {
         this.especialidad = especialidad;
         this.estado = estado;
     }
-    
+
     //GETTERS AND SETTERS
     public long getMatricula() {
         return matricula;
@@ -59,14 +59,14 @@ public class Masajista {
         this.especialidad = especialidad;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-    
-//final    
+//final  
+
+ 
 }
