@@ -91,6 +91,17 @@ public class MasajistaData {
                System.out.println("Error al dar de baja al masajista" + e.getMessage());
            }
        }
+        public void altaMasajista(int matricula){
+           String sql = "UPDATE masajista SET estado = 1 WHERE matricula = ?" ;
+           try {
+               PreparedStatement ps = con.prepareStatement(sql);
+              ps.setLong(1, matricula);
+              ps.executeUpdate();
+              ps.close();
+           } catch (SQLException e) {
+               System.out.println("Error al dar de alta al masajista" + e.getMessage());
+           }
+       }
        
        public Masajista buscarMasajistaPorMatricula(int matricula){
            Masajista masajista = null;

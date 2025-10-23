@@ -1,4 +1,3 @@
-
 package Vista;
 
 import Modelo.Cliente;
@@ -11,9 +10,8 @@ import java.util.List;
 
 public class TrabajoFinalGrupo8 {
 
-  
     public static void main(String[] args) {
-        
+
         System.out.println("Iniciando Programa");
 //        
         ClienteData cData = new ClienteData();
@@ -44,9 +42,8 @@ public class TrabajoFinalGrupo8 {
 //            System.out.println("Id: " + c.getCodCli());
 //            System.out.println("Nombre Completo: " + c.getNombrecompleto());
 //        }
-        
-        
-     MasajistaData msjData = new MasajistaData();
+
+        MasajistaData msjData = new MasajistaData();
 //        
 //       Masajista msj1 = new Masajista();
 //       msj1.setMatricula(1);
@@ -56,7 +53,7 @@ public class TrabajoFinalGrupo8 {
 //       msj1.setEstado(true);
 //       
 //       msjData.agregarMasajista(msj1);
-       
+
 //        System.out.println("Lista de masajistas");
 //        
 //        List<Masajista> ListaMasajistas = msjData.listarMasajista();
@@ -68,19 +65,18 @@ public class TrabajoFinalGrupo8 {
 //            System.out.println("Especialidad: " + m.getEspecialidad());
 //            
 //        }
-//        
+//msjData.bajaMasajista(1);
+msjData.altaMasajista(1);
+
         Masajista m = msjData.buscarMasajistaPorMatricula(1);
         System.out.println("Buscando masajista por matricula...");
         System.out.println("----------------------------------------");
         System.out.println("N. Matrucila: " + m.getMatricula());
-        System.out.println("Nombre Completo:  " + m.getNombreyapellido()
-        );
-        System.out.println("Especialidad: " + m.getEspecialidad()
-        );
-       
+        System.out.println("Nombre Completo:  " + m.getNombreyapellido());
+        System.out.println("Especialidad: " + m.getEspecialidad());
+        System.out.println("Estado: " + m.getEstado());
+
     }
-    
-    
-    
-    Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8","root","");
+
+    Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8", "root", "");
 }
