@@ -26,6 +26,10 @@ public class Masajista {
         this.estado = estado;
     }
 
+    public Masajista() {
+    
+    }
+
     //GETTERS AND SETTERS
     public long getMatricula() {
         return matricula;

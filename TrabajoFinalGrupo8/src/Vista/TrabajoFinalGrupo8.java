@@ -2,8 +2,11 @@
 package Vista;
 
 import Modelo.Cliente;
+import Modelo.Masajista;
 import Modelo.Conexion;
 import Persistencia.ClienteData;
+import Persistencia.MasajistaData;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrabajoFinalGrupo8 {
@@ -31,18 +34,43 @@ public class TrabajoFinalGrupo8 {
 //        } else {
 //            System.out.println("FAllo al guardar un cliente");
 //        }
+//       
+//        System.out.println("Lista de clientes");
+//        
+//        List<Cliente> listaClentes = cData.listarClientesActivos();
+//        
+//        for (Cliente c : listaClentes) {
+//            System.out.println("------------------");
+//            System.out.println("Id: " + c.getCodCli());
+//            System.out.println("Nombre Completo: " + c.getNombrecompleto());
+//        }
+        
+        
+     MasajistaData msjData = new MasajistaData();
+//        
+//       Masajista msj1 = new Masajista();
+//       msj1.setMatricula(1);
+//       msj1.setNombreyapellido("Sergio Galleguillo");
+//       msj1.setTelefono(2665098675L);
+//       msj1.setEspecialidad("Masaje Sueco");
+//       msj1.setEstado(true);
+//       
+//       msjData.agregarMasajista(msj1);
        
-        System.out.println("Lista de clientes");
+        System.out.println("Lista de masajistas");
         
-        List<Cliente> listaClentes = cData.listarClientesActivos();
+        List<Masajista> ListaMasajistas = msjData.listarMasajista();
         
-        for (Cliente c : listaClentes) {
+        for (Masajista m : ListaMasajistas) {
             System.out.println("------------------");
-            System.out.println("Id: " + c.getCodCli());
-            System.out.println("Nombre Completo: " + c.getNombrecompleto());
+            System.out.println("Matricula: " + m.getMatricula());
+            System.out.println("Nombre Completo: " + m.getNombreyapellido());
+            System.out.println("Especialidad: " + m.getEspecialidad());
+            
         }
-        
     }
+    
+    
     
     Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8","root","");
 }

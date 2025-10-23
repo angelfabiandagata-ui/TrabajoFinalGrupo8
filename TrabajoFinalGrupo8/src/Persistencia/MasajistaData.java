@@ -9,6 +9,8 @@ import Modelo.Masajista;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,18 +35,19 @@ public class MasajistaData {
         } catch (Exception e) {
             System.err.print("Error");
         }
+    }
 
     
     
     public void agregarMasajista(Masajista masajista){
-         String sql = "INSERT INTO `masajista`(`matricula`, `nombre`, `apellido`, `telefono`, `especialidad`, `estado`) VALUES (?,?,?,?,?,?)";
+         String sql = "INSERT INTO `masajista`(`matricula`, nombreyApellido, `telefono`, `especialidad`, `estado`) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             
             ps.setLong(1, masajista.getMatricula());
             ps.setString(2, masajista.getNombreyapellido());
             ps.setLong(3, masajista.getTelefono());
-            ps.setString(5, masajista.getEspecialidad());
+            ps.setString(4, masajista.getEspecialidad());
             ps.setBoolean(5, masajista.getEstado());
             ps.executeUpdate();
             
@@ -58,16 +61,45 @@ public class MasajistaData {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            System.out.println("Error al guardar cliente: " + e.getMessage());
+            System.out.println("Error al guardar masajista: " + e.getMessage());
         }
-    }    
+    }
        public void modificar(Masajista masajista){
-        
-    }
+        String sql = "UPDATE `masajista` SET `nombreyApellido = ?,telefono=?,`especialidad`=?,`estado`=? WHERE matricula = ?";
+           try {
+               PreparedStatement ps =con.prepareStatement(sql);
+               ps.setString(1, masajista.getNombreyapellido());
+               ps.setLong(2, masajista.getTelefono());
+               ps.setString(3, masajista.getEspecialidad());
+               ps.setBoolean(4, masajista.getEstado());
+               ps.setLong(5, masajista.getMatricula());
+               ps.executeUpdate();
+               System.out.println("Masajista correctamente modificado :)");
+           } catch (SQLException ex) {
+               System.out.println("Error al modificar masajista" + ex.getMessage());
+           }
+       }
        
-          public void listarMasajista(Masajista masajista){
-        
-    }
+          public List<Masajista> listarMasajista(){
+              List<Masajista> masajistas = new ArrayList<>();
+        String sql = "SELECT * FROM masajista WHERE estado  = true";
+              try {
+                  PreparedStatement ps = con.prepareStatement(sql);
+                  ResultSet rs = ps.executeQuery();
+                  while (rs.next()) {                      
+                      Masajista m = new Masajista();
+                      m.setMatricula(rs.getLong("Matricula"));
+                      m.setNombreyapellido(rs.getString("nombreyApellido"));
+                      m.setTelefono(rs.getLong("Telefono"));
+                      m.setEspecialidad(rs.getString("Especialidad"));
+                      m.setEstado(rs.getBoolean("Estado"));
+                   masajistas.add(m);
+                  }
+              } catch (SQLException e) {
+                  System.out.println("Error al listar masajistas" + e.getMessage());
+              }
+              return masajistas;
+          }
           
            public void buscarEspecialidad(Masajista masajista){
         
