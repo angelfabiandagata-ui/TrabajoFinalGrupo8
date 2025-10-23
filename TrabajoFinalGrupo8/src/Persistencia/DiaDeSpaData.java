@@ -5,6 +5,9 @@
 package Persistencia;
 
 import Modelo.DiaDeSpa;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -12,11 +15,17 @@ import Modelo.DiaDeSpa;
  */
 public class DiaDeSpaData {
     
+    private List<DiaDeSpa> listaspa = new ArrayList<>();
+
+    
     
     
     public void Crear (DiaDeSpa diadespa){
+//faltan cosas
+       listaspa.add(diadespa);
+        System.out.println("Se creo un dia de spa" + diadespa.getCodPack());
+       
         
-   
     }
     
      public void AsociarSesiones (DiaDeSpa diadespa){
@@ -30,6 +39,21 @@ public class DiaDeSpaData {
     }
     
        public void ListarDias (DiaDeSpa diadespa){
+//faltan cosas
+           System.out.println("Dias de spa");
+           if (listaspa.isEmpty()) {
+               System.out.println("Aun no hay dias de spa registrados. ");
+return;
+               
+           }
+           for (DiaDeSpa diaDeSpa : listaspa) {
+               System.out.println("Codigo: "+ diaDeSpa.);
+//faltan cosas
+               
+           }
+               
+           }
+           
         
    
     }
