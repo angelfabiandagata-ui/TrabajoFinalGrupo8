@@ -64,7 +64,7 @@ public class MasajistaData {
             System.out.println("Error al guardar masajista: " + e.getMessage());
         }
     }
-       public void modificar(Masajista masajista){
+       public void modificarMasajista(Masajista masajista){
         String sql = "UPDATE `masajista` SET `nombreyApellido = ?,telefono=?,`especialidad`=?,`estado`=? WHERE matricula = ?";
            try {
                PreparedStatement ps =con.prepareStatement(sql);
@@ -78,6 +78,41 @@ public class MasajistaData {
            } catch (SQLException ex) {
                System.out.println("Error al modificar masajista" + ex.getMessage());
            }
+       }
+       
+       public void bajaMasajista(int matricula){
+           String sql = "UPDATE masajista SET estado = 0 WHERE matricula = ?" ;
+           try {
+               PreparedStatement ps = con.prepareStatement(sql);
+              ps.setLong(1, matricula);
+              ps.executeUpdate();
+              ps.close();
+           } catch (SQLException e) {
+               System.out.println("Error al dar de baja al masajista" + e.getMessage());
+           }
+       }
+       
+       public Masajista buscarMasajistaPorMatricula(int matricula){
+           Masajista masajista = null;
+           String sql = "SELECT * FROM `masajista` WHERE matricula = ? ";
+           try {
+               PreparedStatement ps =con.prepareStatement(sql);
+               ps.setInt(1, matricula);
+               ResultSet rs = ps.executeQuery();
+               if (rs.next()) {
+                   masajista = new Masajista();
+                   masajista.setMatricula(rs.getLong("matricula"));
+                   masajista.setNombreyapellido(rs.getString("nombreyApellido"));
+                   masajista.setTelefono(rs.getLong("telefono"));
+                   masajista.setEspecialidad(rs.getString("especialidad"));
+                   masajista.setEstado(rs.getBoolean("estado"));
+                   
+               }
+               ps.close();
+           } catch (SQLException e) {
+               System.out.println("Error al buscar masajista :(");
+           }
+           return masajista;
        }
        
           public List<Masajista> listarMasajista(){

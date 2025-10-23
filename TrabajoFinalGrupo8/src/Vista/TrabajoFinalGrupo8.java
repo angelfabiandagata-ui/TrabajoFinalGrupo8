@@ -57,17 +57,27 @@ public class TrabajoFinalGrupo8 {
 //       
 //       msjData.agregarMasajista(msj1);
        
-        System.out.println("Lista de masajistas");
-        
-        List<Masajista> ListaMasajistas = msjData.listarMasajista();
-        
-        for (Masajista m : ListaMasajistas) {
-            System.out.println("------------------");
-            System.out.println("Matricula: " + m.getMatricula());
-            System.out.println("Nombre Completo: " + m.getNombreyapellido());
-            System.out.println("Especialidad: " + m.getEspecialidad());
-            
-        }
+//        System.out.println("Lista de masajistas");
+//        
+//        List<Masajista> ListaMasajistas = msjData.listarMasajista();
+//        
+//        for (Masajista m : ListaMasajistas) {
+//            System.out.println("------------------");
+//            System.out.println("Matricula: " + m.getMatricula());
+//            System.out.println("Nombre Completo: " + m.getNombreyapellido());
+//            System.out.println("Especialidad: " + m.getEspecialidad());
+//            
+//        }
+//        
+        Masajista m = msjData.buscarMasajistaPorMatricula(1);
+        System.out.println("Buscando masajista por matricula...");
+        System.out.println("----------------------------------------");
+        System.out.println("N. Matrucila: " + m.getMatricula());
+        System.out.println("Nombre Completo:  " + m.getNombreyapellido()
+        );
+        System.out.println("Especialidad: " + m.getEspecialidad()
+        );
+       
     }
     
     
