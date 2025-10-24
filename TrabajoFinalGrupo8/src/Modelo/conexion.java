@@ -7,6 +7,10 @@ import javax.swing.JOptionPane;
 
 public class Conexion {
 
+    public static com.sun.jdi.connect.spi.Connection getConexion() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     //ATRIBUTOS
     private String url;
     private String usuario;
