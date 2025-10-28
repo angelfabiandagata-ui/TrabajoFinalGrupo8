@@ -39,7 +39,7 @@ public class SesionTurnoData {
             ps.setInt(1, sesionturno.getCodSesion());
             ps.setTime(2, java.sql.Time.valueOf(sesionturno.getFechaHoraInicio()));
             ps.setTime(3, java.sql.Time.valueOf(sesionturno.getFechaHoraFin()));
-            ps.setInt(4, sesionturno.getTratamiento().getCodTratam());
+            ps.setInt(4, sesionturno.getTratamiento().getCodTratamiento());
             ps.setInt(5, sesionturno.getConsultorio().getNroConsultorio());
             ps.setLong(6, sesionturno.getMasajista().getMatricula());
             ps.setArray(7, (Array) sesionturno.getInstalacionesList());
@@ -66,7 +66,7 @@ public class SesionTurnoData {
                PreparedStatement psInsert = con.prepareStatement(sqlInsert);
                ps.setTime(1, java.sql.Time.valueOf(sesionturno.getFechaHoraInicio()));
                ps.setTime(2, java.sql.Time.valueOf(sesionturno.getFechaHoraFin()));
-               ps.setInt(3, sesionturno.getTratamiento().getCodTratam());
+               ps.setInt(3, sesionturno.getTratamiento().getCodTratamiento());
                ps.setInt(4, sesionturno.getConsultorio().getNroConsultorio());
                ps.setLong(5, sesionturno.getMasajista().getMatricula());
                ps.setBoolean(6, sesionturno.getEstado());
