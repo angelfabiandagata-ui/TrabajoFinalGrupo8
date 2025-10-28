@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class conexion {
+public class Conexion {
     
     //atributos
     private String url;
@@ -14,7 +14,7 @@ public class conexion {
     private static Connection conexion = null;
 
     // Constructor
-    public conexion(String url, String usuario, String password) {
+    public Conexion(String url, String usuario, String password) {
         this.url = url;
         this.usuario = usuario;
         this.password = password;
@@ -36,7 +36,7 @@ public class conexion {
     }
 
     //constructor sin parametros
-    public conexion() {
+    public Conexion() {
         this.url = "jdbc:mariadb://localhost:3306/spa_entre_dedos";
         this.usuario = "root";
         this.password = ""; // cambiar según tu entorno
