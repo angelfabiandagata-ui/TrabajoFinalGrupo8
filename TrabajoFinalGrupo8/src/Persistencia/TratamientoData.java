@@ -36,7 +36,7 @@ public class TratamientoData {
 
     }
     
-    public void AltaTratamiento(Tratamiento tratamiento){
+    public void agregarTratamiento(Tratamiento tratamiento){
 
 String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `productos`, `duracion`, `costo`, `estado`) VALUES (?,?,?,?,?,?,?)";
         
@@ -70,8 +70,22 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
     }
 
         
+     public void altaTratamiento(int codTratamiento){
+           String sql = "UPDATE tratamiento SET estado = 1 WHERE codTratamiento = ?" ;
+           try {
+               PreparedStatement ps = con.prepareStatement(sql);
+              ps.setLong(1, codTratamiento);
+              ps.executeUpdate();
+              ps.close();
+           } catch (SQLException e) {
+               System.out.println("Error al dar de alta al tratamiento" + e.getMessage());
+           }
+       }
     
-    public void BajaTratamiento(int codTratamiento){
+    
+    
+    
+    public void bajaTratamiento(int codTratamiento){
     String sql = "UPDATE tratamiento SET estado = false WHERE codTratamiento = ?";
     
     try {
@@ -172,6 +186,52 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
     return tratamientos;
     }
 
+  public Tratamiento buscarMasajistaPorCodigo(int codTratamiento) {
+
+        Tratamiento tratamiento = null;
+
+        String sql = "SELECT * FROM `tratamiento` WHERE codTratamiento = ? ";
+
+        try {
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, codTratamiento);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                tratamiento = new Tratamiento();
+                tratamiento.setCodTratamiento(rs.getInt("codTratamiento"));
+                tratamiento.setNombre(rs.getString("nombre"));
+                tratamiento.setDetalle(rs.getString("detalle"));
+               String productosDB = rs.getString("productos"); 
+            
+            if (productosDB != null && !productosDB.isEmpty()) {
+                List<String> productosList = Arrays.asList(productosDB.split(","));
+                tratamiento.setProductos(productosList); 
+            } else {
+
+                tratamiento.setProductos(new ArrayList<>());
+            }
+            
+
+            Time duracionSql = rs.getTime("duracion");
+            tratamiento.setDuracion(duracionSql); 
+            
+            tratamiento.setCosto(rs.getDouble("costo")); 
+            tratamiento.setEstado(rs.getBoolean("estado"));
+               
+
+            }
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Error al buscar tratamiento :(");
+        }
+        return tratamiento;
+    }
+       
 
 }
 
