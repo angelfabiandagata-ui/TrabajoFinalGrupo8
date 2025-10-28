@@ -3,17 +3,18 @@ package Modelo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 
 public class SesionTurno {
     //Atributos
     private int codSesion;
-    private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
-    private String tratamiento; 
-    private String consultorio;
-    private String masajista;
+    private LocalTime fechaHoraInicio;
+    private LocalTime fechaHoraFin;
+    private Tratamiento tratamiento; 
+    private Consultorio consultorio;
+    private Masajista masajista;
     private List<Instalacion> instalacionesList;
     private LocalDate DiaDeSpa;
     private boolean estado;
@@ -22,16 +23,18 @@ public class SesionTurno {
 
 
 //Constructor
-    public SesionTurno(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, String tratamiento, String consultorio, String masajista, List<Instalacion> instalaciones, LocalDate diaDeSpa) {
+    public SesionTurno(int codSesion, LocalTime fechaHoraInicio, LocalTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista masajista, List<Instalacion> instalacionesList, LocalDate DiaDeSpa, boolean estado) {   
         this.codSesion = codSesion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.tratamiento = tratamiento;
         this.consultorio = consultorio;
         this.masajista = masajista;
-        this.instalacionesList = instalaciones;
-        this.DiaDeSpa = diaDeSpa;
+        this.instalacionesList = instalacionesList;
+        this.DiaDeSpa = DiaDeSpa;
+        this.estado = estado;
     }
+
 //Getter and setter
     public int getCodSesion() {
         return codSesion;
@@ -41,46 +44,65 @@ public class SesionTurno {
         this.codSesion = codSesion;
     }
 
-    public LocalDateTime getFechaHoraInicio() {
+    public LocalTime getFechaHoraInicio() {
         return fechaHoraInicio;
     }
 
-    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+    public void setFechaHoraInicio(LocalTime fechaHoraInicio) {
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public LocalDateTime getFechaHoraFin() {
+    public LocalTime getFechaHoraFin() {
         return fechaHoraFin;
     }
 
-    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
+    public void setFechaHoraFin(LocalTime fechaHoraFin) {
         this.fechaHoraFin = fechaHoraFin;
     }
 
-    public String getTratamiento() {
+    public List<Instalacion> getInstalacionesList() {
+        return instalacionesList;
+    }
+
+    public void setInstalacionesList(List<Instalacion> instalacionesList) {
+        this.instalacionesList = instalacionesList;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public Tratamiento getTratamiento() {
         return tratamiento;
     }
 
-    public void setTratamiento(String tratamiento) {
+    public void setTratamiento(Tratamiento tratamiento) {
         this.tratamiento = tratamiento;
     }
 
-    public String getConsultorio() {
+    public Consultorio getConsultorio() {
         return consultorio;
     }
 
-    public void setConsultorio(String consultorio) {
+    public void setConsultorio(Consultorio consultorio) {
         this.consultorio = consultorio;
     }
 
-    public String getMasajista() {
+    public Masajista getMasajista() {
         return masajista;
     }
 
-    public void setMasajista(String masajista) {
+    public void setMasajista(Masajista masajista) {
         this.masajista = masajista;
     }
 
+    
+
+ 
     public List<Instalacion> getInstalacioneslist() {
         return instalacionesList;
     }
