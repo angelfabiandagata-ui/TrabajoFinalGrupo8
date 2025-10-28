@@ -3,6 +3,7 @@ package Persistencia;
 import Modelo.Conexion;
 import Modelo.Instalacion;
 import Modelo.SesionTurno;
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,7 +11,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.Statement;
 
 public class InstalacionData {
 
@@ -36,32 +36,34 @@ public class InstalacionData {
 //    public List<Instalacion> ListarInstalacionesMasSolicitadas() {
 //    }
     
-    public void guardarInstalacion(Instalacion inst) { 
+public void guardarInstalacion(Instalacion inst) { 
+    // ERROR: Tienes 4 columnas pero 5 parámetros (?)
+    String sql = "INSERT INTO `instalacion`(`nombre`, `detalle_uso`, `precio30m`, `estado`) VALUES (?,?,?,?)";
     
-    String sql = "INSERT INTO `instalacion`( `nombre`, `detalle_uso`, `precio30m`, `estado`) VALUES (?,?,?,?,?)";
-    try {
+    try{
         
-        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        
         ps.setString(1, inst.getNombre());
         ps.setString(2, inst.getDetalleUso());
         ps.setDouble(3, inst.getPrecio30min());
         ps.setBoolean(4, inst.isEstado());
-
+        
         int filas = ps.executeUpdate();
-
+        
         if (filas > 0) {
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                inst.setCodInstal(rs.getInt(0));
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    // ERROR: Los índices en ResultSet empiezan en 1, no en 0
+                    inst.setCodInstal(rs.getInt(1));
+                }
             }
-            JOptionPane.showMessageDialog(null, " Instalacion guardada correctamente");
+            JOptionPane.showMessageDialog(null, " Instalación guardada correctamente");
         } else {
-            JOptionPane.showMessageDialog(null, "️ No se insertó ningúna Instalacion");
+            JOptionPane.showMessageDialog(null, " No se insertó ninguna Instalación");
         }
-
-        ps.close();
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "❌ Error al inscribir: " + ex.getMessage());
+        JOptionPane.showMessageDialog(null, " Error al guardar: " + ex.getMessage());
     }
 }
 
