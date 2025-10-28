@@ -2,7 +2,7 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.Masajista;
-import Modelo.Conexion;
+import Modelo.conexion;
 import Persistencia.ClienteData;
 import Persistencia.MasajistaData;
 import java.util.ArrayList;
@@ -78,5 +78,5 @@ msjData.altaMasajista(1);
 
     }
 
-    Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8", "root", "");
+    conexion con = new conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8", "root", "");
 }
