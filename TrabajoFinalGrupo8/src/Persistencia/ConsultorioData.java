@@ -7,7 +7,6 @@ package Persistencia;
 import Modelo.Conexion;
 import Modelo.Consultorio;
 import com.sun.jdi.connect.spi.Connection;
-import org.mariadb.jdbc.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -47,7 +46,8 @@ public class ConsultorioData {
         String sql = "INSERT INTO consultorio (usos, equipamiento, apto) VALUES (?, ?, ?)";
         
         try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+            PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, consultorio.getUsos());
             ps.setString(2, consultorio.getEquipamiento());
             ps.setBoolean(3, consultorio.isApto());
