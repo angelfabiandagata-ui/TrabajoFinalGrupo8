@@ -5,44 +5,41 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class Conexion {
-
-    public static com.sun.jdi.connect.spi.Connection getConexion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    //ATRIBUTOS
+public class conexion {
+    
+    //atributos
     private String url;
     private String usuario;
     private String password;
-
-    //CONEXION NULA
     private static Connection conexion = null;
 
-    //PARA INSTANCIAR UNA CONEXION SE NESESITAN URL,USU,PASW
-    public Conexion(String url, String usuario, String password) {
+    // Constructor
+    public conexion(String url, String usuario, String password) {
         this.url = url;
         this.usuario = usuario;
         this.password = password;
     }
 
+   //constructor completo
     public Connection buscarConexion() {
         if (conexion == null) {
             try {
-                //CARGA EL MARIADB DRIVER
                 Class.forName("org.mariadb.jdbc.Driver");
-                //CREA UNA CONEXION CON LOS ARGUMENTOS PASADOS
                 conexion = DriverManager.getConnection(url, usuario, password);
-
             } catch (ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "No se pudo cargar el driver" + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "No se pudo cargar el driver: " + ex.getMessage());
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "No se puede conectar" + ex.getMessage());
-
+                JOptionPane.showMessageDialog(null, "No se puede conectar: " + ex.getMessage());
             }
-
         }
         return conexion;
     }
 
+    //constructor sin parametros
+    public conexion() {
+        this.url = "jdbc:mariadb://localhost:3306/spa_entre_dedos";
+        this.usuario = "root";
+        this.password = ""; // cambiar según tu entorno
+    }
 }
+
