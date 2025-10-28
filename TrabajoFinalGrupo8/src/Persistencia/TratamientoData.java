@@ -95,8 +95,26 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
         System.out.println("❌ Error al dar de baja el Tratamiento: " + e.getMessage());
     }
     }
-    public void ModificarTratamiento(){
-        
+    public void ModificarTratamiento(Tratamiento tratamiento){
+         String sql = "UPDATE `tratamiento` SET `nombre` = ?,`detalle`=?,`productosDB`=?,`duracion`=?,`costo`=?,`estado`=? WHERE codTratamiento = ?";
+           try {
+                List<String> productosList = tratamiento.getProductos();
+            String productosDB = String.join(",", productosList);
+               
+              PreparedStatement ps =con.prepareStatement(sql);
+               ps.setInt(1, tratamiento.getCodTratamiento());
+            ps.setString(2, tratamiento.getNombre());
+            ps.setString(3, tratamiento.getDetalle());
+            ps.setString(4, productosDB);
+            ps.setTime(5, tratamiento.getDuracion());
+            ps.setDouble(6, tratamiento.getCosto());
+            ps.setBoolean(7, tratamiento.getEstado());
+            ps.executeUpdate();
+               System.out.println("Tratamiento correctamente modificado :)");
+           } catch (SQLException ex) {
+               System.out.println("Error al modificar el tratamiento" + ex.getMessage());
+           }
+       
     }
 
      List<Tratamiento> tratamientos = new ArrayList<>();
