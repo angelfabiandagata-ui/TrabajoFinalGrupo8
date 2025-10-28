@@ -2,38 +2,39 @@ package Modelo;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.sql.Time;
 
 public class Tratamiento {
 
-    private int codTratam;
+    private int codTratamiento;
     private String nombre;
-    private String tipo;
+//    private String tipo;
     private String detalle;
     private List<String> Productos;
-    private LocalTime Duracion; 
+    private Time Duracion; 
     private double costo;
-    private boolean activo;
+    private boolean estado;
 
     public Tratamiento() {
     }
 
-    public Tratamiento(int codTratam, String nombre, String tipo, String detalle, List<String> Productos, LocalTime Duracion, double costo, boolean activo) {
-        this.codTratam = codTratam;
+    public Tratamiento(int codTratam, String nombre, String tipo, String detalle, List<String> Productos, Time Duracion, double costo, boolean activo) {
+        this.codTratamiento = codTratamiento;
         this.nombre = nombre;
-        this.tipo = tipo;
+//        this.tipo = tipo;
         this.detalle = detalle;
         this.Productos = Productos;
         this.Duracion = Duracion;
         this.costo = costo;
-        this.activo = activo;
+        this.estado = estado;
     }
 
-    public int getCodTratam() {
-        return codTratam;
+    public int getCodTratamiento() {
+        return codTratamiento;
     }
 
-    public void setCodTratam(int codTratam) {
-        this.codTratam = codTratam;
+    public void setCodTratamiento(int codTratamiento) {
+        this.codTratamiento = codTratamiento;
     }
 
     public String getNombre() {
@@ -60,11 +61,11 @@ public class Tratamiento {
         this.Productos = Productos;
     }
 
-    public LocalTime getDuracion() {
+    public Time getDuracion() {
         return Duracion;
     }
 
-    public void setDuracion(LocalTime Duracion) {
+    public void setDuracion(Time Duracion) {
         this.Duracion = Duracion;
     }
 
@@ -76,20 +77,20 @@ public class Tratamiento {
         this.costo = costo;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public boolean getEstado() {
+        return estado;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+//    public String getTipo() {
+//        return tipo;
+//    }
+//
+//    public void setTipo(String tipo) {
+//        this.tipo = tipo;
+//    }
 
 }
