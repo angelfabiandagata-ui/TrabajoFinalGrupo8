@@ -68,7 +68,19 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
             System.out.println("Error al guardar el Tratamiento: " + e.getMessage());
         }
     }
+ public void borrarTratamiento(int codTratamiento) {
+        try {
+            String sql = "DELETE FROM `tratamiento` WHERE codTratamiento = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, codTratamiento);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Tratamiento borrado con exito");
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar el Tratamiento" + ex.getMessage());
+        }
 
+    }
         
      public void altaTratamiento(int codTratamiento){
            String sql = "UPDATE tratamiento SET estado = 1 WHERE codTratamiento = ?" ;
