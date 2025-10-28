@@ -71,8 +71,29 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
 
         
     
-    public void BajaTratamiento(){
+    public void BajaTratamiento(int codTratamiento){
+    String sql = "UPDATE tratamiento SET estado = false WHERE codTratamiento = ?";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
         
+
+        ps.setInt(1, codTratamiento);
+        
+
+        int filasActualizadas = ps.executeUpdate();
+        
+        if (filasActualizadas > 0) {
+            System.out.println("Tratamiento con ID " + codTratamiento + " dado de baja (Estado: Inactivo)");
+        } else {
+            System.out.println("Error: No se encontro ningun tratamiento con ID " + codTratamiento + " para dar de baja");
+        }
+        
+        ps.close();
+        
+    } catch (SQLException e) {
+        System.out.println("❌ Error al dar de baja el Tratamiento: " + e.getMessage());
+    }
     }
     public void ModificarTratamiento(){
         
