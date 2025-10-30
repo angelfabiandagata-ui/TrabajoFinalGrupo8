@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.naming.spi.DirStateFactory;
-import org.mariadb.jdbc.client.result.ResultSetMetaData;
 
 public class SesionTurnoData {
     

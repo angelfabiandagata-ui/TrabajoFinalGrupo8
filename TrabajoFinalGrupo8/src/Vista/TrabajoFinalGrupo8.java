@@ -108,5 +108,6 @@ menu pantalla = new menu();
 
     }
 
-    Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8", "root", "");
+    Conexion con = new Conexion();
+    menu menu = new menu();
 }
