@@ -145,7 +145,16 @@ public class menu extends javax.swing.JFrame {
 
     
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+                                         
+    VistaClientes panelClientes = new VistaClientes();
+    javax.swing.JFrame ventana = new javax.swing.JFrame();
+    ventana.setTitle("Gestión de Clientes"); 
+    ventana.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+    ventana.add(panelClientes);
+    ventana.pack(); 
+    ventana.setLocationRelativeTo(null);
+    ventana.setVisible(true);
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -153,6 +162,7 @@ public class menu extends javax.swing.JFrame {
         VistaMasajistas pantallaMasajistas = new VistaMasajistas();
         pantallaMasajistas.setVisible(true);
         pantallaMasajistas.setLocationRelativeTo(null);
+        pantallaMasajistas.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
