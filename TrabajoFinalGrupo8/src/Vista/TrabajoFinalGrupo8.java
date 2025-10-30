@@ -17,8 +17,9 @@ public class TrabajoFinalGrupo8 {
     public static void main(String[] args) {
 
                 System.out.println("Iniciando Programa");
-//        
-//
+      
+menu pantalla = new menu();
+        pantalla.setVisible(true);
 //        
 //        TratamientoData tData = new TratamientoData();
 //        
