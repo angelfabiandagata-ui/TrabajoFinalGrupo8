@@ -39,7 +39,7 @@ public class Conexion {
     public Conexion() {
         this.url = "jdbc:mariadb://localhost:3306/spa_entre_dedos";
         this.usuario = "root";
-        this.password = ""; // cambiar según tu entorno
+        this.password = ""; 
     }
 }
 

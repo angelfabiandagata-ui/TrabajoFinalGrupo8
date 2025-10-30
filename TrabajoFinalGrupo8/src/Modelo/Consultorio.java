@@ -18,6 +18,11 @@ public class Consultorio {
         this.apto = apto;
     }
 
+    public Consultorio() {
+    }
+    
+    
+
     //GETTERS AND SETTERS
     public int getNroConsultorio() {
         return nroConsultorio;
