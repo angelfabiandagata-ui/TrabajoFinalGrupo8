@@ -18,27 +18,27 @@ public class TrabajoFinalGrupo8 {
 
                 System.out.println("Iniciando Programa");
 //        
-
-        
-        TratamientoData tData = new TratamientoData();
-        
-        Tratamiento tratamiento1 = new Tratamiento();
-        tratamiento1.setCodTratamiento(1);
-        tratamiento1.setNombre("Masaje");
-        tratamiento1.setDetalle("Renovacion total");
-        List<String> listaProductos = Arrays.asList("Aceite de Palta", "Crema de Almendras", "Exfoliante");
-    tratamiento1.setProductos(listaProductos);
-        tratamiento1.setDuracion(Time.valueOf("00:50:00"));
-        tratamiento1.setEstado(true);
-        
-        
-        tData.agregarTratamiento(tratamiento1);
-        
-        if (tratamiento1.getCodTratamiento() > 0) {
-            System.out.println("Se guardo el Tratamiento Nro " + tratamiento1.getCodTratamiento());
-        } else {
-            System.out.println("Fallo al guardar el tratamiento");
-        }
+//
+//        
+//        TratamientoData tData = new TratamientoData();
+//        
+//        Tratamiento tratamiento1 = new Tratamiento();
+//        tratamiento1.setCodTratamiento(1);
+//        tratamiento1.setNombre("Masaje");
+//        tratamiento1.setDetalle("Renovacion total");
+//        List<String> listaProductos = Arrays.asList("Aceite de Palta", "Crema de Almendras", "Exfoliante");
+//    tratamiento1.setProductos(listaProductos);
+//        tratamiento1.setDuracion(Time.valueOf("00:50:00"));
+//        tratamiento1.setEstado(true);
+//        
+//        
+//        tData.agregarTratamiento(tratamiento1);
+//        
+//        if (tratamiento1.getCodTratamiento() > 0) {
+//            System.out.println("Se guardo el Tratamiento Nro " + tratamiento1.getCodTratamiento());
+//        } else {
+//            System.out.println("Fallo al guardar el tratamiento");
+//        }
 //        
 //        
 //        System.out.println("Iniciando Programa");
