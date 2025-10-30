@@ -27,6 +27,7 @@ public class menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane2 = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -45,18 +46,22 @@ public class menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\user\\OneDrive\\Documentos\\GitHub\\TransversalTP1\\TransversalTP1-grupo8\\src\\Vista\\Imagen de WhatsApp 2025-10-30 a las 18.43.13_1ad1829a.jpg")); // NOI18N
+
+        jDesktopPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
         jDesktopPane2.setLayout(jDesktopPane2Layout);
         jDesktopPane2Layout.setHorizontalGroup(
             jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 866, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jDesktopPane2Layout.setVerticalGroup(
             jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("clientes");
+        jMenu1.setText("Clientes");
 
         jMenuItem2.setText("Gestionar Clientes");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -68,42 +73,42 @@ public class menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("masajistas");
+        jMenu2.setText("Masajistas");
 
         jMenuItem3.setText("Gestionar Masajistas");
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
 
-        jMenu5.setText("sesiones");
+        jMenu5.setText("Sesiones");
 
         jMenuItem4.setText("Gestionar Sesiones / Turnos");
         jMenu5.add(jMenuItem4);
 
         jMenuBar1.add(jMenu5);
 
-        jMenu6.setText("tratamientos");
+        jMenu6.setText("Tratamientos");
 
         jMenuItem5.setText("Gestionar Tratamientos");
         jMenu6.add(jMenuItem5);
 
         jMenuBar1.add(jMenu6);
 
-        jMenu7.setText("dia de espa");
+        jMenu7.setText("Dia de Spa");
 
         jMenuItem6.setText("Gestionar dias de espa");
         jMenu7.add(jMenuItem6);
 
         jMenuBar1.add(jMenu7);
 
-        jMenu8.setText("instalacion");
+        jMenu8.setText("Instalacion");
 
         jMenuItem7.setText("Gestionar Instalaciones");
         jMenu8.add(jMenuItem7);
 
         jMenuBar1.add(jMenu8);
 
-        jMenu9.setText("consultorio");
+        jMenu9.setText("Consultorio");
 
         jMenuItem8.setText("Gestionar Consultorios");
         jMenu9.add(jMenuItem8);
@@ -167,6 +172,7 @@ public class menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;
