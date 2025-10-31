@@ -1,28 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Ema
- */
+
 public class menu extends javax.swing.JFrame {
 
     /**
      * Creates new form menu
      */
-    public menu() {
-        initComponents();
-        this.setLocationRelativeTo(this);
-       actualizarVista();
-
-    }
+public menu() {
+    initComponents();
+    
+    crearyordenarcomponentes();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,16 +47,18 @@ public class menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1600, 600));
 
+        radio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Disenio/radio.jpg"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(radio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE)
+            .addComponent(radio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(radio, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                .addComponent(radio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -82,11 +77,6 @@ public class menu extends javax.swing.JFrame {
         jMenu2.setText("Masajistas");
 
         jMenuItem3.setText("Gestionar Masajistas");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -145,26 +135,8 @@ public class menu extends javax.swing.JFrame {
 
     
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-                                         
-    VistaClientes panelClientes = new VistaClientes();
-    javax.swing.JFrame ventana = new javax.swing.JFrame();
-    ventana.setTitle("Gestión de Clientes"); 
-    ventana.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-    ventana.add(panelClientes);
-    ventana.pack(); 
-    ventana.setLocationRelativeTo(null);
-    ventana.setVisible(true);
-
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        VistaMasajistas pantallaMasajistas = new VistaMasajistas();
-        pantallaMasajistas.setVisible(true);
-        pantallaMasajistas.setLocationRelativeTo(null);
-        pantallaMasajistas.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-        
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,6 +185,60 @@ public void actualizarVista(){
     radio.setIcon(imagen);
 }    
 
+public void crearyordenarcomponentes(){
+        
+    this.setLocationRelativeTo(null); 
+    this.setSize(1600, 600); 
+
+    PanelConFondo panelFondo = new PanelConFondo();
+    panelFondo.setLayout(null); 
+    this.setContentPane(panelFondo);
+
+    // A. CONFIGURACION (Círculo Izquierdo)
+    javax.swing.JButton btnConfiguracion = new javax.swing.JButton(""); 
+    btnConfiguracion.setBounds( 825, 100, 225, 220); 
+    btnConfiguracion.setOpaque(false);
+    btnConfiguracion.setContentAreaFilled(false); 
+    btnConfiguracion.setBorderPainted(false);
+    panelFondo.add(btnConfiguracion);
+
+    //  TURNOS 
+    javax.swing.JButton btnTurnos = new javax.swing.JButton("");
+    btnTurnos.setBounds(530, 100, 225, 220);
+    btnTurnos.setOpaque(false);
+    btnTurnos.setContentAreaFilled(false);
+    btnTurnos.setBorderPainted(false);
+    panelFondo.add(btnTurnos);
+
+    // CLIENTES 
+    javax.swing.JButton btnClientes = new javax.swing.JButton("");
+    btnClientes.setBounds( 515, 384, 210, 38);
+    btnClientes.setOpaque(false);
+    btnClientes.setContentAreaFilled(false);
+    btnClientes.setBorderPainted(false);
+    panelFondo.add(btnClientes);
+
+    // D. MASAJISTAS 
+    javax.swing.JButton btnMasajistas = new javax.swing.JButton("");
+    btnMasajistas.setBounds(740, 384, 269, 38);
+    btnMasajistas.setOpaque(false);
+    btnMasajistas.setContentAreaFilled(false);
+    btnMasajistas.setBorderPainted(false);
+    panelFondo.add(btnMasajistas);
+    
+    // F. Ayuda (Botón Inferior Derecho)
+    javax.swing.JButton btnAyuda = new javax.swing.JButton("");
+    btnAyuda.setBounds( 980, 430, 100, 30); // X: 400 + 580
+    btnAyuda.setOpaque(false);
+    btnAyuda.setContentAreaFilled(false);
+    btnAyuda.setBorderPainted(false);
+    panelFondo.add(btnAyuda);
+
+    // Asegura que todos los componentes se dibujen.
+    this.revalidate();
+    this.repaint();
+    
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
