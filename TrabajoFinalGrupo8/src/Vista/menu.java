@@ -17,12 +17,7 @@ import javax.swing.JPanel;
 public class menu extends javax.swing.JFrame {
 
    /*
-public menu() {
-    initComponents();
-        crearyordenarcomponentes();
-        setLocationRelativeTo(null);
-        setSize(1600, 600);
-    }
+
 
    
     @SuppressWarnings("unchecked")
@@ -159,142 +154,12 @@ public menu() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+   
     
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    
-    public static void main(String args[]) {
-      
-       
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new menu().setVisible(true);
-            }
-        });
-    }
-
-public void crearyordenarcomponentes() {
-    setLocationRelativeTo(null);
-    setSize(1600, 600);
-
-    PanelConFondo panelFondo = new PanelConFondo();
-    panelFondo.setLayout(null);
-    setContentPane(panelFondo);
-
-    // Crear y agregar botones con debugging
-    panelFondo.add(crearBoton(825, 100, 225, 220, this::abrirConfiguracion, "Configuración"));
-    panelFondo.add(crearBoton(530, 100, 225, 220, this::abrirTurnos, "Turnos"));
-    panelFondo.add(crearBoton(515, 384, 210, 38, this::abrirClientes, "Clientes"));
-    panelFondo.add(crearBoton(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
-    panelFondo.add(crearBoton(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
-
-    revalidate();
-    repaint();
-}
-
-private JButton crearBoton(int x, int y, int w, int h, Runnable accion, String nombre) {
-    JButton boton = new JButton(nombre); // Texto temporal para debugging
-    boton.setBounds(x, y, w, h);
-    
-    // TEMPORAL: Hacer botones visibles para debugging
-    boton.setOpaque(true);
-    boton.setBackground(new Color(255, 0, 0, 100)); // Rojo semitransparente
-    boton.setContentAreaFilled(true);
-    boton.setBorderPainted(true);
-    
-    boton.addActionListener(e -> {
-        System.out.println("DEBUG: Botón " + nombre + " clickeado");
-        accion.run();
-    });
-    
-    return boton;
-}
-
-// Métodos corregidos para Internal Frames
-private void abrirClientes() {
-    System.out.println("DEBUG: Ejecutando abrirClientes()");
-    try {
-        VistaClientes clientes = new VistaClientes();
-        clientes.setSize(800, 600);
-        // Para Internal Frames, usar setLocation en lugar de setLocationRelativeTo
-        clientes.setLocation(100, 100); // Posición dentro del contenedor padre
-        clientes.setVisible(true);
-        System.out.println("DEBUG: VistaClientes abierta");
-    } catch (Exception e) {
-        System.err.println("ERROR al abrir Clientes: " + e.getMessage());
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al abrir Clientes: " + e.getMessage());
-    }
-}
-
-private void abrirMasajistas() {
-    System.out.println("DEBUG: Ejecutando abrirMasajistas()");
-    try {
-        VistaMasajistas masajistas = new VistaMasajistas();
-        masajistas.setSize(800, 600);
-        masajistas.setLocation(100, 100);
-        masajistas.setVisible(true);
-        System.out.println("DEBUG: VistaMasajistas abierta");
-    } catch (Exception e) {
-        System.err.println("ERROR al abrir Masajistas: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
-
-private void abrirTurnos() {
-    System.out.println("DEBUG: Ejecutando abrirTurnos()");
-    try {
-        VistaTurnos turnos = new VistaTurnos();
-        turnos.setSize(800, 600);
-        turnos.setLocation(100, 100);
-        turnos.setVisible(true);
-        System.out.println("DEBUG: VistaTurnos abierta");
-    } catch (Exception e) {
-        System.err.println("ERROR al abrir Turnos: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
-
-private void abrirConfiguracion() {
-    System.out.println("DEBUG: Ejecutando abrirConfiguracion()");
-    try {
-        VistaConfiguracion configuracion = new VistaConfiguracion();
-        configuracion.setSize(800, 600);
-        configuracion.setLocation(100, 100);
-        configuracion.setVisible(true);
-        System.out.println("DEBUG: VistaConfiguracion abierta");
-    } catch (Exception e) {
-        System.err.println("ERROR al abrir Configuración: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
-
-private void mostrarAyuda() {
-    System.out.println("DEBUG: Ejecutando mostrarAyuda()");
-    JOptionPane.showMessageDialog(this, "Para Contactar Con el Soporte page 100 dolares");
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
@@ -321,12 +186,15 @@ private void mostrarAyuda() {
 
 
     public menu() {
-        initComponents();
-        crearyordenarcomponentes();
-        setLocationRelativeTo(null);
-        setSize(1600, 600);
-    }
+    initComponents();
 
+    // tamaño antes de crear componentes
+    this.setSize(1600, 600);
+    this.setLocationRelativeTo(null);
+
+    crearyordenarcomponentes();
+    }
+    
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
@@ -400,23 +268,37 @@ private void mostrarAyuda() {
     }
 
     public void crearyordenarcomponentes() {
-        PanelConFondo panelFondo = new PanelConFondo();
-        panelFondo.setLayout(null);
+    // Creamos panel con fondo
+    PanelConFondo panelFondo = new PanelConFondo();
+    panelFondo.setLayout(null);
 
-        jDesktopPane1.removeAll();
-        jDesktopPane1.add(panelFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.repaint();
-        jDesktopPane1.revalidate();
+    // Limpiamos desktop y agregamos panel de fondo en la capa más baja
+    jDesktopPane1.removeAll();
 
-        panelFondo.add(crearBoton(825, 100, 225, 220, this::abrirConfiguracion, "Configuración"));
-        panelFondo.add(crearBoton(530, 100, 225, 220, this::abrirTurnos, "Turnos"));
-        panelFondo.add(crearBoton(515, 384, 210, 38, this::abrirClientes, "Clientes"));
-        panelFondo.add(crearBoton(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
-        panelFondo.add(crearBoton(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
+    // Necesitamos que el panelFondo ocupe todo el desktop; seteamos bounds ahora
+    panelFondo.setBounds(0, 0, jDesktopPane1.getWidth(), jDesktopPane1.getHeight());
+    jDesktopPane1.add(panelFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        revalidate();
-        repaint();
-    }
+    // Si al momento de crear aún width/height son 0 (puede pasar), aseguramos un listener
+    jDesktopPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
+        @Override
+        public void componentResized(java.awt.event.ComponentEvent e) {
+            panelFondo.setBounds(0, 0, jDesktopPane1.getWidth(), jDesktopPane1.getHeight());
+        }
+    });
+
+    // Agregar botones (zonas clicables) — invisibles sobre la imagen
+    panelFondo.add(crearBotonInvisible(825, 100, 225, 220, this::abrirConfiguracion, "Configuración"));
+    panelFondo.add(crearBotonInvisible(530, 100, 225, 220, this::abrirTurnos, "Turnos"));
+    panelFondo.add(crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes"));
+    panelFondo.add(crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
+    panelFondo.add(crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
+
+    // refrescar
+    jDesktopPane1.revalidate();
+    jDesktopPane1.repaint();
+}
+
 
     private JButton crearBoton(int x, int y, int w, int h, Runnable accion, String nombre) {
         JButton boton = new JButton(nombre);
@@ -430,6 +312,20 @@ private void mostrarAyuda() {
         return boton;
     }
 
+    private JButton crearBotonInvisible(int x, int y, int w, int h, Runnable accion, String tooltip) {
+    JButton boton = new JButton();
+    boton.setBounds(x, y, w, h);
+    boton.setOpaque(false);
+    boton.setContentAreaFilled(false);
+    boton.setBorderPainted(false);
+    boton.setFocusPainted(false);
+    boton.setToolTipText(tooltip);
+
+    boton.addActionListener(e -> accion.run());
+    return boton;
+}
+
+    
     // ==========================
     // Métodos para abrir ventanas
     // ==========================
@@ -446,12 +342,10 @@ private void mostrarAyuda() {
 
     private void abrirTurnos() {
         VistaTurnos turnos = new VistaTurnos();
-        prepararInternalFrame(turnos);
     }
 
     private void abrirConfiguracion() {
         VistaConfiguracion configuracion = new VistaConfiguracion();
-        prepararInternalFrame(configuracion);
     }
 
     private void mostrarAyuda() {
@@ -459,7 +353,7 @@ private void mostrarAyuda() {
     }
 
     private void prepararInternalFrame(JInternalFrame frame) {
-        frame.setSize(800, 600);
+        frame.setSize(800, 400);
         frame.setClosable(true);
         frame.setMaximizable(true);
         frame.setIconifiable(true);
@@ -467,6 +361,10 @@ private void mostrarAyuda() {
         jDesktopPane1.add(frame);
         frame.setVisible(true);
         frame.toFront();
+        int x = (jDesktopPane1.getWidth() - frame.getWidth()) / 2;
+    int y = (jDesktopPane1.getHeight() - frame.getHeight()) / 2;
+    frame.setLocation(x, y);
+
     }
 
     // Variables
@@ -487,11 +385,3 @@ private void mostrarAyuda() {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
 }
-
-/*Con esto ya andaria bien los:
-Ahora los JInternalFrame se agregan como corresponde.
-DesktopPane sigue existiendo y sirve.
-Panel con fondo está correctamente "dentro" del DesktopPane.
-Menú real abre ventanas.
-Botones también.
-}*/
