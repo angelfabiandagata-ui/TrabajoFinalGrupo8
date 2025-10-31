@@ -1,46 +1,27 @@
-package Vista; // Asegúrate de que este sea el paquete correcto
+package Vista;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Dimension; // Necesario para getPreferredSize
+
+
+import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-/**
- * Clase para usar una imagen como fondo de un JPanel.
- */
 public class PanelConFondo extends JPanel {
-    
-    private Image imagenDeFondo;
-    private final String RUTA_IMAGEN = "/Vista/Disenio/radio.jpg"; 
+    private Image imagenFondo;
 
     public PanelConFondo() {
         try {
-            imagenDeFondo = new ImageIcon(getClass().getResource(RUTA_IMAGEN)).getImage();
+            // Cargar imagen desde recursos
+            imagenFondo = new ImageIcon(getClass().getResource("/Vista/Disenio/radio.jpg")).getImage();
         } catch (Exception e) {
-            System.err.println("Error al cargar la imagen de fondo: " + RUTA_IMAGEN);
-            e.printStackTrace();
+            System.err.println("Error al cargar imagen de fondo: " + e.getMessage());
         }
     }
 
-    @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); 
-        
-        if (imagenDeFondo != null) {
-            g.drawImage(
-                imagenDeFondo, 
-                0, 
-                0, 
-                getWidth(), 
-                getHeight(), 
-                this
-            );
+        super.paintComponent(g);
+        if (imagenFondo != null) {
+            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
         }
-    }
-    
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(1600, 600); 
     }
 }

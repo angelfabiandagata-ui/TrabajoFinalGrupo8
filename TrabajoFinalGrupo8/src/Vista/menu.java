@@ -1,9 +1,16 @@
 
 package Vista;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
 public class menu extends javax.swing.JFrame {
@@ -26,8 +33,8 @@ public menu() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
-        radio = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -45,21 +52,39 @@ public menu() {
         jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1600, 600));
-
-        radio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Disenio/radio.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(radio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 1019, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(radio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 521, Short.MAX_VALUE)
+        );
+
+        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1031, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 509, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jMenu1.setText("Clientes");
@@ -122,17 +147,23 @@ public menu() {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jDesktopPane1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    
     
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -172,74 +203,110 @@ public menu() {
             }
         });
     }
-    
-public void actualizarVista(){
- 
-//cargar imagen
-        Icon imagen = new ImageIcon(
-    new ImageIcon(getClass().getResource("/Vista/Disenio/radio.jpg"))
-        .getImage()
-        .getScaledInstance(radio.getWidth(), radio.getHeight(), Image.SCALE_SMOOTH)
-    );
 
-    radio.setIcon(imagen);
-}    
-
-public void crearyordenarcomponentes(){
-        
-    this.setLocationRelativeTo(null); 
-    this.setSize(1600, 600); 
+public void crearyordenarcomponentes() {
+    setLocationRelativeTo(null);
+    setSize(1600, 600);
 
     PanelConFondo panelFondo = new PanelConFondo();
-    panelFondo.setLayout(null); 
-    this.setContentPane(panelFondo);
+    panelFondo.setLayout(null);
+    setContentPane(panelFondo);
 
-    // A. CONFIGURACION (Círculo Izquierdo)
-    javax.swing.JButton btnConfiguracion = new javax.swing.JButton(""); 
-    btnConfiguracion.setBounds( 825, 100, 225, 220); 
-    btnConfiguracion.setOpaque(false);
-    btnConfiguracion.setContentAreaFilled(false); 
-    btnConfiguracion.setBorderPainted(false);
-    panelFondo.add(btnConfiguracion);
+    // Crear y agregar botones con debugging
+    panelFondo.add(crearBoton(825, 100, 225, 220, this::abrirConfiguracion, "Configuración"));
+    panelFondo.add(crearBoton(530, 100, 225, 220, this::abrirTurnos, "Turnos"));
+    panelFondo.add(crearBoton(515, 384, 210, 38, this::abrirClientes, "Clientes"));
+    panelFondo.add(crearBoton(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
+    panelFondo.add(crearBoton(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
 
-    //  TURNOS 
-    javax.swing.JButton btnTurnos = new javax.swing.JButton("");
-    btnTurnos.setBounds(530, 100, 225, 220);
-    btnTurnos.setOpaque(false);
-    btnTurnos.setContentAreaFilled(false);
-    btnTurnos.setBorderPainted(false);
-    panelFondo.add(btnTurnos);
-
-    // CLIENTES 
-    javax.swing.JButton btnClientes = new javax.swing.JButton("");
-    btnClientes.setBounds( 515, 384, 210, 38);
-    btnClientes.setOpaque(false);
-    btnClientes.setContentAreaFilled(false);
-    btnClientes.setBorderPainted(false);
-    panelFondo.add(btnClientes);
-
-    // D. MASAJISTAS 
-    javax.swing.JButton btnMasajistas = new javax.swing.JButton("");
-    btnMasajistas.setBounds(740, 384, 269, 38);
-    btnMasajistas.setOpaque(false);
-    btnMasajistas.setContentAreaFilled(false);
-    btnMasajistas.setBorderPainted(false);
-    panelFondo.add(btnMasajistas);
-    
-    // F. Ayuda (Botón Inferior Derecho)
-    javax.swing.JButton btnAyuda = new javax.swing.JButton("");
-    btnAyuda.setBounds( 980, 430, 100, 30); // X: 400 + 580
-    btnAyuda.setOpaque(false);
-    btnAyuda.setContentAreaFilled(false);
-    btnAyuda.setBorderPainted(false);
-    panelFondo.add(btnAyuda);
-
-    // Asegura que todos los componentes se dibujen.
-    this.revalidate();
-    this.repaint();
-    
+    revalidate();
+    repaint();
 }
+
+private JButton crearBoton(int x, int y, int w, int h, Runnable accion, String nombre) {
+    JButton boton = new JButton(nombre); // Texto temporal para debugging
+    boton.setBounds(x, y, w, h);
+    
+    // TEMPORAL: Hacer botones visibles para debugging
+    boton.setOpaque(true);
+    boton.setBackground(new Color(255, 0, 0, 100)); // Rojo semitransparente
+    boton.setContentAreaFilled(true);
+    boton.setBorderPainted(true);
+    
+    boton.addActionListener(e -> {
+        System.out.println("DEBUG: Botón " + nombre + " clickeado");
+        accion.run();
+    });
+    
+    return boton;
+}
+
+// Métodos corregidos para Internal Frames
+private void abrirClientes() {
+    System.out.println("DEBUG: Ejecutando abrirClientes()");
+    try {
+        VistaClientes clientes = new VistaClientes();
+        clientes.setSize(800, 600);
+        // Para Internal Frames, usar setLocation en lugar de setLocationRelativeTo
+        clientes.setLocation(100, 100); // Posición dentro del contenedor padre
+        clientes.setVisible(true);
+        System.out.println("DEBUG: VistaClientes abierta");
+    } catch (Exception e) {
+        System.err.println("ERROR al abrir Clientes: " + e.getMessage());
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al abrir Clientes: " + e.getMessage());
+    }
+}
+
+private void abrirMasajistas() {
+    System.out.println("DEBUG: Ejecutando abrirMasajistas()");
+    try {
+        VistaMasajistas masajistas = new VistaMasajistas();
+        masajistas.setSize(800, 600);
+        masajistas.setLocation(100, 100);
+        masajistas.setVisible(true);
+        System.out.println("DEBUG: VistaMasajistas abierta");
+    } catch (Exception e) {
+        System.err.println("ERROR al abrir Masajistas: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
+private void abrirTurnos() {
+    System.out.println("DEBUG: Ejecutando abrirTurnos()");
+    try {
+        VistaTurnos turnos = new VistaTurnos();
+        turnos.setSize(800, 600);
+        turnos.setLocation(100, 100);
+        turnos.setVisible(true);
+        System.out.println("DEBUG: VistaTurnos abierta");
+    } catch (Exception e) {
+        System.err.println("ERROR al abrir Turnos: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
+private void abrirConfiguracion() {
+    System.out.println("DEBUG: Ejecutando abrirConfiguracion()");
+    try {
+        VistaConfiguracion configuracion = new VistaConfiguracion();
+        configuracion.setSize(800, 600);
+        configuracion.setLocation(100, 100);
+        configuracion.setVisible(true);
+        System.out.println("DEBUG: VistaConfiguracion abierta");
+    } catch (Exception e) {
+        System.err.println("ERROR al abrir Configuración: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
+private void mostrarAyuda() {
+    System.out.println("DEBUG: Ejecutando mostrarAyuda()");
+    JOptionPane.showMessageDialog(this, "Para Contactar Con el Soporte page 100 dolares");
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;
@@ -256,6 +323,5 @@ public void crearyordenarcomponentes(){
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel radio;
     // End of variables declaration//GEN-END:variables
 }
