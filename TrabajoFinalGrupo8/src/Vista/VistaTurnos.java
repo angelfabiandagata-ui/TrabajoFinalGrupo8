@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package Vista;
 
@@ -8,16 +8,23 @@ package Vista;
  *
  * @author Ema
  */
-public class VistaTurnos extends javax.swing.JPanel {
+public class VistaTurnos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VistaTurnos
      */
     public VistaTurnos() {
         initComponents();
-        
-        
-        
+    this.setSize(800, 600);
+    }
+
+    public void centrarEnDesktop() {
+    javax.swing.JDesktopPane desktopPane = this.getDesktopPane();
+    if (desktopPane != null) {
+        int x = (desktopPane.getWidth() - this.getWidth()) / 2;
+        int y = (desktopPane.getHeight() - this.getHeight()) / 2;
+        this.setLocation(x, y);
+    }
     }
 
     /**
@@ -29,16 +36,18 @@ public class VistaTurnos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
 

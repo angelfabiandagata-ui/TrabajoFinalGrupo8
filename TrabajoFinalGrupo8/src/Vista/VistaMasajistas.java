@@ -10,9 +10,6 @@ package Vista;
  */
 public class VistaMasajistas extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VistaMasajista
-     */
     public VistaMasajistas() {
     initComponents();
     this.setSize(800, 600);

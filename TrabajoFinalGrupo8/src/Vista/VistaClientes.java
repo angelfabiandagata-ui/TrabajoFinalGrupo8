@@ -15,20 +15,12 @@ public class VistaClientes extends javax.swing.JInternalFrame {
      */
     public VistaClientes() {
         initComponents();
-        
-        // ⬇️ COMENTARIO PARA EL CÓDIGO ⬇️
-    // Centra automáticamente este JInternalFrame en el JDesktopPane contenedor.
-    // Es importante que el internal frame ya tenga un tamaño definido (pack() o setSize()).
-    
-    // Obtiene el contenedor (JDesktopPane)
     javax.swing.JDesktopPane desktopPane = this.getDesktopPane();
     
     if (desktopPane != null) {
-        // Calcula las coordenadas X e Y para el centrado
         int x = (desktopPane.getWidth() - this.getWidth()) / 2;
         int y = (desktopPane.getHeight() - this.getHeight()) / 2;
         
-        // Establece la nueva posición
         this.setLocation(x, y);
     }
     }
