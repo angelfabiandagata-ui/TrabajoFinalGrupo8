@@ -2,6 +2,7 @@
 package Modelo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,7 +11,7 @@ public class DiaDeSpa {
     private LocalDateTime  fechaHora;
     private String preferencia;
     private String cliente;
-    private List<SesionTurno> sesiones;
+    private ArrayList<SesionTurno> sesiones = new ArrayList<>();
     private double monto;
 
     public DiaDeSpa(int codPack, LocalDateTime fechaHora, String preferencia, String cliente, List<SesionTurno> sesiones, double monto) {
@@ -18,7 +19,7 @@ public class DiaDeSpa {
         this.fechaHora = fechaHora;
         this.preferencia = preferencia;
         this.cliente = cliente;
-        this.sesiones = sesiones;
+        this.sesiones = new ArrayList<>();
         this.monto = monto;
     }
 
@@ -54,11 +55,11 @@ public class DiaDeSpa {
         this.cliente = cliente;
     }
 
-    public List<SesionTurno> getSesiones() {
-        return sesiones;
+    public ArrayList<SesionTurno> getSesiones() {
+        return (ArrayList<SesionTurno>) sesiones;
     }
 
-    public void setSesiones(List<SesionTurno> sesiones) {
+    public void setSesiones(ArrayList<SesionTurno> sesiones) {
         this.sesiones = sesiones;
     }
 
