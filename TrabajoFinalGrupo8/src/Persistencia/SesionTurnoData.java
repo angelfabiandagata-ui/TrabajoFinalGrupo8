@@ -4,6 +4,10 @@ import Modelo.Conexion;
 import Modelo.Instalacion;
 import Modelo.Masajista;
 import Modelo.SesionTurno;
+import Modelo.Tratamiento;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 <<<<<<< HEAD
 import Modelo.Tratamiento;
 =======
