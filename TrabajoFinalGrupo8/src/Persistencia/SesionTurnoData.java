@@ -8,26 +8,25 @@ import Modelo.Tratamiento;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
+
 import Modelo.Tratamiento;
-=======
+
 import com.sun.net.httpserver.Authenticator;
->>>>>>> 816970a54fb94f767e84bb56242e04be9a7674f9
+
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
+
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-=======
 import java.util.HashMap;
 import java.util.Map;
 import javax.naming.spi.DirStateFactory;
->>>>>>> 816970a54fb94f767e84bb56242e04be9a7674f9
+
 
 public class SesionTurnoData {
 
@@ -54,7 +53,7 @@ public class SesionTurnoData {
     public void crearSesion(SesionTurno sesionturno) {
         String sql = "INSERT INTO `sesion`(`codSesion`, `fechaHoraInicio`, `fechaHoraFin`, `codTratamiento`, `nroConsultorio`, `matricula`, `codInstalacion`, `codPack`, `estado`) VALUES "
                 + "(?,?,?,?,?,?,?,?,?)";
-        try {
+       /* try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, sesionturno.getCodSesion());
             ps.setTimestamp(2, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraInicio()));
@@ -73,7 +72,7 @@ public class SesionTurnoData {
 
         } catch (SQLException ex) {
             System.out.println("Error al crear excepcion" + ex.getMessage());
-        }
+        }*/
     }
 
     public void Modificar(SesionTurno sesionturno) {
@@ -81,7 +80,7 @@ public class SesionTurnoData {
         String sqlDelete = "DELETE FROM sesion WHERE codSesion = ?";
         String sqlInsert = "INSERT INTO sesion (codSesion, codInstalacion) VALUES (?, ?)";
 
-        try {
+       /* try {
 
             PreparedStatement ps = con.prepareStatement(sql);
             PreparedStatement psDelete = con.prepareStatement(sqlDelete);
@@ -110,7 +109,7 @@ public class SesionTurnoData {
         } catch (SQLException ex) {
             System.out.println("Error al crear masajsita" + ex.getMessage());
 
-        }
+        }*/
     }
 
     public void ListarSesionesXDia(LocalDate sesionturno) {
@@ -197,8 +196,8 @@ public class SesionTurnoData {
     public void AsignarMasajistaSegunEspecialidad(SesionTurno sesionturno) {
 
     }
-=======
-            
+
+        /*    
         } catch (SQLException ex) {
             System.out.println("Error al crear excepcion" +ex.getMessage());
         }
@@ -288,5 +287,5 @@ public class SesionTurnoData {
      public void AsignarMasajistaSegunEspecialidad(SesionTurno sesionturno){
     
 }
->>>>>>> 816970a54fb94f767e84bb56242e04be9a7674f9
+>>>>>>> 816970a54fb94f767e84bb56242e04be9a7674f9*/
 }
