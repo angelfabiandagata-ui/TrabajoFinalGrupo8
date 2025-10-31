@@ -315,10 +315,10 @@ private void mostrarAyuda() {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-}
+} codigo viejo
 */
 
-//aca esta todo ya corregido pero falta ver si esta todo bien . public class menu extends javax.swing.JFrame {
+
 
     public menu() {
         initComponents();
