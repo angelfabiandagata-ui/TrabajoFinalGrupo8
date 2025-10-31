@@ -23,15 +23,15 @@ public class TratamientoData {
     }
 
     public TratamientoData() {
-        String url = "localhost/phpmyadmin/index.php?route=database/structure&db=sgulp_equipo_8";
+        String url = "jdbc:mariadb://localhost:3306/spa_grupo_8";
         String usuario = "root";
-        String password = "1234";
+        String password = "";
 
         try {
             Conexion conAux = new Conexion(url, usuario, password);
             this.con = conAux.buscarConexion();
         } catch (Exception e) {
-            System.err.print("Error");
+            System.err.print("Conexion Fallida");
         }
 
     }

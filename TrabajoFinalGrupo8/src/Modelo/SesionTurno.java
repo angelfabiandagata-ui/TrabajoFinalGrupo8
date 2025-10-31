@@ -10,8 +10,8 @@ import java.util.List;
 public class SesionTurno {
     //Atributos
     private int codSesion;
-    private LocalTime fechaHoraInicio;
-    private LocalTime fechaHoraFin;
+    private LocalDateTime fechaHoraInicio;
+    private LocalDateTime fechaHoraFin;
     private Tratamiento tratamiento; 
     private Consultorio consultorio;
     private Masajista masajista;
@@ -23,7 +23,7 @@ public class SesionTurno {
 
 
 //Constructor
-    public SesionTurno(int codSesion, LocalTime fechaHoraInicio, LocalTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista masajista, List<Instalacion> instalacionesList, LocalDate DiaDeSpa, boolean estado) {   
+    public SesionTurno(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista masajista, List<Instalacion> instalacionesList, LocalDate DiaDeSpa, boolean estado) {   
         this.codSesion = codSesion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
@@ -35,6 +35,9 @@ public class SesionTurno {
         this.estado = estado;
     }
 
+    public SesionTurno() {
+    }
+
 //Getter and setter
     public int getCodSesion() {
         return codSesion;
@@ -44,19 +47,19 @@ public class SesionTurno {
         this.codSesion = codSesion;
     }
 
-    public LocalTime getFechaHoraInicio() {
+    public LocalDateTime getFechaHoraInicio() {
         return fechaHoraInicio;
     }
 
-    public void setFechaHoraInicio(LocalTime fechaHoraInicio) {
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public LocalTime getFechaHoraFin() {
+    public LocalDateTime getFechaHoraFin() {
         return fechaHoraFin;
     }
 
-    public void setFechaHoraFin(LocalTime fechaHoraFin) {
+    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
         this.fechaHoraFin = fechaHoraFin;
     }
 

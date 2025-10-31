@@ -2,19 +2,49 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.Masajista;
+import Modelo.Tratamiento;
+import java.sql.Time;
 import Modelo.Conexion;
 import Persistencia.ClienteData;
 import Persistencia.MasajistaData;
+import Persistencia.TratamientoData;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TrabajoFinalGrupo8 {
 
     public static void main(String[] args) {
 
-        System.out.println("Iniciando Programa");
+                System.out.println("Iniciando Programa");
+      
+menu pantalla = new menu();
+        pantalla.setVisible(true);
 //        
-        ClienteData cData = new ClienteData();
+//        TratamientoData tData = new TratamientoData();
+//        
+//        Tratamiento tratamiento1 = new Tratamiento();
+//        tratamiento1.setCodTratamiento(1);
+//        tratamiento1.setNombre("Masaje");
+//        tratamiento1.setDetalle("Renovacion total");
+//        List<String> listaProductos = Arrays.asList("Aceite de Palta", "Crema de Almendras", "Exfoliante");
+//    tratamiento1.setProductos(listaProductos);
+//        tratamiento1.setDuracion(Time.valueOf("00:50:00"));
+//        tratamiento1.setEstado(true);
+//        
+//        
+//        tData.agregarTratamiento(tratamiento1);
+//        
+//        if (tratamiento1.getCodTratamiento() > 0) {
+//            System.out.println("Se guardo el Tratamiento Nro " + tratamiento1.getCodTratamiento());
+//        } else {
+//            System.out.println("Fallo al guardar el tratamiento");
+//        }
+//        
+//        
+//        System.out.println("Iniciando Programa");
+////        
+//        ClienteData cData = new ClienteData();
 //        
 //        Cliente cliente1 = new Cliente();
 //        cliente1.setDni(47267078);
@@ -43,7 +73,7 @@ public class TrabajoFinalGrupo8 {
 //            System.out.println("Nombre Completo: " + c.getNombrecompleto());
 //        }
 
-        MasajistaData msjData = new MasajistaData();
+//        MasajistaData msjData = new MasajistaData();
 //        
 //       Masajista msj1 = new Masajista();
 //       msj1.setMatricula(1);
@@ -66,17 +96,18 @@ public class TrabajoFinalGrupo8 {
 //            
 //        }
 //msjData.bajaMasajista(1);
-msjData.altaMasajista(1);
-
-        Masajista m = msjData.buscarMasajistaPorMatricula(1);
-        System.out.println("Buscando masajista por matricula...");
-        System.out.println("----------------------------------------");
-        System.out.println("N. Matrucila: " + m.getMatricula());
-        System.out.println("Nombre Completo:  " + m.getNombreyapellido());
-        System.out.println("Especialidad: " + m.getEspecialidad());
-        System.out.println("Estado: " + m.getEstado());
+//msjData.altaMasajista(1);
+//
+//        Masajista m = msjData.buscarMasajistaPorMatricula(1);
+//        System.out.println("Buscando masajista por matricula...");
+//        System.out.println("----------------------------------------");
+//        System.out.println("N. Matrucila: " + m.getMatricula());
+//        System.out.println("Nombre Completo:  " + m.getNombreyapellido());
+//        System.out.println("Especialidad: " + m.getEspecialidad());
+//        System.out.println("Estado: " + m.getEstado());
 
     }
 
-    Conexion con = new Conexion("jdbc:mysql://localhost:3306/tpfinalgrupo8", "root", "");
+    Conexion con = new Conexion();
+    menu menu = new menu();
 }
