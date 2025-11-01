@@ -216,8 +216,8 @@ public class menu extends javax.swing.JFrame {
     private JButton botonCerrarTurnos;
 
     // paneles
-    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/turno.png");
-    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/Configuracion.png");
+    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/turno.jpg");
+    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/Configuracion.jpg");
 
     // constructor
     public menu() {
