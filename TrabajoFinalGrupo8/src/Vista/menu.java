@@ -1,24 +1,7 @@
 
-package Vista;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.net.URL;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 
-public class menu extends javax.swing.JFrame {
+
 
    /*
 
@@ -187,17 +170,64 @@ public class menu extends javax.swing.JFrame {
 
 */
 
+package Vista;
 
+import java.awt.BorderLayout;
+import java.awt.Point;
+import java.net.URL;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+public class menu extends javax.swing.JFrame {
+
+    // ========= VARIABLES =========
+    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+
+    private Clip clipMusica;
+    private PanelConFondo panelFondo;
+
+    // abrir paneles
+    private JButton botonConfiguracion;
+    private JButton botonTurnos;
+
+    // cerrar paneles
+    private JButton botonCerrarConfig;
+    private JButton botonCerrarTurnos;
+
+    // paneles
+    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/turno.png");
+    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/Configuracion.png");
+
+    // constructor
     public menu() {
-    initComponents();
-
-    // tamaño antes de crear componentes
-    this.setSize(1600, 600);
-    this.setLocationRelativeTo(null);
-
-    crearyordenarcomponentes();
+        initComponents();
+        setSize(1600, 600);
+        setLocationRelativeTo(null);
+        crearYOrdenarComponentes();
+        reproducirMusicaFondo();
     }
+
     
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -260,73 +290,55 @@ public class menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu9);
 
         setJMenuBar(jMenuBar1);
-
         getContentPane().add(jDesktopPane1, BorderLayout.CENTER);
         pack();
-        
-        reproducirMusicaFondo();
     }
 
- 
+    // metodo para crear los botones
+    public void crearYOrdenarComponentes() {
 
-    public void crearyordenarcomponentes() {
-    PanelConFondo panelFondo = new PanelConFondo();
-    panelFondo.setLayout(null);
+        panelFondo = new PanelConFondo("/Vista/Disenio/radio.jpg");
+        panelFondo.setLayout(null);
+        jDesktopPane1.removeAll();
+        panelFondo.setBounds(0, 0, jDesktopPane1.getWidth(), jDesktopPane1.getHeight());
+        jDesktopPane1.add(panelFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-    jDesktopPane1.removeAll();
+        // 🔸 Botones principales
+        botonConfiguracion = crearBotonInvisible(825, 100, 225, 220, this::abrirConfiguracion, "Configuración");
+        botonTurnos = crearBotonInvisible(530, 100, 225, 220, this::abrirTurnos, "Turnos");
 
-    panelFondo.setBounds(0, 0, jDesktopPane1.getWidth(), jDesktopPane1.getHeight());
-    jDesktopPane1.add(panelFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        // botones para cerrar paneles
+        botonCerrarConfig = crearBotonInvisible(775, 100, 50, 60, this::cerrarConfiguracion, "Cerrar Configuración");
+        botonCerrarTurnos = crearBotonInvisible(480, 100, 50, 60, this::cerrarTurnos, "Cerrar Turnos");
 
-    jDesktopPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
-        @Override
-        public void componentResized(java.awt.event.ComponentEvent e) {
-            panelFondo.setBounds(0, 0, jDesktopPane1.getWidth(), jDesktopPane1.getHeight());
-        }
-    });
+        // botones
+        panelFondo.add(botonConfiguracion);
+        panelFondo.add(botonTurnos);
+        panelFondo.add(botonCerrarConfig);
+        panelFondo.add(botonCerrarTurnos);
 
-    panelFondo.add(crearBotonInvisible(825, 100, 225, 220, this::abrirConfiguracion, "Configuración"));
-    panelFondo.add(crearBotonInvisible(530, 100, 225, 220, this::abrirTurnos, "Turnos"));
-    panelFondo.add(crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes"));
-    panelFondo.add(crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
-    panelFondo.add(crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
+        // Otros botones
+        panelFondo.add(crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes"));
+        panelFondo.add(crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
+        panelFondo.add(crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
 
-    // refrescar
-    jDesktopPane1.revalidate();
-    jDesktopPane1.repaint();
-}
-
-
-    private JButton crearBoton(int x, int y, int w, int h, Runnable accion, String nombre) {
-        JButton boton = new JButton(nombre);
-        boton.setBounds(x, y, w, h);
-        boton.setOpaque(true);
-        boton.setBackground(new Color(255, 0, 0, 80));
-        boton.setBorderPainted(true);
-
-        boton.addActionListener(e -> accion.run());
-
-        return boton;
+        jDesktopPane1.revalidate();
+        jDesktopPane1.repaint();
     }
 
     private JButton crearBotonInvisible(int x, int y, int w, int h, Runnable accion, String tooltip) {
-    JButton boton = new JButton();
-    boton.setBounds(x, y, w, h);
-    boton.setOpaque(false);
-    boton.setContentAreaFilled(false);
-    boton.setBorderPainted(false);
-    boton.setFocusPainted(false);
-    boton.setToolTipText(tooltip);
+        JButton boton = new JButton();
+        boton.setBounds(x, y, w, h);
+        boton.setOpaque(false);
+        boton.setContentAreaFilled(false);
+        boton.setBorderPainted(true);
+        boton.setFocusPainted(false);
+        boton.setToolTipText(tooltip);
+        boton.addActionListener(e -> accion.run());
+        return boton;
+    }
 
-    boton.addActionListener(e -> accion.run());
-    return boton;
-}
-
-    
-    // ==========================
-    // Métodos para abrir ventanas
-    // ==========================
-
+    // metodos de los botones
     private void abrirClientes() {
         VistaClientes clientes = new VistaClientes();
         prepararInternalFrame(clientes);
@@ -338,89 +350,95 @@ public class menu extends javax.swing.JFrame {
     }
 
     private void abrirTurnos() {
-    VistaTurnos turnos = new VistaTurnos();
-    prepararInternalFrame(turnos);
-}
+        mostrarPanelSobreBoton(VistaTurnos, botonTurnos);
+    }
 
-private void abrirConfiguracion() {
-    VistaConfiguracion configuracion = new VistaConfiguracion();
-    prepararInternalFrame(configuracion);
-}
+    private void abrirConfiguracion() {
+        mostrarPanelSobreBoton(VistaConfiguracion, botonConfiguracion);
+    }
+
+    private void cerrarConfiguracion() {
+        VistaConfiguracion.setVisible(false);
+        jDesktopPane1.remove(VistaConfiguracion);
+        jDesktopPane1.repaint();
+    }
+
+    private void cerrarTurnos() {
+        VistaTurnos.setVisible(false);
+        jDesktopPane1.remove(VistaTurnos);
+        jDesktopPane1.repaint();
+    }
 
     private void mostrarAyuda() {
-        JOptionPane.showMessageDialog(this, "Para contactar con soporte pague 100 dólares");
+        JOptionPane.showMessageDialog(this, "Centro de ayuda del Spa Entre Dedos 💆");
     }
 
+    
     private void prepararInternalFrame(JInternalFrame frame) {
-    try {
-        frame.setSize(800, 600); 
-        frame.setClosable(true);
-        frame.setMaximizable(true);
-        frame.setIconifiable(true);
-        frame.setResizable(true);
-        
-        jDesktopPane1.add(frame);
-        
-        int x = (jDesktopPane1.getWidth() - frame.getWidth()) / 2;
-        int y = (jDesktopPane1.getHeight() - frame.getHeight()) / 2;
-        frame.setLocation(Math.max(0, x), Math.max(0, y));
-        
-        frame.setVisible(true);
-        frame.toFront();
-        
-        System.out.println("DEBUG: " + frame.getClass().getSimpleName() + " abierta correctamente");
-        
-    } catch (Exception e) {
-        System.err.println("ERROR al abrir " + frame.getClass().getSimpleName() + ": " + e.getMessage());
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al abrir: " + e.getMessage());
-    }
-}
-    
-
-    private Clip clipMusica;
-    private void reproducirMusicaFondo() {
-    try {
-        URL url = getClass().getResource("/Vista/Sonido/cancion.wav");
-
-        if (url == null) {
-            System.err.println("No se encontró el archivo de sonido.");
-            return;
+        try {
+            frame.setSize(800, 600);
+            frame.setClosable(true);
+            frame.setMaximizable(true);
+            frame.setIconifiable(true);
+            frame.setResizable(true);
+            jDesktopPane1.add(frame);
+            int x = (jDesktopPane1.getWidth() - frame.getWidth()) / 2;
+            int y = (jDesktopPane1.getHeight() - frame.getHeight()) / 2;
+            frame.setLocation(Math.max(0, x), Math.max(0, y));
+            frame.setVisible(true);
+            frame.toFront();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        // Abrimos el audio
-        AudioInputStream audioInput = AudioSystem.getAudioInputStream(url);
-        clipMusica = AudioSystem.getClip();
-        clipMusica.open(audioInput);
+  
+    private void mostrarPanelSobreBoton(PanelConFondo panel, JButton botonBase) {
+        try {
+            if (botonBase == null) return;
 
-        // Reproducir en loop infinito
-        clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
-        clipMusica.start();
+            
+            jDesktopPane1.remove(panel);
 
-        System.out.println("🎵 Música de fondo iniciada...");
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println("Error al reproducir música: " + e.getMessage());
+            
+            panel.setSize(botonBase.getWidth(), botonBase.getHeight());
+
+            
+            Point punto = SwingUtilities.convertPoint(botonBase.getParent(), botonBase.getLocation(), jDesktopPane1);
+            int x = punto.x;
+            int y = punto.y - panel.getHeight() - 10;
+
+            if (y < 0) y = punto.y + botonBase.getHeight() + 10; 
+
+            panel.setLocation(x, y);
+            jDesktopPane1.add(panel, javax.swing.JLayeredPane.POPUP_LAYER);
+            panel.setVisible(true);
+            panel.repaint();
+            jDesktopPane1.revalidate();
+            jDesktopPane1.repaint();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // musica
+    private void reproducirMusicaFondo() {
+        try {
+            URL url = getClass().getResource("/Vista/Sonido/cancion.wav");
+            if (url == null) {
+                System.err.println("No se encontró el archivo de sonido.");
+                return;
+            }
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(url);
+            clipMusica = AudioSystem.getClip();
+            clipMusica.open(audioInput);
+            clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
+            clipMusica.start();
+            System.out.println("🎵 Música de fondo iniciada...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
-    
-
-    // Variables
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-}
