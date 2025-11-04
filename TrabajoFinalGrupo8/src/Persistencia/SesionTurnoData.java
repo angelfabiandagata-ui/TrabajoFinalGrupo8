@@ -33,7 +33,7 @@ public class SesionTurnoData {
     }
 
     public SesionTurnoData() {
-        String url = "jdbc:mysql://localhost:3306/sgulp_equipo_8";
+        String url = "jdbc:mariadb://localhost:3306/spa_grupo_8";
         String usuario = "root";
         String password = "";
 
@@ -149,15 +149,13 @@ public class SesionTurnoData {
 
     }
 
-    public void ListarMasajitas(SesionTurno listamasajistas) {
-        System.out.println("Lista de masajistas: " + listamasajistas);
 
+    public void ListarMasajitas() {
+        System.out.println("Lista de masajistas: " );
         String sql = "SELECT matricula, nombreyapellido, telefono, especialidad, estado FROM masajista";
-
         boolean encontrado = false;
-
-try (PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
             
             while (rs.next()) {
                 System.out.println("-----------------------");
@@ -171,14 +169,13 @@ try (PreparedStatement ps = con.prepareStatement(sql);
         } catch (SQLException ex) {
             System.out.println("Error al listar masajistas: " + ex.getMessage());
         }
-        
         if (!encontrado) {
             System.out.println("No hay masajistas encontrados.");
         }
     }
 
-    public void ListarTratamientos(SesionTurno listadetratamientos) {
-        System.out.println("Lista de tratamientos " + listadetratamientos);
+    public void ListarTratamientos() {
+        System.out.println("Lista de tratamientos " );
 String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado FROM tratamiento";
 
         boolean encontrado = false;
@@ -191,7 +188,7 @@ String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado FR
                 System.out.println(" Codigo: " + rs.getInt("codTratamiento"));
                 System.out.println(" Nombre: " + rs.getString("nombre"));
                 System.out.println(" Detalle: " + rs.getString("detalle"));
-                System.out.println(" Duracion: " + rs.getString("duracion")); // Asumo String (ej. "30 min")
+                System.out.println(" Duracion: " + rs.getString("duracion"));
                 System.out.println(" Costo: $" + rs.getDouble("costo"));
                 System.out.println(" Estado: " + rs.getBoolean("estado"));
                 encontrado = true;
@@ -205,9 +202,28 @@ String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado FR
         }
     }
 
-    public void ListarInstalaciones(SesionTurno sesionturno) {
-
+    public void ListarInstalaciones() {
+        System.out.println("Lista instalaciones");
+    String sql = "Select codInstalacion, nombre, estado from instalacion";
+    boolean encontrado = false;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                System.out.println("Codigo: " + rs.getInt("codInstalacion"));
+                System.out.println("Nombre: " + rs.getString("nombre"));
+                System.out.println("Estafo: " + rs.getBoolean("estado") );
+                encontrado=true;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar instalaciones");
+        }
+        if (!encontrado) {
+            System.out.println("No hay instalaciones");
+        }
     }
+    
 
     public void AsignarMasajistaSegunEspecialidad(SesionTurno sesionturno) {
 
