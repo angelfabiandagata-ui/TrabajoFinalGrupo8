@@ -8,17 +8,13 @@ import Modelo.Tratamiento;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import Modelo.Tratamiento;
-
 import com.sun.net.httpserver.Authenticator;
-
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -37,15 +33,15 @@ public class SesionTurnoData {
     }
 
     public SesionTurnoData() {
-        String url = "localhost/phpmyadmin/index.php?route=database/structure&db=sgulp_equipo_8";
+        String url = "jdbc:mysql://localhost:3306/sgulp_equipo_8";
         String usuario = "root";
-        String password = "1234";
+        String password = "";
 
         try {
             Conexion conAux = new Conexion(url, usuario, password);
             this.con = conAux.buscarConexion();
         } catch (Exception e) {
-            System.err.print("Error");
+            System.err.print("Error al conectar base de datos");
         }
 
     }
@@ -53,7 +49,8 @@ public class SesionTurnoData {
     public void crearSesion(SesionTurno sesionturno) {
         String sql = "INSERT INTO `sesion`(`codSesion`, `fechaHoraInicio`, `fechaHoraFin`, `codTratamiento`, `nroConsultorio`, `matricula`, `codInstalacion`, `codPack`, `estado`) VALUES "
                 + "(?,?,?,?,?,?,?,?,?)";
-       /* try {
+        String sqlInstalacion = "INSERT INTO `sesion_instalacion`(`codSesion`, `codInstalacion`) VALUES (?,?)";
+       try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, sesionturno.getCodSesion());
             ps.setTimestamp(2, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraInicio()));
@@ -67,12 +64,19 @@ public class SesionTurnoData {
 
             ps.executeUpdate();
             ps.close();
-            System.out.println("Sesion creada correctamente");
-<<<<<<< HEAD
-
+            
+            PreparedStatement psInstalacion = con.prepareStatement(sqlInstalacion);
+            for (Instalacion inst : sesionturno.getInstalacioneslist()) {
+               psInstalacion.setInt(1, sesionturno.getCodSesion());
+               psInstalacion.setInt(2, inst.getCodInstal());
+               psInstalacion.executeUpdate();
+           }
+            
+            System.out.println("Sesion creada con exito");
+           
         } catch (SQLException ex) {
             System.out.println("Error al crear excepcion" + ex.getMessage());
-        }*/
+        }
     }
 
     public void Modificar(SesionTurno sesionturno) {
@@ -80,19 +84,18 @@ public class SesionTurnoData {
         String sqlDelete = "DELETE FROM sesion WHERE codSesion = ?";
         String sqlInsert = "INSERT INTO sesion (codSesion, codInstalacion) VALUES (?, ?)";
 
-       /* try {
+       try {
 
             PreparedStatement ps = con.prepareStatement(sql);
             PreparedStatement psDelete = con.prepareStatement(sqlDelete);
             PreparedStatement psInsert = con.prepareStatement(sqlInsert);
-            ps.setTime(1, java.sql.Time.valueOf(sesionturno.getFechaHoraInicio()));
-            ps.setTime(2, java.sql.Time.valueOf(sesionturno.getFechaHoraFin()));
+            ps.setTimestamp(1, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraInicio()));
+            ps.setTimestamp(2, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraFin()));
             ps.setInt(3, sesionturno.getTratamiento().getCodTratamiento());
             ps.setInt(4, sesionturno.getConsultorio().getNroConsultorio());
             ps.setLong(5, sesionturno.getMasajista().getMatricula());
             ps.setBoolean(6, sesionturno.getEstado());
             ps.setInt(7, sesionturno.getCodSesion());
-
             ps.executeUpdate();
 
             psDelete.setInt(1, sesionturno.getCodSesion());
@@ -102,35 +105,42 @@ public class SesionTurnoData {
                 psInsert.setInt(1, sesionturno.getCodSesion());
                 psInsert.setInt(2, inst.getCodInstal());
                 psInsert.executeUpdate();
-
             }
 
-            System.out.println("Masajista correctamente modificado :)");
+            System.out.println("Sesion correctamente modificada :)");
         } catch (SQLException ex) {
             System.out.println("Error al crear masajsita" + ex.getMessage());
 
-        }*/
+        }
     }
 
-    public void ListarSesionesXDia(LocalDate sesionturno) {
-        System.out.println("Sesiones del dia: " + sesionturno);
-        ArrayList<SesionTurno> sesiones = new ArrayList<>();
+    public void ListarSesionesXDia(LocalDate fecha) throws SQLException {
+        System.out.println("Sesiones del dia: " + fecha);
+        
+        String sql = "SELECT codSesion, fechaHoraInicio, fechaHoraFin, codTratamiento, nroConsultorio, matricula, estado \"\n" +
+"                   + FROM sesion WHERE DATE(fechaHoraInicio) = ?";
+        
         boolean encontrado = false;
-
-        for (SesionTurno s : sesiones) {
-            if (s.getDiaDeSpa().equals(sesionturno)) {
-                System.out.println("Codigo de sesion: " + s.getCodSesion());
-                System.out.println("Hora de inicio: " + s.getFechaHoraInicio());
-                System.out.println("Hora de finalizacion:" + s.getFechaHoraFin());
-                System.out.println("Tratamiento:" + s.getTratamiento());
-                System.out.println("Consultorio:" + s.getConsultorio());
-                System.out.println("Masajista:" + s.getMasajista());
-                System.out.println("Instalaciones: " + s.getInstalacionesList());
-                System.out.println("Estado: " + s.getEstado());
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+        
+            try (ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+                    System.out.println("Codigo de sesion: " + rs.getInt("codSesion"));
+                System.out.println("Hora de inicio: " + rs.getTimestamp("fechaHoraInicio").toLocalDateTime());
+                System.out.println("Hora de finalizacion:" + rs.getTimestamp("fechaHoraFin").toLocalDateTime());
+                System.out.println("Tratamiento:" + rs.getInt("codTratamiento"));
+                System.out.println("Consultorio:" + rs.getInt("nroConsultorio"));
+                System.out.println("Masajista:" + rs.getLong("matricula"));
+                System.out.println("Instalaciones: " + rs.getBoolean("estado"));
                 encontrado = true;
-
             }
-            if (encontrado) {
+     
+ 
+            } catch (SQLException ex) {
+                System.out.println("Erros al listar sesiones" + ex.getMessage());
+        }
+            if (!encontrado) {
 
                 System.out.println("No hay sesiones agendadas para la fecha.");
             }
@@ -142,50 +152,56 @@ public class SesionTurnoData {
     public void ListarMasajitas(SesionTurno listamasajistas) {
         System.out.println("Lista de masajistas: " + listamasajistas);
 
-        List<Masajista> masajistas = new ArrayList<>();
+        String sql = "SELECT matricula, nombreyapellido, telefono, especialidad, estado FROM masajista";
 
-        boolean masajes = false;
+        boolean encontrado = false;
 
-        for (Masajista ms : masajistas) {
-            if (ms instanceof Object) {
-
-                System.out.println(" Matricula: " + ms.getMatricula());
-                System.out.println("Nombre y Apellido:" + ms.getNombreyapellido());
-                System.out.println("Telefono:" + ms.getTelefono());
-                System.out.println("Especialidad: " + ms.getEspecialidad());
-                System.out.println("Estado: " + ms.getEstado());
-                masajes = true;
-
+try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            
+            while (rs.next()) {
+                System.out.println("-----------------------");
+                System.out.println(" Matricula: " + rs.getLong("matricula"));
+                System.out.println(" Nombre y Apellido: " + rs.getString("nombreyapellido"));
+                System.out.println(" Telefono: " + rs.getString("telefono"));
+                System.out.println(" Especialidad: " + rs.getString("especialidad"));
+                System.out.println(" Estado: " + rs.getBoolean("estado"));
+                encontrado = true;
             }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar masajistas: " + ex.getMessage());
+        }
+        
+        if (!encontrado) {
+            System.out.println("No hay masajistas encontrados.");
         }
     }
 
     public void ListarTratamientos(SesionTurno listadetratamientos) {
         System.out.println("Lista de tratamientos " + listadetratamientos);
+String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado FROM tratamiento";
 
-        List<Tratamiento> tratamientos = new ArrayList<>();
-
-        boolean articulo = false;
-
-        for (Tratamiento tratamiento : tratamientos) {
-
-            if (tratamiento instanceof Object) {
-
-                System.out.println("Codigo: " + tratamiento.getCodTratamiento());
-                System.out.println("Nombre: " + tratamiento.getNombre());
-                System.out.println("Detalle: " + tratamiento.getDetalle());
-                System.out.println("Duracion:" + tratamiento.getDuracion());
-                System.out.println("Costo: $" + tratamiento.getCosto());
-                System.out.println("Estado: " + tratamiento.getEstado());
-                //   System.out.println("Tipo: "+ tratamiento.getTipo()); falta definir el atributo.
-                articulo = true;
-
+        boolean encontrado = false;
+        
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            
+            while (rs.next()) {
+                System.out.println("-----------------------");
+                System.out.println(" Codigo: " + rs.getInt("codTratamiento"));
+                System.out.println(" Nombre: " + rs.getString("nombre"));
+                System.out.println(" Detalle: " + rs.getString("detalle"));
+                System.out.println(" Duracion: " + rs.getString("duracion")); // Asumo String (ej. "30 min")
+                System.out.println(" Costo: $" + rs.getDouble("costo"));
+                System.out.println(" Estado: " + rs.getBoolean("estado"));
+                encontrado = true;
             }
-            if (articulo) {
-                System.out.println("No hay tratamiento encontrado.");
+        } catch (SQLException ex) {
+            System.out.println("Error al listar tratamientos: " + ex.getMessage());
+        }
 
-            }
-
+        if (!encontrado) {
+            System.out.println("No hay tratamientos encontrados.");
         }
     }
 
