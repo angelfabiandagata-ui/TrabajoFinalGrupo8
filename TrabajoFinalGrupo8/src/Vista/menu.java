@@ -179,7 +179,9 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -216,9 +218,23 @@ public class menu extends javax.swing.JFrame {
     private JButton botonCerrarTurnos;
 
     // paneles
-    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/turno.jpg");
+    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/turnodos.jpg");
     private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/Configuracion.jpg");
+    
+    //botones dentro de paneles
+    //turnos
+    private JButton agregar;
+    private JButton verturnos;
+    private JButton eliminar;
+    private JButton turnosVacios;
+    
+    //configuracion
+    private JButton tratamientos;
+    private JButton instalaciones;
+    private JButton historial;
+    private JButton configuracionAvanzada;
 
+    
     // constructor
     public menu() {
         initComponents();
@@ -228,6 +244,7 @@ public class menu extends javax.swing.JFrame {
         reproducirMusicaFondo();
     }
 
+    
     
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -324,12 +341,29 @@ public class menu extends javax.swing.JFrame {
 
         jDesktopPane1.revalidate();
         jDesktopPane1.repaint();
+        
+        //botones dentro de los paneles
+        
+        //turno
+        
+        agregar = crearBotonInvisible(110, 0, 110, 110, this::agregar , "agregar");
+        verturnos = crearBotonInvisible(110, 110, 110,110, this::agregar , "agregar");
+        eliminar = crearBotonInvisible(0, 110, 110, 110, this::agregar , "agregar");
+        turnosVacios = crearBotonInvisible(0, 0, 110, 110, this::agregar , "agregar");
+        
+        //configuracion
+        tratamientos = crearBotonInvisible(110, 0, 110, 110, this::agregar , "agregar");
+        instalaciones = crearBotonInvisible(110, 110, 110,110, this::agregar , "agregar");
+        historial = crearBotonInvisible(0, 110, 110, 110, this::agregar , "agregar");
+        configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110, this::agregar , "agregar");        
+        
+        
     }
 
     private JButton crearBotonInvisible(int x, int y, int w, int h, Runnable accion, String tooltip) {
         JButton boton = new JButton();
         boton.setBounds(x, y, w, h);
-        boton.setOpaque(false);
+        boton.setOpaque(true);
         boton.setContentAreaFilled(false);
         boton.setBorderPainted(true);
         boton.setFocusPainted(false);
@@ -349,29 +383,75 @@ public class menu extends javax.swing.JFrame {
         prepararInternalFrame(masajistas);
     }
 
-    private void abrirTurnos() {
-        mostrarPanelSobreBoton(VistaTurnos, botonTurnos);
-    }
+    
+        //--------------turnos--------------
+        private void abrirTurnos() {
+            // se pone falso para que el panel pueda abrirse (si estan en la misma ubicacion el panel y el boton no deja)
+            botonTurnos.setEnabled(false);
+            //set layer es nesesario importar, se usa para controlar la importancia de los paneles, si queres que se muestre uno por sobre otro usas set layer
+            jDesktopPane1.setLayer(VistaTurnos, JLayeredPane.PALETTE_LAYER);
+            //añadir el panel turnos a la vista del desktop frame
 
-    private void abrirConfiguracion() {
-        mostrarPanelSobreBoton(VistaConfiguracion, botonConfiguracion);
-    }
+            // ?solo lo agregamos si todavía no está dentro del DesktopPane (evita duplicación o deformación)
+            if (VistaTurnos.getParent() == null) {
+                jDesktopPane1.add(VistaTurnos);
 
-    private void cerrarConfiguracion() {
-        VistaConfiguracion.setVisible(false);
-        jDesktopPane1.remove(VistaConfiguracion);
-        jDesktopPane1.repaint();
-    }
+                //añadir botones (solo una vez)
+                VistaTurnos.add(agregar);  
+                VistaTurnos.add(verturnos);
+                VistaTurnos.add(eliminar);
+                VistaTurnos.add(turnosVacios);
+            }
 
-    private void cerrarTurnos() {
-        VistaTurnos.setVisible(false);
-        jDesktopPane1.remove(VistaTurnos);
-        jDesktopPane1.repaint();
-    }
+            //hacer visible cada vez que se da click
+            VistaTurnos.setVisible(true);
+        }
+
+        //---------------configuracion
+        private void abrirConfiguracion() {
+
+            botonConfiguracion.setEnabled(false);
+            botonConfiguracion.setVisible(false);
+            jDesktopPane1.setLayer(VistaConfiguracion, JLayeredPane.PALETTE_LAYER);
+
+            // 
+            if (VistaConfiguracion.getParent() == null) {
+                jDesktopPane1.add(VistaConfiguracion);
+
+                //añadir botones
+                VistaConfiguracion.add(tratamientos);
+                VistaConfiguracion.add(instalaciones);
+                VistaConfiguracion.add(historial);
+                VistaConfiguracion.add(configuracionAvanzada);
+            }
+
+            VistaConfiguracion.setVisible(true);
+        }
+
+        private void cerrarConfiguracion() {
+            VistaConfiguracion.setVisible(false);
+            jDesktopPane1.repaint();
+            botonConfiguracion.setEnabled(true);
+            botonConfiguracion.setVisible(true);
+        }
+
+        private void cerrarTurnos() {
+            VistaTurnos.setVisible(false);
+            jDesktopPane1.repaint();
+            botonTurnos.setEnabled(true);
+        }
+
 
     private void mostrarAyuda() {
         JOptionPane.showMessageDialog(this, "Centro de ayuda del Spa Entre Dedos 💆");
     }
+    
+    // botones internos de conf y turn
+    private void agregar(){
+    AgregarTurno agregar = new AgregarTurno();
+    agregar.setVisible(true);
+    }
+    
 
     
     private void prepararInternalFrame(JInternalFrame frame) {
@@ -392,36 +472,6 @@ public class menu extends javax.swing.JFrame {
         }
     }
 
-  
-    private void mostrarPanelSobreBoton(PanelConFondo panel, JButton botonBase) {
-        try {
-            if (botonBase == null) return;
-
-            
-            jDesktopPane1.remove(panel);
-
-            
-            panel.setSize(botonBase.getWidth(), botonBase.getHeight());
-
-            
-            Point punto = SwingUtilities.convertPoint(botonBase.getParent(), botonBase.getLocation(), jDesktopPane1);
-            int x = punto.x;
-            int y = punto.y - panel.getHeight() - 10;
-
-            if (y < 0) y = punto.y + botonBase.getHeight() + 10; 
-
-            panel.setLocation(x, y);
-            jDesktopPane1.add(panel, javax.swing.JLayeredPane.POPUP_LAYER);
-            panel.setVisible(true);
-            panel.repaint();
-            jDesktopPane1.revalidate();
-            jDesktopPane1.repaint();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     // musica
     private void reproducirMusicaFondo() {
         try {
@@ -435,7 +485,7 @@ public class menu extends javax.swing.JFrame {
             clipMusica.open(audioInput);
             clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
             clipMusica.start();
-            System.out.println("🎵 Música de fondo iniciada...");
+            System.out.println(" Música de fondo ");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -14,10 +14,15 @@ public class PanelConFondo extends JPanel {
             System.err.println("Error al cargar imagen de fondo: " + e.getMessage());
         }
         
-        if(url == "/Vista/Disenio/Turno.png"){
+        if(url == "/Vista/Disenio/turnodos.jpg"){
             this.setSize(200, 200);
-            this.setBounds(825, 100, 225, 220);
+            this.setBounds(531, 100, 225, 220);
         }
+        if(url == "/Vista/Disenio/Configuracion.jpg"){
+            this.setSize(180, 180);
+            this.setBounds(826, 100, 225, 220);
+        }
+         this.setLayout(null);
     }
 
     @Override
