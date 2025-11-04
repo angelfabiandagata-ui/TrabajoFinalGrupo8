@@ -218,8 +218,8 @@ public class menu extends javax.swing.JFrame {
     private JButton botonCerrarTurnos;
 
     // paneles
-    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/turnodos.jpg");
-    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/Configuracion.jpg");
+    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/uno.png");
+    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/dos.png");
     
     //botones dentro de paneles
     //turnos
@@ -346,15 +346,15 @@ public class menu extends javax.swing.JFrame {
         
         //turno
         
-        agregar = crearBotonInvisible(110, 0, 110, 110, this::agregar , "agregar");
-        verturnos = crearBotonInvisible(110, 110, 110,110, this::agregar , "agregar");
-        eliminar = crearBotonInvisible(0, 110, 110, 110, this::agregar , "agregar");
-        turnosVacios = crearBotonInvisible(0, 0, 110, 110, this::agregar , "agregar");
+        agregar = crearBotonInvisible(120, 0, 110, 110, this::agregar , "agregar");
+        verturnos = crearBotonInvisible(120, 110, 110,110, this::agregar , "agregar");
+        eliminar = crearBotonInvisible(0, 110, 117, 110, this::agregar , "agregar");
+        turnosVacios = crearBotonInvisible(0, 0, 117, 110, this::agregar , "agregar");
         
         //configuracion
-        tratamientos = crearBotonInvisible(110, 0, 110, 110, this::agregar , "agregar");
-        instalaciones = crearBotonInvisible(110, 110, 110,110, this::agregar , "agregar");
-        historial = crearBotonInvisible(0, 110, 110, 110, this::agregar , "agregar");
+        tratamientos = crearBotonInvisible(120, 0, 110, 110, this::agregar , "agregar");
+        instalaciones = crearBotonInvisible(120, 110, 117,110, this::agregar , "agregar");
+        historial = crearBotonInvisible(0, 110, 117, 110, this::agregar , "agregar");
         configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110, this::agregar , "agregar");        
         
         
@@ -472,7 +472,7 @@ public class menu extends javax.swing.JFrame {
         }
     }
 
-    // musica
+    // ========= MÚSICA =========
     private void reproducirMusicaFondo() {
         try {
             URL url = getClass().getResource("/Vista/Sonido/cancion.wav");
@@ -485,7 +485,7 @@ public class menu extends javax.swing.JFrame {
             clipMusica.open(audioInput);
             clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
             clipMusica.start();
-            System.out.println(" Música de fondo ");
+            System.out.println("🎵 Música de fondo iniciada...");
         } catch (Exception e) {
             e.printStackTrace();
         }
