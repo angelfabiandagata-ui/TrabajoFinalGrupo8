@@ -44,7 +44,7 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             List<String> productosList = tratamiento.getProductos();
-            String productosDB = String.join(",", productosList);
+            String productosDB = "";
 
             ps.setInt(1, tratamiento.getCodTratamiento());
             ps.setString(2, tratamiento.getNombre());
@@ -55,7 +55,9 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
             ps.setBoolean(7, tratamiento.getEstado());
             ps.executeUpdate();
 
-        
+            if (productosList != null && !productosList.isEmpty()) {
+                productosDB = String.join(",", productosList);
+            }
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 tratamiento.setCodTratamiento(rs.getInt(1));
