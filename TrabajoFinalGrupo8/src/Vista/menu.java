@@ -346,16 +346,16 @@ public class menu extends javax.swing.JFrame {
         
         //turno
         
-        agregar = crearBotonInvisible(120, 0, 110, 110, this::agregar , "agregar");
-        verturnos = crearBotonInvisible(120, 110, 110,110, this::agregar , "agregar");
-        eliminar = crearBotonInvisible(0, 110, 117, 110, this::agregar , "agregar");
-        turnosVacios = crearBotonInvisible(0, 0, 117, 110, this::agregar , "agregar");
+        agregar = crearBotonInvisible(120, 0, 110, 110, this::uno , "agregar");
+        verturnos = crearBotonInvisible(120, 110, 110,110, this::dos, "a");
+        eliminar = crearBotonInvisible(0, 110, 117, 110,  this::tres, "b");
+        turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::cuatro , "c");
         
         //configuracion
-        tratamientos = crearBotonInvisible(120, 0, 110, 110, this::agregar , "agregar");
-        instalaciones = crearBotonInvisible(120, 110, 117,110, this::agregar , "agregar");
-        historial = crearBotonInvisible(0, 110, 117, 110, this::agregar , "agregar");
-        configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110, this::agregar , "agregar");        
+        tratamientos = crearBotonInvisible(120, 0, 110, 110, this::cinco , "d");
+        instalaciones = crearBotonInvisible(120, 110, 117,110,  this::seis, "e");
+        historial = crearBotonInvisible(0, 110, 117, 110,  this::siete , "f");
+        configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::agregar , "g");        
         
         
     }
@@ -365,7 +365,7 @@ public class menu extends javax.swing.JFrame {
         boton.setBounds(x, y, w, h);
         boton.setOpaque(true);
         boton.setContentAreaFilled(false);
-        boton.setBorderPainted(true);
+        boton.setBorderPainted(false);
         boton.setFocusPainted(false);
         boton.setToolTipText(tooltip);
         boton.addActionListener(e -> accion.run());
@@ -446,13 +446,42 @@ public class menu extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Centro de ayuda del Spa Entre Dedos 💆");
     }
     
-    // botones internos de conf y turn
-    private void agregar(){
+    //----------------- botones internos de conf y turn--------------
+    private void agregar() {
     AgregarTurno agregar = new AgregarTurno();
+    agregar.setBounds(100, 100, 500, 500);
+    jDesktopPane1.add(agregar);
+    jDesktopPane1.setLayer(agregar, JLayeredPane.DRAG_LAYER);
     agregar.setVisible(true);
-    }
-    
+}
 
+
+     private void uno(){
+         System.out.println("UNO");
+    }
+        private void dos(){
+         System.out.println("dos");
+    }
+            private void tres(){
+         System.out.println("tres");
+    }
+                private void cuatro(){
+         System.out.println("cuatro");
+    }
+                    private void cinco(){
+         System.out.println("cinco");
+    }
+     private void seis(){
+         System.out.println("seis");
+    }
+        private void siete(){
+         System.out.println("nueve");
+    }
+            private void ocho(){
+         System.out.println("ocho");
+    }
+
+                    
     
     private void prepararInternalFrame(JInternalFrame frame) {
         try {
