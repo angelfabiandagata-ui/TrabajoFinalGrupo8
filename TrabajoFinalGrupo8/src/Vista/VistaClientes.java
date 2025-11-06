@@ -4,17 +4,23 @@
  */
 package Vista;
 
+import Modelo.Cliente;
+import Persistencia.ClienteData;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ema
  */
 public class VistaClientes extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form VistaCliente
-     */
+private ClienteData clienteData = new ClienteData();
+    private DefaultTableModel modeloTabla;
     public VistaClientes() {
         initComponents();
+        configurarTabla();
+        actulizarTabla();
     javax.swing.JDesktopPane desktopPane = this.getDesktopPane();
     
     if (desktopPane != null) {
@@ -24,7 +30,81 @@ public class VistaClientes extends javax.swing.JInternalFrame {
         this.setLocation(x, y);
     }
     }
-
+    private Cliente obtenerCliente(){
+  if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "El Dni, Nombre y Apellido son obligatorios","faltan datos", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+        long dni = 0;
+        long telefono = 0;
+        int edad=0;
+        
+        try {
+            dni = Long.parseLong(jTextField1.getText().trim());
+            
+            if (!jTextField5.getText().trim().isEmpty()) {
+                telefono = Long.parseLong(jTextField5.getText().trim());
+            }
+            
+            edad = Integer.parseInt(jTextField4.getText().trim());
+        } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El DNi, Telefono y edad deben ser numeros");
+        return null;
+        }
+    
+    
+    
+    
+    Cliente nuevoCliente = new Cliente();
+ nuevoCliente.setDni(dni);
+        nuevoCliente.setNombrecompleto(jTextField2.getText().trim() + " " + jTextField3.getText().trim());
+        nuevoCliente.setTelefono(telefono);
+        nuevoCliente.setEdad(edad);
+        nuevoCliente.setAfeciones(jTextField6.getText().trim());
+        nuevoCliente.setEstado(jCheckBox1.isSelected());
+        
+ return nuevoCliente;   
+}
+    private void configurarTabla(){
+        String[] Titulos = {"Codigo", "DNI", "Nombre", "Telefono", "Estado"};
+        modeloTabla = new DefaultTableModel(Titulos, 0);
+        
+        jTable1.setModel(modeloTabla);
+    }
+    
+    
+    private void Limpiar(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jCheckBox1.setSelected(true);
+    }
+    
+    private void actulizarTabla(){
+        modeloTabla.setRowCount(0);
+        try {
+            List<Cliente> clientes = clienteData.listarClientesActivos();
+            
+            
+            for (Cliente cliente : clientes) {
+                Object [] fila = new Object[5];
+                
+                fila[0] = cliente.getCodCli();
+                fila[1] = cliente.getDni();
+                fila[2] = cliente.getNombrecompleto();
+                fila[3] = cliente.getTelefono();
+                fila[4] = cliente.isEstado() ? "Activo" : "Baja Logica";
+                
+                modeloTabla.addRow(fila);
+            }
+        } catch (Exception e) {
+        }
+    
+    
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -163,8 +243,9 @@ public class VistaClientes extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addComponent(jLabel7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,9 +285,9 @@ public class VistaClientes extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
         );
 
@@ -232,7 +313,7 @@ public class VistaClientes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(518, Short.MAX_VALUE))
+                .addContainerGap(540, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -245,10 +326,58 @@ public class VistaClientes extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+       Cliente nuevoCliente = obtenerCliente();
+       
+        if (nuevoCliente == null) {
+            return;
+        }
+        try {
+            clienteData.guardarCliente(nuevoCliente);
+            
+           JOptionPane.showMessageDialog(this, "Cliente: " + nuevoCliente.getNombrecompleto() + " guardado correctamente", "guardado exitoso", JOptionPane.INFORMATION_MESSAGE);
+       
+           Limpiar();
+           actulizarTabla();
+           
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar cliente", "Error al guardar", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int filaSElec = jTable1.getSelectedRow();
+        
+        if (filaSElec == -1) {
+            JOptionPane.showMessageDialog(this, "Se tiene q elegir a un cliente de la tabla para eliminarlo", "Requerido", JOptionPane.WARNING_MESSAGE);
+        return;
+        }
+        Object valorCLiCod = modeloTabla.getValueAt(filaSElec, 0);
+        
+        if (valorCLiCod == null) {
+            JOptionPane.showMessageDialog(this, "No tiene codigo cliente valido esta fila", "Eror de datos", JOptionPane.WARNING_MESSAGE);
+        return;
+        }
+        try {
+            
+            int codCli = (int) valorCLiCod;
+            
+            int confrimacion = JOptionPane.showConfirmDialog(this,
+                    "Seguro de eliminar cliente?", "Condirmar elimanar", JOptionPane.YES_NO_OPTION);
+            
+            
+            if (confrimacion == JOptionPane.YES_OPTION) {
+                
+                clienteData.eliminarCliente(codCli);
+                JOptionPane.showMessageDialog(this,"Clietne dado de baja","Dada de baja existosa", JOptionPane.INFORMATION_MESSAGE);
+            
+            Limpiar();
+            actulizarTabla();
+            
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al dar de baja Detalle:" + e.getMessage(), "Error" , JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed

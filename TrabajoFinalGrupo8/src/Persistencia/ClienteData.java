@@ -56,7 +56,7 @@ public class ClienteData {
                 cliente.setCodCli(rs.getInt(1)); 
             }
              }
-            System.out.println("Cliente guardado correctamente.");
+            System.out.println("Cliente guardado correctamente. CodCli asignado: " + cliente.getCodCli());
             
         
         } catch (SQLException e) {
@@ -84,7 +84,7 @@ public class ClienteData {
     }
     
      public void eliminarCliente(int codCli) {
-        String sql = "UPDATE cliente SET estado='0' WHERE codCli=?";
+        String sql = "UPDATE cliente SET estado='0' WHERE codCliente=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, codCli);
             ps.executeUpdate();
@@ -147,7 +147,7 @@ public class ClienteData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Cliente c = new Cliente();
-                c.setCodCli(rs.getInt("codCli"));
+                c.setCodCli(rs.getInt("codCliente"));
                 c.setDni(rs.getLong("dni"));
                 c.setNombrecompleto(rs.getString("nombre"));
                 
