@@ -33,14 +33,14 @@ public class MasajistaData {
             Conexion conAux = new Conexion(url, usuario, password);
             this.con = conAux.buscarConexion();
         } catch (Exception e) {
-            System.err.print("Error");
+            System.err.print("Error al conectar" + e.getMessage());
         }
     }
 
     
     
     public void agregarMasajista(Masajista masajista){
-         String sql = "INSERT INTO `masajista`(`matricula`, nombreyApellido, `telefono`, `especialidad`, `estado`) VALUES (?,?,?,?,?)";
+         String sql = "INSERT INTO `masajista`(`matricula`, `nombreyApellido`, `telefono`, `especialidad`, `estado`) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             
@@ -65,7 +65,7 @@ public class MasajistaData {
         }
     }
        public void modificarMasajista(Masajista masajista){
-        String sql = "UPDATE `masajista` SET `nombreyApellido = ?,telefono=?,`especialidad`=?,`estado`=? WHERE matricula = ?";
+        String sql = "UPDATE `masajista` SET `nombreyApellido` = ?,`telefono`=?,`especialidad`=?,`estado`=? WHERE `matricula` = ?";
            try {
                PreparedStatement ps =con.prepareStatement(sql);
                ps.setString(1, masajista.getNombreyapellido());

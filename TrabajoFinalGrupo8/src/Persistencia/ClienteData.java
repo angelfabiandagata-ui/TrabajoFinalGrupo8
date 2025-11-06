@@ -6,6 +6,7 @@ package Persistencia;
 
 import Modelo.Cliente;
 import Modelo.Conexion;
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,7 @@ public class ClienteData {
             Conexion conAux = new Conexion(url, usuario, password);
             this.con = conAux.buscarConexion();
         } catch (Exception e) {
-            System.err.print("Error");
+            System.err.print("Error al conectar" + e.getMessage());
         }
 
     }
@@ -49,18 +50,19 @@ public class ClienteData {
             ps.setBoolean(6, cliente.isEstado());
             ps.executeUpdate();
             
-            
-             ResultSet rs = ps.getGeneratedKeys();
+        
+             try(ResultSet rs = ps.getGeneratedKeys()){
             if (rs.next()) {
                 cliente.setCodCli(rs.getInt(1)); 
             }
+             }
             System.out.println("Cliente guardado correctamente.");
             
-            ps.close();
-            rs.close();
+        
         } catch (SQLException e) {
             System.out.println("Error al guardar cliente: " + e.getMessage());
         }
+        
         
     }
     
@@ -115,11 +117,11 @@ public class ClienteData {
     }
 
     
-    public Cliente buscarClientePorDni(String dni) {
+    public Cliente buscarClientePorDni(Long dni) {
         Cliente cliente = null;
         String sql = "SELECT * FROM cliente WHERE dni=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, dni);
+            ps.setLong(1, dni);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 cliente = new Cliente();
@@ -145,7 +147,7 @@ public class ClienteData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Cliente c = new Cliente();
-                c.setCodCli(rs.getInt("codcliente"));
+                c.setCodCli(rs.getInt("codCli"));
                 c.setDni(rs.getLong("dni"));
                 c.setNombrecompleto(rs.getString("nombre"));
                 
