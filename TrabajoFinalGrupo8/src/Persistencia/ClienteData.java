@@ -74,7 +74,7 @@ public class ClienteData {
             ps.setLong(3, cliente.getTelefono());
             ps.setInt(4, cliente.getEdad());
             ps.setString(5, cliente.getAfeciones());
-            ps.setBoolean(6, cliente.isEstado());
+            ps.setInt(6, cliente.isEstado()? 1 : 0);
             ps.setInt(7, cliente.getCodCli());
             ps.executeUpdate();
             System.out.println("Cliente modificado correctamente.");
