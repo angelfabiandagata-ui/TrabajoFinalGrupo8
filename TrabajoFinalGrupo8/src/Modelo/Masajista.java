@@ -11,14 +11,14 @@ package Modelo;
 public class Masajista {
 
     //ATRIBUTOS
-    private long matricula;
+    private int matricula;
     private String nombreyapellido;
     private long telefono;
     private String especialidad;
     private boolean estado;
 
     //CONSTRUCTOR
-    public Masajista(long matricula, String nombreyapellido, long telefono, String especialidad, boolean estado) {
+    public Masajista(int matricula, String nombreyapellido, long telefono, String especialidad, boolean estado) {
         this.matricula = matricula;
         this.nombreyapellido = nombreyapellido;
         this.telefono = telefono;
@@ -31,11 +31,11 @@ public class Masajista {
     }
 
     //GETTERS AND SETTERS
-    public long getMatricula() {
+    public int getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(long matricula) {
+    public void setMatricula(int matricula) {
         this.matricula = matricula;
     }
 
@@ -71,6 +71,10 @@ public class Masajista {
         this.estado = estado;
     }
 //final  
+
+    public boolean isEstado() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
  
 }

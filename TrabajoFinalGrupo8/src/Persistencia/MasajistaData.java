@@ -35,33 +35,31 @@ public class MasajistaData {
         } catch (Exception e) {
             System.err.print("Error al conectar" + e.getMessage());
         }
+        if (this.con == null) {
+            throw new RuntimeException("Fallo Crítico: La conexión a la base de datos es nula. Revise los parámetros del constructor o la clase Conexion.");
+        }
     }
 
     
     
     public void agregarMasajista(Masajista masajista){
          String sql = "INSERT INTO `masajista`(`matricula`, `nombreyApellido`, `telefono`, `especialidad`, `estado`) VALUES (?,?,?,?,?)";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement ps = con.prepareStatement(sql)){
             
-            ps.setLong(1, masajista.getMatricula());
+            ps.setInt(1, masajista.getMatricula());
             ps.setString(2, masajista.getNombreyapellido());
             ps.setLong(3, masajista.getTelefono());
             ps.setString(4, masajista.getEspecialidad());
             ps.setBoolean(5, masajista.getEstado());
             ps.executeUpdate();
             
-            
-             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                masajista.setMatricula(rs.getInt(1)); 
-            }
+          
             System.out.println("Masajista agregado correctamente.");
             
             ps.close();
-            rs.close();
         } catch (SQLException e) {
             System.out.println("Error al guardar masajista: " + e.getMessage());
+            throw new RuntimeException("Error al guardar masajista en la BD: " + e.getMessage());
         }
     }
        public void modificarMasajista(Masajista masajista){
@@ -112,7 +110,7 @@ public class MasajistaData {
                ResultSet rs = ps.executeQuery();
                if (rs.next()) {
                    masajista = new Masajista();
-                   masajista.setMatricula(rs.getLong("matricula"));
+                   masajista.setMatricula(rs.getInt("matricula"));
                    masajista.setNombreyapellido(rs.getString("nombreyApellido"));
                    masajista.setTelefono(rs.getLong("telefono"));
                    masajista.setEspecialidad(rs.getString("especialidad"));
@@ -126,7 +124,7 @@ public class MasajistaData {
            return masajista;
        }
        
-          public List<Masajista> listarMasajista(){
+          public List<Masajista> listarMasajista() {
               List<Masajista> masajistas = new ArrayList<>();
         String sql = "SELECT * FROM masajista WHERE estado  = true";
               try {
@@ -134,15 +132,16 @@ public class MasajistaData {
                   ResultSet rs = ps.executeQuery();
                   while (rs.next()) {                      
                       Masajista m = new Masajista();
-                      m.setMatricula(rs.getLong("Matricula"));
+                      m.setMatricula(rs.getInt("matricula"));
                       m.setNombreyapellido(rs.getString("nombreyApellido"));
-                      m.setTelefono(rs.getLong("Telefono"));
-                      m.setEspecialidad(rs.getString("Especialidad"));
-                      m.setEstado(rs.getBoolean("Estado"));
+                      m.setTelefono(rs.getLong("telefono"));
+                      m.setEspecialidad(rs.getString("especialidad"));
+                      m.setEstado(rs.getBoolean("estado"));
                    masajistas.add(m);
                   }
               } catch (SQLException e) {
                   System.out.println("Error al listar masajistas" + e.getMessage());
+                  throw new RuntimeException("Error al listar masajistas desde la BD: " + e.getMessage());
               }
               return masajistas;
           }
@@ -151,7 +150,15 @@ public class MasajistaData {
         
     }
              
-          public void borrar(Masajista masajista){
-        
+
+    public void borrar(long matricula) {
+        String sql = "UPDATE masajista SET estado='0' WHERE matricula=?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, matricula);
+            ps.executeUpdate();
+            System.out.println("MAsajista dado de baja correctamente.");
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar masajista: " + e.getMessage());
+        }
     }
 }

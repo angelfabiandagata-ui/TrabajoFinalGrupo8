@@ -15,7 +15,7 @@ public class Conexion {
 
     //sin parametros
     public Conexion() {
-        this.url = "jdbc:mariadb://localhost:3306/spa_entre_dedos";
+        this.url = "jdbc:mariadb://localhost:3306/spa_grupo_8";
         this.usuario = "root";
         this.password = "";
     }
