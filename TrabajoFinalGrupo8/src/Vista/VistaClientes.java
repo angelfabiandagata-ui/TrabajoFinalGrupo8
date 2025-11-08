@@ -374,7 +374,7 @@ private ClienteData clienteData = new ClienteData();
             if (confrimacion == JOptionPane.YES_OPTION) {
                 
                 clienteData.eliminarCliente(codCli);
-                JOptionPane.showMessageDialog(this,"Clietne dado de baja","Dada de baja existosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,"Cliente dado de baja","Dada de baja existosa", JOptionPane.INFORMATION_MESSAGE);
             
             Limpiar();
             actulizarTabla();
