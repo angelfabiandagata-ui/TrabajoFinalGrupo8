@@ -182,6 +182,9 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
+/**
+ * (Tu clase menu - se mantuvo estructura, comentarios y nombres)
+ */
 public class menu extends javax.swing.JFrame {
 
     // ========= VARIABLES =========
@@ -342,7 +345,7 @@ public class menu extends javax.swing.JFrame {
         
         //turno
         agregar = crearBotonInvisible(120, 0, 110, 110, this::uno , "agregar");
-        verturnos = crearBotonInvisible(120, 110, 110,110, this::dos, "a");
+        verturnos = crearBotonInvisible(120, 110, 110,110, this::configuracionAvanzada, "a");
         eliminar = crearBotonInvisible(0, 110, 117, 110,  this::tres, "b");
         turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::cuatro , "c");
         
@@ -352,6 +355,10 @@ public class menu extends javax.swing.JFrame {
         historial = crearBotonInvisible(0, 110, 117, 110,  this::siete , "f");
         configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::agregar , "g");        
         
+        // -> importante: los paneles que van a contener botones internos deben usar layout null
+        // para que respeten los bounds de los botones que ya creaste arriba
+        VistaTurnos.setLayout(null);
+        VistaConfiguracion.setLayout(null);
     }
 
     private JButton crearBotonInvisible(int x, int y, int w, int h, Runnable accion, String tooltip) {
@@ -383,7 +390,8 @@ public class menu extends javax.swing.JFrame {
         // se pone falso para que el panel pueda abrirse (si estan en la misma ubicacion el panel y el boton no deja)
         botonTurnos.setEnabled(false);
         //set layer es nesesario importar, se usa para controlar la importancia de los paneles, si queres que se muestre uno por sobre otro usas set layer
-        jDesktopPane1.setLayer(VistaTurnos, JLayeredPane.DEFAULT_LAYER); // 🔹 corregido: capa más alta
+        // 🔹 usar PALETTE_LAYER para que el panel quede por encima del fondo y los botones
+        jDesktopPane1.setLayer(VistaTurnos, JLayeredPane.PALETTE_LAYER);
 
         //añadir el panel turnos a la vista del desktop frame
         if (VistaTurnos.getParent() == null) {
@@ -408,7 +416,8 @@ public class menu extends javax.swing.JFrame {
     private void abrirConfiguracion() {
         botonConfiguracion.setEnabled(false);
         botonConfiguracion.setVisible(false);
-        jDesktopPane1.setLayer(VistaConfiguracion, JLayeredPane.DEFAULT_LAYER); // 🔹 corregido: capa más alta
+        // 🔹 usar PALETTE_LAYER para que el panel quede por encima del fondo y los botones
+        jDesktopPane1.setLayer(VistaConfiguracion, JLayeredPane.PALETTE_LAYER);
 
         if (VistaConfiguracion.getParent() == null) {
             jDesktopPane1.add(VistaConfiguracion);
@@ -446,6 +455,7 @@ public class menu extends javax.swing.JFrame {
     
     //----------------- botones internos de conf y turn--------------
     private void agregar() {
+        // constructor que recibe "this" (menu), según tu versión
         AgregarT agregar = new AgregarT(this);
         agregar.setBounds(0, 0, 900, 380);
         jDesktopPane1.add(agregar, JLayeredPane.DRAG_LAYER);
@@ -459,21 +469,34 @@ public class menu extends javax.swing.JFrame {
         agregar.setLocation(x, y);
         desactivarTodosLosBotones();
     }
+    private void configuracionAvanzada(){
+    ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1); // ✅ cambio aquí
+    jDesktopPane1.add(con, JLayeredPane.DRAG_LAYER);
+    
+    con.setBounds(0, 0, 900, 380);
+    int x = (jDesktopPane1.getWidth() - con.getWidth()) / 2;
+    int y = (jDesktopPane1.getHeight() - con.getHeight()) / 2;
+    con.setLocation(x, y);
+    con.setVisible(true);
+    desactivarTodosLosBotones();
+}
+
+
     
     // se usa para cuando un panel se agranda y no quieres que interfiera con otros del panel abierto
     public void desactivarTodosLosBotones() {
-    botonConfiguracion.setEnabled(false);
-    botonTurnos.setEnabled(false);
-    botonCerrarConfig.setEnabled(false);
-    botonCerrarTurnos.setEnabled(false);
-}
+        botonConfiguracion.setEnabled(false);
+        botonTurnos.setEnabled(false);
+        botonCerrarConfig.setEnabled(false);
+        botonCerrarTurnos.setEnabled(false);
+    }
     //volver a activar botones una vez que se cierra el panel
     public void activarTodosLosBotones() {
-    botonConfiguracion.setEnabled(true);
-    botonTurnos.setEnabled(true);
-    botonCerrarConfig.setEnabled(true);
-    botonCerrarTurnos.setEnabled(true);
-}
+        botonConfiguracion.setEnabled(true);
+        botonTurnos.setEnabled(true);
+        botonCerrarConfig.setEnabled(true);
+        botonCerrarTurnos.setEnabled(true);
+    }
 
     private void uno(){ System.out.println("UNO"); }
     private void dos(){ System.out.println("dos"); }
@@ -521,4 +544,3 @@ public class menu extends javax.swing.JFrame {
         }
     }
 }
-

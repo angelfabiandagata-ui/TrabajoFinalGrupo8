@@ -1,15 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Persistencia;
 
 import Modelo.Conexion;
 import Modelo.Consultorio;
-import com.sun.jdi.connect.spi.Connection;
+import java.sql.Connection; // ✅ CORREGIDO
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.Statement; // ✅ para RETURN_GENERATED_KEYS
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +16,15 @@ import java.util.List;
  */
 public class ConsultorioData {
     
-     private java.sql.Connection con = null;
+     private Connection con = null; // ✅ tipo correcto
 
-    public ConsultorioData(java.sql.Connection conexion) {
+    public ConsultorioData(Connection conexion) {
         this.con = conexion;
     }
 
     
     public ConsultorioData() {
-            String url = "jdbc:mariadb://localhost:3306/spa_grupo_8";
+        String url = "jdbc:mariadb://localhost:3306/spa_grupo_8";
         String usuario = "root";
         String password = "";
 
@@ -37,20 +34,21 @@ public class ConsultorioData {
         } catch (Exception e) {
             System.err.print("Error");
         }
-
     }
     
     
-    
-       public void Guardar(Consultorio consultorio){
+    // ================== GUARDAR ==================
+    public void Guardar(Consultorio consultorio){
         String sql = "INSERT INTO consultorio (usos, equipamiento, apto) VALUES (?, ?, ?)";
         
         try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // ✅ CORREGIDO
             
-            PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setString(1, consultorio.getUsos());
-            ps.setString(2, consultorio.getEquipamiento());
+            
+            ps.setString(1, String.join(",", consultorio.getUsos())); 
+            ps.setString(2, String.join(",", consultorio.getEquipamiento()));
             ps.setBoolean(3, consultorio.isApto());
+            
             ps.executeUpdate();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -59,6 +57,7 @@ public class ConsultorioData {
                 System.out.println("Consultorio guardado con ID: " + consultorio.getNroConsultorio());
             }
             
+            rs.close(); // ✅ cerrar resultset
             ps.close();
         } catch (SQLException ex) {
             System.out.println("Error al guardar consultorio: " + ex.getMessage());
@@ -66,15 +65,17 @@ public class ConsultorioData {
     }
            
     
-       
-       public void Modificar(Consultorio consultorio){
+    // ================== MODIFICAR ==================
+    public void Modificar(Consultorio consultorio){
         
-           String sql = "UPDATE consultorio SET usos = ?, equipamiento = ?, apto = ? WHERE nroConsultorio = ?";
+        String sql = "UPDATE consultorio SET usos = ?, equipamiento = ?, apto = ? WHERE nroConsultorio = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, consultorio.getUsos());
-            ps.setString(2, consultorio.getEquipamiento());
+            
+            //
+            ps.setString(1, String.join(",", consultorio.getUsos()));
+            ps.setString(2, String.join(",", consultorio.getEquipamiento()));
             ps.setBoolean(3, consultorio.isApto());
             ps.setInt(4, consultorio.getNroConsultorio());
             
@@ -92,8 +93,9 @@ public class ConsultorioData {
     }
     
        
-        public Consultorio Buscar(int nroConsultorio){
-          String sql = "SELECT * FROM consultorio WHERE nroConsultorio = ?";
+    // ================== BUSCAR ==================
+    public Consultorio Buscar(int nroConsultorio){
+        String sql = "SELECT * FROM consultorio WHERE nroConsultorio = ?";
         Consultorio c = null;
         
         try {
@@ -102,14 +104,18 @@ public class ConsultorioData {
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
+                String usos = rs.getString("usos");
+                String equipamiento = rs.getString("equipamiento");
+                
                 c = new Consultorio(
                     rs.getInt("nroConsultorio"),
-                    rs.getString("usos"),
-                    rs.getString("equipamiento"),
+                    usos.split(","), 
+                    equipamiento.split(","),
                     rs.getBoolean("apto")
                 );
             }
             
+            rs.close(); // ✅ cerrar resultset
             ps.close();
         } catch (SQLException ex) {
             System.out.println("Error al buscar consultorio: " + ex.getMessage());
@@ -119,9 +125,8 @@ public class ConsultorioData {
     }
       
     
-        
-        
-       public List<Consultorio> Listar() {
+    // ================== LISTAR ==================
+    public List<Consultorio> Listar() {
         List<Consultorio> lista = new ArrayList<>();
         String sql = "SELECT * FROM consultorio";
         
@@ -130,15 +135,20 @@ public class ConsultorioData {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
+                // ✅ CORREGIDO igual que arriba
+                String usos = rs.getString("usos");
+                String equipamiento = rs.getString("equipamiento");
+                
                 Consultorio c = new Consultorio(
                     rs.getInt("nroConsultorio"),
-                    rs.getString("usos"),
-                    rs.getString("equipamiento"),
+                    usos.split(","),
+                    equipamiento.split(","),
                     rs.getBoolean("apto")
                 );
                 lista.add(c);
             }
             
+            rs.close(); // ✅ cerrar resultset
             ps.close();
         } catch (SQLException ex) {
             System.out.println("Error al listar consultorios: " + ex.getMessage());
@@ -146,5 +156,4 @@ public class ConsultorioData {
         
         return lista;
     }
-    
 }

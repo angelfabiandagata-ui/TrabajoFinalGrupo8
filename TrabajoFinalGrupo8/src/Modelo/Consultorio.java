@@ -6,12 +6,12 @@ public class Consultorio {
     
     //ATRIBUTOS
     private int nroConsultorio;
-    private String usos;
-    private String equipamiento;
+    private String[] usos;
+    private String[] equipamiento;
     private boolean apto;
     
     //CONSTRUCTOR
-    public Consultorio(int nroConsultorio, String usos, String equipamiento, boolean apto) {
+    public Consultorio(int nroConsultorio, String []usos, String []equipamiento, boolean apto) {
         this.nroConsultorio = nroConsultorio;
         this.usos = usos;
         this.equipamiento = equipamiento;
@@ -32,19 +32,19 @@ public class Consultorio {
         this.nroConsultorio = nroConsultorio;
     }
 
-    public String getUsos() {
+    public String[] getUsos() {
         return usos;
     }
 
-    public void setUsos(String usos) {
+    public void setUsos(String[] usos) {
         this.usos = usos;
     }
 
-    public String getEquipamiento() {
+    public String[] getEquipamiento() {
         return equipamiento;
     }
 
-    public void setEquipamiento(String equipamiento) {
+    public void setEquipamiento(String[] equipamiento) {
         this.equipamiento = equipamiento;
     }
 
