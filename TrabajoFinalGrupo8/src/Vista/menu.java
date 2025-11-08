@@ -383,7 +383,7 @@ public class menu extends javax.swing.JFrame {
         // se pone falso para que el panel pueda abrirse (si estan en la misma ubicacion el panel y el boton no deja)
         botonTurnos.setEnabled(false);
         //set layer es nesesario importar, se usa para controlar la importancia de los paneles, si queres que se muestre uno por sobre otro usas set layer
-        jDesktopPane1.setLayer(VistaTurnos, JLayeredPane.POPUP_LAYER); // 🔹 corregido: capa más alta
+        jDesktopPane1.setLayer(VistaTurnos, JLayeredPane.DEFAULT_LAYER); // 🔹 corregido: capa más alta
 
         //añadir el panel turnos a la vista del desktop frame
         if (VistaTurnos.getParent() == null) {
@@ -408,7 +408,7 @@ public class menu extends javax.swing.JFrame {
     private void abrirConfiguracion() {
         botonConfiguracion.setEnabled(false);
         botonConfiguracion.setVisible(false);
-        jDesktopPane1.setLayer(VistaConfiguracion, JLayeredPane.POPUP_LAYER); // 🔹 corregido: capa más alta
+        jDesktopPane1.setLayer(VistaConfiguracion, JLayeredPane.DEFAULT_LAYER); // 🔹 corregido: capa más alta
 
         if (VistaConfiguracion.getParent() == null) {
             jDesktopPane1.add(VistaConfiguracion);
