@@ -247,10 +247,45 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
     }
        
 
+
+
+    public List<Tratamiento> TratamientosMasSesionados(){  
+        List<Tratamiento> tratamientos = new ArrayList<>();
+        
+        
+        
+        
+        
+        String sql = "SELECT * FROM tratamiento WHERE estado='1'";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Tratamiento c = new Tratamiento();
+                c.setCodTratamiento(rs.getInt("codTratamiento"));
+                c.setNombre(rs.getString("nombre"));
+                c.setDetalle(rs.getString("detalle"));
+                String productosSeparados = rs.getString("productos");
+                List<String> listaDeProductos;
+                
+                if (productosSeparados != null && !productosSeparados.isEmpty()) {
+                    listaDeProductos =  java.util.Arrays.asList(productosSeparados.split(","));
+                }
+                else{
+                    listaDeProductos = new java.util.ArrayList<>();
+                }
+                c.setProductos(listaDeProductos);
+                c.setDuracion(rs.getTime("duracion"));
+                c.setCosto(rs.getDouble("costo"));
+                c.setEstado(rs.getBoolean("estado"));
+                tratamientos.add(c);
+                
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al listar clientes: " + e.getMessage());
+        }
+        return tratamientos;
+      
+   }
 }
 
-//     public List<Tratamiento> TratamientosMasSesionados(){
-//       
-//    }
-//}
     
