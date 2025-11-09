@@ -181,6 +181,7 @@
 
 package Vista;
 
+import Persistencia.ConsultorioData;
 import java.awt.BorderLayout;
 import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
@@ -242,6 +243,9 @@ public class menu extends javax.swing.JFrame {
     private JButton historial;
     private JButton configuracionAvanzada;
 
+    
+    ConsultorioData consultoriod = new ConsultorioData();
+    VistaConsultorio vistaconsultorio = new VistaConsultorio();
     
     // constructor
     public menu() {
@@ -478,9 +482,11 @@ public class menu extends javax.swing.JFrame {
         agregar.setLocation(x, y);
         desactivarTodosLosBotones();
     }
+    
+    
     private void configuracionAvanzada(){
-    ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1); // ✅ cambio aquí
-    jDesktopPane1.add(con, 400);
+    ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1); 
+    jDesktopPane1.add(con, 40);
     
     con.setBounds(0, 0, 900, 380);
     int x = (jDesktopPane1.getWidth() - con.getWidth()) / 2;

@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 
 /**
@@ -21,7 +22,7 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
     public ConfiguracionAvanzada(JDesktopPane jk) {
     initComponents();
     desktop = jk;
-    cons = new VistaConsultorio();
+     cons = new VistaConsultorio();
     }
 
     
@@ -74,7 +75,7 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbabrirconsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirconsultorioActionPerformed
-       cons.setBounds(0, 0, 1000, 400);
+       cons.setBounds(0, 0, 700, 300);
     desktop.add(cons);
     desktop.moveToFront(cons);
     
@@ -99,4 +100,38 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
     private javax.swing.JButton jbabrirconsultorio;
     private javax.swing.JButton jbsalir;
     // End of variables declaration//GEN-END:variables
+
+    public JDesktopPane getDesktop() {
+        return desktop;
+    }
+
+    public void setDesktop(JDesktopPane desktop) {
+        this.desktop = desktop;
+    }
+
+    public VistaConsultorio getCons() {
+        return cons;
+    }
+
+    public void setCons(VistaConsultorio cons) {
+        this.cons = cons;
+    }
+
+    public JButton getJbabrirconsultorio() {
+        return jbabrirconsultorio;
+    }
+
+    public void setJbabrirconsultorio(JButton jbabrirconsultorio) {
+        this.jbabrirconsultorio = jbabrirconsultorio;
+    }
+
+    public JButton getJbsalir() {
+        return jbsalir;
+    }
+
+    public void setJbsalir(JButton jbsalir) {
+        this.jbsalir = jbsalir;
+    }
+
+
 }

@@ -156,4 +156,24 @@ public class ConsultorioData {
         
         return lista;
     }
+
+public void Eliminar(int nroConsultorio) {
+    String sql = "DELETE FROM consultorio WHERE nroConsultorio = ?";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, nroConsultorio);
+        
+        int exito = ps.executeUpdate();
+        if (exito == 1) {
+            System.out.println("Consultorio eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró ningún consultorio con ese número.");
+        }
+        
+        ps.close(); // ✅ cerramos el PreparedStatement
+    } catch (SQLException ex) {
+        System.out.println("Error al eliminar consultorio: " + ex.getMessage());
+    }
+}
 }
