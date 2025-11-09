@@ -45,7 +45,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         int codTratamiento = 0;
         double costo = 0;
         Time duracion=null;
-        Date horaCompleta = null;
+        Number duracionNumber = (Number) spinnerDuracion.getValue();
+        
+  
         
         try {
             codTratamiento = Integer.parseInt(txtCodTrat.getText().trim());
@@ -54,7 +56,15 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                 costo = Double.parseDouble(txtCostoTrat.getText().trim());
             }
             
-            duracion = new Time(horaCompleta.getTime());
+            if (duracionNumber == null || duracionNumber.intValue() <= 0) {
+        JOptionPane.showMessageDialog(this, "La Duración es obligatoria y debe ser mayor a cero.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+        return null;
+            }
+            
+            int minutos = duracionNumber.intValue();
+            long tiempoMilisegundos = (long) minutos * 60 * 1000;
+            duracion = new Time(tiempoMilisegundos);
+            
         } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "El codigo y el costo deben ser numeros y la duracion tiene que estar completa!");
         return null;
@@ -152,6 +162,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         buttomBajaTrat = new javax.swing.JRadioButton();
         jButton3 = new javax.swing.JButton();
         labelTrat10 = new javax.swing.JLabel();
+        spinnerDuracion = new com.toedter.components.JSpinField();
         jLabel8 = new javax.swing.JLabel();
         labelTrat4 = new javax.swing.JLabel();
         boxProductos = new javax.swing.JComboBox<>();
@@ -282,10 +293,6 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(285, 285, 285)
-                .addComponent(buttomBajaTrat)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(298, 298, 298)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,6 +304,15 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(62, 62, 62))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(285, 285, 285)
+                        .addComponent(buttomBajaTrat))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +350,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                                 .addComponent(jButton3))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelTrat10)
-                        .addGap(101, 101, 101)
+                        .addGap(46, 46, 46)
+                        .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelTrat5)
                             .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -393,8 +411,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -511,6 +528,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelTrat4;
     private javax.swing.JLabel labelTrat5;
     private javax.swing.JLabel labelTrat7;
+    private com.toedter.components.JSpinField spinnerDuracion;
     private javax.swing.JTextField txtCodTrat;
     private javax.swing.JTextField txtCostoTrat;
     private javax.swing.JTextField txtDetalleTrat;
