@@ -400,7 +400,7 @@ public class menu extends javax.swing.JFrame {
         botonTurnos.setEnabled(false);
         //set layer es nesesario importar, se usa para controlar la importancia de los paneles, si queres que se muestre uno por sobre otro usas set layer
         // 🔹 usar PALETTE_LAYER para que el panel quede por encima del fondo y los botones
-        jDesktopPane1.setLayer(VistaTurnos, JLayeredPane.PALETTE_LAYER);
+        jDesktopPane1.setLayer(VistaTurnos, 0);
 
         //añadir el panel turnos a la vista del desktop frame
         if (VistaTurnos.getParent() == null) {
@@ -426,7 +426,7 @@ public class menu extends javax.swing.JFrame {
         botonConfiguracion.setEnabled(false);
         botonConfiguracion.setVisible(false);
         // 🔹 usar PALETTE_LAYER para que el panel quede por encima del fondo y los botones
-        jDesktopPane1.setLayer(VistaConfiguracion, JLayeredPane.PALETTE_LAYER);
+        jDesktopPane1.setLayer(VistaConfiguracion, 0);
 
         if (VistaConfiguracion.getParent() == null) {
             jDesktopPane1.add(VistaConfiguracion);
@@ -467,8 +467,8 @@ public class menu extends javax.swing.JFrame {
         // constructor que recibe "this" (menu), según tu versión
         AgregarT agregar = new AgregarT(this);
         agregar.setBounds(0, 0, 900, 380);
-        jDesktopPane1.add(agregar, JLayeredPane.DRAG_LAYER);
-        jDesktopPane1.moveToFront(agregar); // asegura que se muestre
+        jDesktopPane1.add(agregar, 20);
+        jDesktopPane1.moveToFront(agregar); 
         agregar.setVisible(true);
         
         //una forma de ponerlo al medio es poniendo el padre - el panel a agregar y todo eso dividido por dos
@@ -480,7 +480,7 @@ public class menu extends javax.swing.JFrame {
     }
     private void configuracionAvanzada(){
     ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1); // ✅ cambio aquí
-    jDesktopPane1.add(con, JLayeredPane.DRAG_LAYER);
+    jDesktopPane1.add(con, 400);
     
     con.setBounds(0, 0, 900, 380);
     int x = (jDesktopPane1.getWidth() - con.getWidth()) / 2;
@@ -488,6 +488,8 @@ public class menu extends javax.swing.JFrame {
     con.setLocation(x, y);
     con.setVisible(true);
     desactivarTodosLosBotones();
+    jDesktopPane1.moveToFront(con);
+    
 }
 
 
