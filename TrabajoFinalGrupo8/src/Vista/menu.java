@@ -277,6 +277,7 @@ public class menu extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
+       
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -300,6 +301,7 @@ public class menu extends javax.swing.JFrame {
 
         jMenu6.setText("Tratamientos");
         jMenuItem5.setText("Gestionar Tratamientos");
+        jMenuItem5.addActionListener(evt -> abrirTratamiento());
         jMenu6.add(jMenuItem5);
         jMenuBar1.add(jMenu6);
 
@@ -350,6 +352,7 @@ public class menu extends javax.swing.JFrame {
         panelFondo.add(crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes"));
         panelFondo.add(crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
         panelFondo.add(crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
+        panelFondo.add(crearBotonInvisible(50, 50, 110, 110, this::abrirTratamiento, "Tratamientos"));
 
         jDesktopPane1.revalidate();
         jDesktopPane1.repaint();
@@ -360,7 +363,7 @@ public class menu extends javax.swing.JFrame {
         agregar = crearBotonInvisible(120, 0, 110, 110, this::uno , "agregar");
         verturnos = crearBotonInvisible(120, 110, 110,110, this::configuracionAvanzada, "a");
         eliminar = crearBotonInvisible(0, 110, 117, 110,  this::tres, "b");
-        turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::cuatro , "c");
+        turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::abrirTratamiento , "c");
         
         //configuracion
         tratamientos = crearBotonInvisible(120, 0, 110, 110, this::cinco , "d");
@@ -395,6 +398,11 @@ public class menu extends javax.swing.JFrame {
     private void abrirMasajistas() {
         VistaMasajistas masajistas = new VistaMasajistas();
         prepararInternalFrame(masajistas);
+    }
+    
+     private void abrirTratamiento() {
+        VistaTratamiento tratamientos = new VistaTratamiento();
+        prepararInternalFrame(tratamientos);
     }
 
     
