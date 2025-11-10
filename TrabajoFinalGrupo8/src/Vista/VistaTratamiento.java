@@ -106,7 +106,8 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     nuevoTratamiento.setProductos(productosParaTratamiento);
     nuevoTratamiento.setDuracion(duracion); 
     nuevoTratamiento.setCosto(costo);
-    nuevoTratamiento.setEstado(isIcon); 
+    boolean estadoActivo = chkEstado.isSelected();
+    nuevoTratamiento.setEstado(estadoActivo);
 
     return nuevoTratamiento; 
 }
@@ -123,7 +124,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         txtNombreTrat.setText("");
         txtDetalleTrat.setText("");
         txtCostoTrat.setText("");
-        jCheckBox1.setSelected(false);
+        chkEstado.setSelected(false);
     }
     
     private void cargarProductosComboBox() {
@@ -152,13 +153,11 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     
     private void actulizarTabla(){
        
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel(); // Usa el nombre real de tu JTable
-    modelo.setRowCount(0); // Esto elimina todas las filas
-    
-    // 2. Obtener la lista actualizada desde la base de datos:
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel(); 
+    modelo.setRowCount(0); 
     List<Tratamiento> tratamientos = tratamientoData.listarTratamientos();
-    
-    // 3. Recorrer y añadir los nuevos datos:
+    System.out.println("Tratamientos cargados de DB: " + tratamientos.size());
+  
     for (Tratamiento t : tratamientos) {
 
         modelo.addRow(new Object[]{
@@ -185,8 +184,6 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -194,7 +191,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         labelTrat2 = new javax.swing.JLabel();
         labelTrat3 = new javax.swing.JLabel();
         labelTrat5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        chkEstado = new javax.swing.JCheckBox();
         labelTrat7 = new javax.swing.JLabel();
         txtCodTrat = new javax.swing.JTextField();
         txtNombreTrat = new javax.swing.JTextField();
@@ -208,31 +205,11 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         labelTrat4 = new javax.swing.JLabel();
         boxProductos = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-
-        jTable1.setBackground(new java.awt.Color(204, 204, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Codigo", "Nombre", "Detalle", "Producto", "Duracion", "Costo", "Estado"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class, java.lang.Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
 
         jPanel1.setBackground(new java.awt.Color(199, 154, 142));
 
@@ -260,11 +237,11 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
 
         labelTrat5.setText("Costo");
 
-        jCheckBox1.setMaximumSize(new java.awt.Dimension(30, 30));
-        jCheckBox1.setMinimumSize(new java.awt.Dimension(30, 30));
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        chkEstado.setMaximumSize(new java.awt.Dimension(30, 30));
+        chkEstado.setMinimumSize(new java.awt.Dimension(30, 30));
+        chkEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                chkEstadoActionPerformed(evt);
             }
         });
 
@@ -332,8 +309,8 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                             .addComponent(txtDetalleTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
-                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(593, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(298, 298, 298)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -341,7 +318,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(129, 129, 129)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 297, Short.MAX_VALUE))
+                        .addGap(46, 315, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -401,7 +378,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelTrat7)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(84, 84, 84))
         );
@@ -413,6 +390,27 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         labelTrat4.setText("Duracion");
 
         boxProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nombre", "Detalle", "Producto", "Duracion", "Costo", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -426,16 +424,17 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(labelTrat4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 284, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(labelTrat4)))
+                .addGap(78, 78, 78))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -452,15 +451,14 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)))
-                .addGap(2, 2, 2)
+                        .addGap(252, 252, 252)
+                        .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTrat4)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -565,25 +563,25 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodTratActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void chkEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkEstadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_chkEstadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton ButtonAltaTrat;
     private javax.swing.JComboBox<String> boxProductos;
     private javax.swing.JRadioButton buttomBajaTrat;
+    private javax.swing.JCheckBox chkEstado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTrat1;
     private javax.swing.JLabel labelTrat10;
