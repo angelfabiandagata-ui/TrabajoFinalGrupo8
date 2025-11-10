@@ -171,59 +171,63 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
 }
     
     
-     List<Tratamiento> tratamientos = new ArrayList<>();
+    
      
-       public List<Tratamiento> listarTratamientos() {
- 
-    String sql = "SELECT * FROM tratamiento WHERE estado = true";
+      public List<Tratamiento> listarTratamientos() {
 
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+        List<Tratamiento> tratamientos = new ArrayList<>();
 
+        String sql = "SELECT * FROM tratamiento WHERE estado = true";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        while (rs.next()) {
+        try {
 
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
 
-            Tratamiento tratam = new Tratamiento();
+            while (rs.next()) {
+                Tratamiento tratam = new Tratamiento();
 
+                tratam.setCodTratamiento(rs.getInt("codTratamiento"));
+                tratam.setNombre(rs.getString("nombre"));
+                tratam.setDetalle(rs.getString("detalle"));
 
-            tratam.setCodTratamiento(rs.getInt("codTratamiento"));  
-            tratam.setNombre(rs.getString("nombre"));
-            tratam.setDetalle(rs.getString("detalle"));
-            
+                String productosDB = rs.getString("productos");
+                if (productosDB != null && !productosDB.isEmpty()) {
 
-            String productosDB = rs.getString("productos");
+                    List<String> productosList = Arrays.asList(productosDB.split(","));
+                    tratam.setProductos(productosList);
+                } else {
+                    tratam.setProductos(new ArrayList<>());
+                }
 
-            if (productosDB != null && !productosDB.isEmpty()) {
+                Time duracionSql = rs.getTime("duracion");
+                tratam.setDuracion(duracionSql);
 
-                List<String> productosList = Arrays.asList(productosDB.split(","));
-                tratam.setProductos(productosList); 
-            } else {
+                tratam.setCosto(rs.getDouble("costo"));
+                tratam.setEstado(rs.getBoolean("estado"));
 
-                tratam.setProductos(new ArrayList<>());
+                tratamientos.add(tratam);
             }
 
-            Time duracionSql = rs.getTime("duracion");
-            tratam.setDuracion(duracionSql); 
-            
+        } catch (SQLException ex) {
+            System.out.println(" Error al listar tratamientos: " + ex.getMessage());
+        } finally {
 
-            tratam.setCosto(rs.getDouble("costo")); 
-            
-
-            tratam.setEstado(rs.getBoolean("estado")); 
-
-
-            tratamientos.add(tratam);
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar recursos: " + e.getMessage());
+            }
         }
 
-        ps.close();
-        rs.close();
-    } catch (SQLException ex) {
-        System.out.println("Error al listar tratamientos: " + ex.getMessage());
-    }
-
-    return tratamientos;
+        return tratamientos;
     }
 
   public Tratamiento buscarMasajistaPorCodigo(int codTratamiento) {

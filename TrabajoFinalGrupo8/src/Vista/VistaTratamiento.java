@@ -28,6 +28,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         configurarTabla();
         actulizarTabla();
         javax.swing.JDesktopPane desktopPane = this.getDesktopPane();
+        cargarProductosComboBox();
         
         
          if (desktopPane != null) {
@@ -125,29 +126,51 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         jCheckBox1.setSelected(false);
     }
     
+    private void cargarProductosComboBox() {
+    // 1. Limpiar el ComboBox por si acaso
+    boxProductos.removeAllItems();
+    
+    // 2. Obtener la lista de productos
+    // Si los productos son fijos (hardcodeados):
+    List<String> productosDisponibles = new ArrayList<>();
+    productosDisponibles.add("Aceite de Lavanda");
+    productosDisponibles.add("Piedras Calientes");
+    productosDisponibles.add("Exfoliante de Sal");
+    productosDisponibles.add("Crema Hidratante");
+    
+    // 3. Llenar el ComboBox
+    for (String producto : productosDisponibles) {
+        boxProductos.addItem(producto);
+    }
+    
+    // Opcional: Seleccionar el primer elemento
+    if (!productosDisponibles.isEmpty()) {
+        boxProductos.setSelectedIndex(0);
+    }
+}      
+    
+    
     private void actulizarTabla(){
-        modeloTabla.setRowCount(0);
-        try {
-            List<Tratamiento> tratamientos = tratamientoData.TratamientosMasSesionados();
-            
-            
-            for (Tratamiento tratamiento : tratamientos) {
-                Object [] fila = new Object[6];
-                
-                fila[0] = tratamiento.getCodTratamiento();
-                fila[1] = tratamiento.getNombre();
-                fila[2] = tratamiento.getDetalle();
-                fila[3] = tratamiento.getProductos();
-                fila[4] = tratamiento.getDuracion();
-                fila[5] = tratamiento.getCosto();
-                fila[6] = tratamiento.getEstado()? "Activo" : "Baja Logica";
-                
-                
-                
-                modeloTabla.addRow(fila);
-            }
-        } catch (Exception e) {
-        }
+       
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel(); // Usa el nombre real de tu JTable
+    modelo.setRowCount(0); // Esto elimina todas las filas
+    
+    // 2. Obtener la lista actualizada desde la base de datos:
+    List<Tratamiento> tratamientos = tratamientoData.listarTratamientos();
+    
+    // 3. Recorrer y añadir los nuevos datos:
+    for (Tratamiento t : tratamientos) {
+
+        modelo.addRow(new Object[]{
+            t.getCodTratamiento(),
+            t.getNombre(),
+            t.getDetalle(),
+            t.getProductos(),
+            t.getDuracion(), 
+            t.getCosto(),
+            t.getEstado()
+        });
+    }
 }
     
     
