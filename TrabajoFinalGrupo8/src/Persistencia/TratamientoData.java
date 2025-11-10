@@ -145,6 +145,32 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
        
     }
 
+    public boolean existeTratamiento(int codTratamiento) {
+    String sql = "SELECT codTratamiento FROM tratamiento WHERE codTratamiento = ?";
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, codTratamiento);
+        rs = ps.executeQuery();
+
+        
+        boolean existe = rs.next(); 
+        
+        ps.close();
+        rs.close();
+        
+        return existe;
+
+    } catch (SQLException ex) {
+        
+        System.out.println("Error al verificar la existencia del Tratamiento: " + ex.getMessage());
+        return true; 
+    }
+}
+    
+    
      List<Tratamiento> tratamientos = new ArrayList<>();
      
        public List<Tratamiento> listarTratamientos() {

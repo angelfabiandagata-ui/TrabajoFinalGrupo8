@@ -12,6 +12,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -38,59 +40,74 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     
     
      private Tratamiento obtenerTratamiento(){
-  if (txtCodTrat.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "El Codigo es obligatorio","faltan datos", JOptionPane.WARNING_MESSAGE);
+ 
+    int codTratamiento = 0;
+    double costo = 0;
+    Time duracion = null;
+    
+    
+    Number duracionNumber = (Number) spinnerDuracion.getValue();
+
+
+    try {
+        if (txtCodTrat.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "El Codigo es obligatorio", "Faltan Datos", JOptionPane.WARNING_MESSAGE);
             return null;
         }
-        int codTratamiento = 0;
-        double costo = 0;
-        Time duracion=null;
-        Number duracionNumber = (Number) spinnerDuracion.getValue();
         
-  
-        
-        try {
-            codTratamiento = Integer.parseInt(txtCodTrat.getText().trim());
-            
-            if (!txtCostoTrat.getText().trim().isEmpty()) {
-                costo = Double.parseDouble(txtCostoTrat.getText().trim());
-            }
-            
-            if (duracionNumber == null || duracionNumber.intValue() <= 0) {
-        JOptionPane.showMessageDialog(this, "La Duración es obligatoria y debe ser mayor a cero.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
-        return null;
-            }
-            
-            int minutos = duracionNumber.intValue();
-            long tiempoMilisegundos = (long) minutos * 60 * 1000;
-            duracion = new Time(tiempoMilisegundos);
-            
-        } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El codigo y el costo deben ser numeros y la duracion tiene que estar completa!");
-        return null;
+ 
+        codTratamiento = Integer.parseInt(txtCodTrat.getText().trim());
+
+
+        if (!txtCostoTrat.getText().trim().isEmpty()) {
+            costo = Double.parseDouble(txtCostoTrat.getText().trim());
         }
-    
+
+        if (duracionNumber == null || duracionNumber.intValue() <= 0) {
+            JOptionPane.showMessageDialog(this, "La Duracion es obligatoria y debe ser mayor a cero", "Faltan Datos", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+        
+        int minutos = duracionNumber.intValue();
+        
+        int horas = minutos / 60;
+        int minutosRestantes = minutos % 60;
+        
+        Calendar cal = Calendar.getInstance();
+        
+        cal.set(Calendar.YEAR, 1970);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        
+        cal.set(Calendar.HOUR_OF_DAY, horas);
+        cal.set(Calendar.MINUTE, minutosRestantes);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        
+        duracion = new Time(cal.getTimeInMillis());
+        
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El codigo y el costo deben ser números validos", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        return null;
+    }
     
     String productoSeleccionado = (String) boxProductos.getSelectedItem();
-       List<String> productosParaTratamiento= new ArrayList<>();
-         if (productoSeleccionado != null) {
-             productosParaTratamiento.add(productoSeleccionado);
-         }
-    
+    List<String> productosParaTratamiento= new ArrayList<>();
+    if (productoSeleccionado != null) {
+        productosParaTratamiento.add(productoSeleccionado);
+    }
     
     Tratamiento nuevoTratamiento = new Tratamiento();
- 
+
     nuevoTratamiento.setCodTratamiento(codTratamiento);
     nuevoTratamiento.setNombre(txtNombreTrat.getText().trim());
     nuevoTratamiento.setDetalle(txtDetalleTrat.getText().trim());
     nuevoTratamiento.setProductos(productosParaTratamiento);
-    nuevoTratamiento.setDuracion(duracion);
+    nuevoTratamiento.setDuracion(duracion); 
     nuevoTratamiento.setCosto(costo);
-    nuevoTratamiento.setEstado(isIcon);
-    
-  
-        
- return nuevoTratamiento;   
+    nuevoTratamiento.setEstado(isIcon); 
+
+    return nuevoTratamiento; 
 }
     private void configurarTabla(){
         String[] Titulos = {"codigoTratamiento", "nombre", "Nombre", "detalle", "producto","duracion","costo","estado"};
@@ -132,6 +149,8 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         } catch (Exception e) {
         }
 }
+    
+    
     
 
     /**
@@ -441,17 +460,39 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         if (nuevoTratamiento == null) {
             return;
         }
+        
+        int codigoIngresado = nuevoTratamiento.getCodTratamiento();
+        
         try {
-            tratamientoData.agregarTratamiento(nuevoTratamiento);
+            
+    if (tratamientoData.existeTratamiento(codigoIngresado)) {
+        
+       
+        JOptionPane.showMessageDialog(this, 
+            "️ El codigo de tratamiento " + codigoIngresado + " ya existe. No se puede guardar", 
+            "Código Duplicado", 
+            JOptionPane.WARNING_MESSAGE);
+        
+    } else {
+        
+        
+        tratamientoData.agregarTratamiento(nuevoTratamiento);
 
-            JOptionPane.showMessageDialog(this, "Tratamiento: " + nuevoTratamiento.getNombre() + " guardado correctamente", "guardado exitoso", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, 
+            "Tratamiento: " + nuevoTratamiento.getNombre() + " guardado correctamente", 
+            "Guardado Exitoso", 
+            JOptionPane.INFORMATION_MESSAGE);
 
-            Limpiar();
-            actulizarTabla();
+        Limpiar();
+        actulizarTabla();
+    }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el tratamiento", "Error al guardar", JOptionPane.ERROR_MESSAGE);
-        }
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(this, 
+        " Error al intentar guardar el tratamiento: " + e.getMessage(), 
+        "Error al Guardar", 
+        JOptionPane.ERROR_MESSAGE);
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
