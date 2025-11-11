@@ -493,7 +493,7 @@ public class menu extends javax.swing.JFrame {
     
     
     private void configuracionAvanzada(){
-    ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1); 
+    ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1,this); 
     jDesktopPane1.add(con, 40);
     
     con.setBounds(0, 0, 900, 380);

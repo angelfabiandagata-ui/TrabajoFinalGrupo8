@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package Vista;
 
 import Modelo.Consultorio;
@@ -9,6 +6,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Persistencia.ConsultorioData;
 import java.util.Arrays;
+import java.util.List;
+import javax.swing.JButton;
 
 /**
  *
@@ -19,11 +18,16 @@ public class VistaConsultorio extends javax.swing.JPanel {
    ConsultorioData consultorio;
    menu men; 
    String[] usos = new String[0];
-    String[] Equipamiento = new String[0];
+   String[] equipamiento = new String[0];
+   
+   
+   
    
     public VistaConsultorio() {
         initComponents();
         consultorio = new ConsultorioData();
+        actualizarArreglo();
+        desactivarCodigo();
     }
 
     /**
@@ -35,6 +39,8 @@ public class VistaConsultorio extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jtnum = new javax.swing.JTextField();
@@ -42,16 +48,35 @@ public class VistaConsultorio extends javax.swing.JPanel {
         tablaequipamiento = new javax.swing.JTable();
         jcapt = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        crear = new javax.swing.JButton();
+        borrar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablausos = new javax.swing.JTable();
         agregarusos = new javax.swing.JButton();
-        agregarequipamiento = new javax.swing.JButton();
+        agregarequip = new javax.swing.JButton();
         jtequi = new javax.swing.JTextField();
         jtagre = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        salir = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        consultorios = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable1);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Vista Consultorio");
 
         jLabel2.setText("Numero De Consultorio");
@@ -85,21 +110,21 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
         jLabel5.setText("Apto");
 
-        jButton1.setText("Crear");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        crear.setText("Crear");
+        crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                crearActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Borrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        borrar.setText("Borrar");
+        borrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                borrarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Salir");
+        jButton3.setText("Eliminar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -134,10 +159,10 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
-        agregarequipamiento.setText("Agregar");
-        agregarequipamiento.addActionListener(new java.awt.event.ActionListener() {
+        agregarequip.setText("Agregar");
+        agregarequip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregarequipamientoActionPerformed(evt);
+                agregarequipActionPerformed(evt);
             }
         });
 
@@ -153,139 +178,142 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        jButton4.setText("Eliminar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        salir.setText("Salir");
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
+
+        consultorios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Consultorios"
+            }
+        ));
+        jScrollPane4.setViewportView(consultorios);
+
+        jButton5.setText("Buscar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(128, 128, 128)
-                                .addComponent(jcapt))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
-                                .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jButton1))
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)))
-                        .addGap(85, 85, 85)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtagre, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(agregarusos))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtequi, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(agregarequipamiento))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(150, 150, 150))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(crear)
+                                            .addGap(18, 18, 18))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jcapt)
+                                            .addGap(27, 27, 27))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addComponent(borrar)
+                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(52, 52, 52)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jtagre, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(agregarusos))
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jtequi, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(agregarequip))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salir)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtagre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(agregarusos)
                     .addComponent(jtequi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(agregarequipamiento)
-                    .addComponent(jLabel1))
+                    .addComponent(agregarequip))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(19, 19, 19)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcapt)
-                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jcapt))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(crear, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void desactivarCodigo(){
+    jtnum.setEnabled(false);
+    }
     
-    int num = Integer.valueOf(jtnum.getText());
-    Consultorio con = consultorio.Buscar(num);
-    if (con != null) {
-    JOptionPane.showMessageDialog(null, "Ya existe un Consultorio con ese id");
-    } else {
-    Consultorio nuevo = new Consultorio();
-    nuevo.setNroConsultorio(num);
-    nuevo.setEquipamiento(Equipamiento);
-    nuevo.setUsos(usos);
-    nuevo.setApto(jcapt.isSelected());
-    consultorio.Guardar(nuevo);
-    JOptionPane.showMessageDialog(null, "Consultorio creado correctamente");
-}
-
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void agregarusosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarusosActionPerformed
-    
-    String nuevoUso = jtagre.getText().trim();
-    if (!nuevoUso.isEmpty()) {
-        usos = Arrays.copyOf(usos, usos.length + 1);
-        usos[usos.length - 1] = nuevoUso;
-        actualizarListas();
-        jtagre.setText("");
-    } else {
-        JOptionPane.showMessageDialog(this, "Ingrese un uso válido");
-    }   
-        
-    }//GEN-LAST:event_agregarusosActionPerformed
-
     private void jtnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtnumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtnumActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     
-    String nuevoUso = jtagre.getText().trim();    
-     if (!nuevoUso.isEmpty()) {
-      
-     int texto = Integer.valueOf(nuevoUso);
-      consultorio.Eliminar(texto);
-    }     
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-     this.setVisible(false);
-     this.setEnabled(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jtagreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtagreActionPerformed
      
@@ -303,21 +331,128 @@ public class VistaConsultorio extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtequiActionPerformed
 
-    private void agregarequipamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarequipamientoActionPerformed
-   
-                                                  
-    String nuevoEq = jtequi.getText().trim();
-    if (!nuevoEq.isEmpty()) {
-        Equipamiento = Arrays.copyOf(Equipamiento, Equipamiento.length + 1);
-        Equipamiento[Equipamiento.length - 1] = nuevoEq;
+    private void agregarusosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarusosActionPerformed
+
+        String nuevoUso = jtagre.getText();
+
+        if (!nuevoUso.isEmpty()) {
+            usos = Arrays.copyOf(usos, usos.length + 1);
+            usos[usos.length - 1] = nuevoUso;
+            actualizarListas();
+            jtagre.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese un uso válido");
+        }
+
+    }//GEN-LAST:event_agregarusosActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        if(jtnum.isEnabled()){
+            jtnum.setEnabled(false);
+            crear.setEnabled(true);
+            borrar.setEnabled(true);
+        }else{
+            jtnum.setEnabled(true);
+            crear.setEnabled(false);
+            borrar.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
+
+        try {
+            int num = Integer.parseInt(jtnum.getText().trim());
+            consultorio.Eliminar(num);
+            JOptionPane.showMessageDialog(this, "Consultorio eliminado correctamente");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número de consultorio válido");
+        }
+
         actualizarListas();
-        jtequi.setText("");
-    } else {
-        JOptionPane.showMessageDialog(this, "Ingrese un equipamiento válido");
-    }
-   
-        
-    }//GEN-LAST:event_agregarequipamientoActionPerformed
+
+    }//GEN-LAST:event_borrarActionPerformed
+
+    private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
+
+        if(tablausos.getColumnCount() < 1){
+            return;
+        }
+        if(tablaequipamiento.getColumnCount() < 1){
+            return;
+        }
+
+        int num = Integer.valueOf(jtnum.getText());
+        Consultorio con = consultorio.Buscar(num);
+        if (con != null) {
+            JOptionPane.showMessageDialog(null, "Ya existe un Consultorio con ese id");
+        } else {
+            Consultorio nuevo = new Consultorio();
+            nuevo.setNroConsultorio(num);
+            nuevo.setEquipamiento(equipamiento);
+            nuevo.setUsos(usos);
+            nuevo.setApto(jcapt.isSelected());
+            consultorio.Guardar(nuevo);
+            JOptionPane.showMessageDialog(null, "Consultorio creado correctamente");
+        }
+
+        actualizarListas();
+    }//GEN-LAST:event_crearActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        //se obtiene el indice con get selected row (int)
+        int fila = tablausos.getSelectedRow();
+
+        // si no seleciono fila retorna (termina la funcion)
+        if (fila == -1) {
+            return;
+        }
+        //se obtiene el modelo usado
+        DefaultTableModel model = (DefaultTableModel)tablausos.getModel();
+        //se remove por medio del modelo
+        model.removeRow(fila);
+
+        tablausos.setModel(model);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        int fila = tablaequipamiento.getSelectedRow();
+
+        // si no hay fila seleccionada, salir del método
+        if (fila == -1) {
+            return;
+        }
+
+        // obtener el modelo actual
+        DefaultTableModel model = (DefaultTableModel) tablaequipamiento.getModel();
+
+        // eliminar la fila seleccionada
+        model.removeRow(fila);
+
+        tablausos.setModel(model);
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void agregarequipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarequipActionPerformed
+
+        String nuevoEq = jtequi.getText().trim();
+        if (!nuevoEq.isEmpty()) {
+            equipamiento = Arrays.copyOf(equipamiento, equipamiento.length + 1);
+            equipamiento[equipamiento.length - 1] = nuevoEq;
+            actualizarListas();
+            jtequi.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese un equipamiento válido");
+        }
+    }//GEN-LAST:event_agregarequipActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        this.setEnabled(false);
+        this.setVisible(false);
+    }//GEN-LAST:event_salirActionPerformed
 
     
 public void actualizarListas() {
@@ -330,33 +465,66 @@ public void actualizarListas() {
 
     // ----- Tabla de equipamiento -----
     DefaultTableModel modeloequi = new DefaultTableModel(new Object[][]{}, new String[]{"Equipamiento"});
-    for (String eq : Equipamiento) {
+    for (String eq : equipamiento) {
         modeloequi.addRow(new Object[]{eq});
     }
     tablaequipamiento.setModel(modeloequi);
 }
 
+public void actualizarArreglo() {
+    //hacer el arreglo
+    List<Consultorio> lista = consultorio.Listar();
+    Consultorio[] consultoriosArreglo = new Consultorio[lista.size()];
+    
+    //poner los elementos en el arreglo
+    for (int i = 0; i < lista.size(); i++) {
+        consultoriosArreglo[i] = lista.get(i);
+    }
+    
+    //columnas para el table
+    String[] Columnas = {"ID", "Equipamiento", "Usos"}; 
+    
+    // Create data for the table
+    Object[][] data = new Object[consultoriosArreglo.length][];
+    for (int i = 0; i < consultoriosArreglo.length; i++) {
+        Consultorio c = consultoriosArreglo[i];
+        
+        data[i] = new Object[]{
+        c.getNroConsultorio(),
+        String.join(", ", c.getEquipamiento()),
+        String.join(", ", c.getUsos())
+        };
+    
+    DefaultTableModel model = new DefaultTableModel(data, Columnas);
+    
+    // Apply the model to your JTable
+    consultorios.setModel(model); // Replace with your actual JTable variable name
+}
 
-
-
-
-
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton agregarequipamiento;
+    private javax.swing.JButton agregarequip;
     private javax.swing.JButton agregarusos;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton borrar;
+    private javax.swing.JTable consultorios;
+    private javax.swing.JButton crear;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable1;
     private javax.swing.JCheckBox jcapt;
     private javax.swing.JTextField jtagre;
     private javax.swing.JTextField jtequi;
     private javax.swing.JTextField jtnum;
+    private javax.swing.JButton salir;
     private javax.swing.JTable tablaequipamiento;
     private javax.swing.JTable tablausos;
     // End of variables declaration//GEN-END:variables

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ConsultorioData {
     
-     private Connection con = null; // ✅ tipo correcto
+     private Connection con = null;
 
     public ConsultorioData(Connection conexion) {
         this.con = conexion;
@@ -36,13 +36,12 @@ public class ConsultorioData {
         }
     }
     
-    
     // ================== GUARDAR ==================
     public void Guardar(Consultorio consultorio){
         String sql = "INSERT INTO consultorio (usos, equipamiento, apto) VALUES (?, ?, ?)";
         
         try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // ✅ CORREGIDO
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // 
             
             
             ps.setString(1, String.join(",", consultorio.getUsos())); 
@@ -57,7 +56,7 @@ public class ConsultorioData {
                 System.out.println("Consultorio guardado con ID: " + consultorio.getNroConsultorio());
             }
             
-            rs.close(); // ✅ cerrar resultset
+            rs.close(); 
             ps.close();
         } catch (SQLException ex) {
             System.out.println("Error al guardar consultorio: " + ex.getMessage());
@@ -115,7 +114,7 @@ public class ConsultorioData {
                 );
             }
             
-            rs.close(); // ✅ cerrar resultset
+            rs.close(); 
             ps.close();
         } catch (SQLException ex) {
             System.out.println("Error al buscar consultorio: " + ex.getMessage());
@@ -135,7 +134,7 @@ public class ConsultorioData {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
-                // ✅ CORREGIDO igual que arriba
+                
                 String usos = rs.getString("usos");
                 String equipamiento = rs.getString("equipamiento");
                 
@@ -148,7 +147,7 @@ public class ConsultorioData {
                 lista.add(c);
             }
             
-            rs.close(); // ✅ cerrar resultset
+            rs.close();
             ps.close();
         } catch (SQLException ex) {
             System.out.println("Error al listar consultorios: " + ex.getMessage());
@@ -171,7 +170,7 @@ public void Eliminar(int nroConsultorio) {
             System.out.println("No se encontró ningún consultorio con ese número.");
         }
         
-        ps.close(); // ✅ cerramos el PreparedStatement
+        ps.close();
     } catch (SQLException ex) {
         System.out.println("Error al eliminar consultorio: " + ex.getMessage());
     }
