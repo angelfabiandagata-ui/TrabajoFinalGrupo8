@@ -32,6 +32,10 @@ public class MasajistaData {
         try {
             Conexion conAux = new Conexion(url, usuario, password);
             this.con = conAux.buscarConexion();
+            
+            if (this.con == null) {
+            throw new SQLException("La conexión falló. Revise credenciales o estado del servidor de BD.");
+        }
         } catch (Exception e) {
             System.err.print("Error al conectar" + e.getMessage());
         }
@@ -139,9 +143,13 @@ public class MasajistaData {
                       m.setEstado(rs.getBoolean("estado"));
                    masajistas.add(m);
                   }
-              } catch (SQLException e) {
-                  System.out.println("Error al listar masajistas" + e.getMessage());
-                  throw new RuntimeException("Error al listar masajistas desde la BD: " + e.getMessage());
+              } catch (Exception e) {
+                  // *******************************************************
+        // 🚨 CAMBIO CRÍTICO: Muestra la traza completa (STACK TRACE)
+        System.err.println("------------------------------------------");
+        System.err.println("⚠️ ERROR FATAL AL LISTAR MASAJISTAS:");
+        e.printStackTrace(); 
+        System.err.println("------------------------------------------");
               }
               return masajistas;
           }

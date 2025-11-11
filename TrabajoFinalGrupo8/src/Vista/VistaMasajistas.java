@@ -98,13 +98,16 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
                 fila[1] = m.getNombreyapellido();
                 fila[2] = m.getTelefono();
                 fila[3] = m.getEspecialidad();
-                fila[4] = m.isEstado()? "Activo" : "Baja Logica";
+                fila[4] = m.getEstado()? "Activo" : "Baja Logica";
                 
                 modeloTabla.addRow(fila);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar la tabla de masajistas. Detalle: " + e.getMessage(), "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
-        }
+            } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+            "Error al cargar la tabla de masajistas. Detalle: " + e.getMessage(), 
+            "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
+    }
+        
     
     
     }
