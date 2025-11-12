@@ -7,27 +7,32 @@ import javax.swing.table.DefaultTableModel;
 import Persistencia.ConsultorioData;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 
-/**
- *
- * @author Ema
- */
+
+
 public class VistaConsultorio extends javax.swing.JPanel {
 
    ConsultorioData consultorio;
-   menu men; 
    String[] usos = new String[0];
    String[] equipamiento = new String[0];
+   menu men;
    
-   
-   
-   
-    public VistaConsultorio() {
+    public VistaConsultorio(menu men) {
         initComponents();
+        //enlazar con clases para usar metodos guardar y borrar y controlar botones
+        this.men = men;
         consultorio = new ConsultorioData();
+        
+        //actualizar la info apenas se abre
         actualizarArreglo();
         desactivarCodigo();
+        actualizarListas();      
+        
+        //para no tener todo activado
+        buscar.setEnabled(false);
+        tfbuscar.setEnabled(false);
     }
 
     /**
@@ -41,12 +46,13 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        grupobotones = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jtnum = new javax.swing.JTextField();
+        tfbuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaequipamiento = new javax.swing.JTable();
-        jcapt = new javax.swing.JCheckBox();
+        apto = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         crear = new javax.swing.JButton();
         borrar = new javax.swing.JButton();
@@ -61,7 +67,9 @@ public class VistaConsultorio extends javax.swing.JPanel {
         salir = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         consultorios = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
+        buscar = new javax.swing.JButton();
+        radiobuscar = new javax.swing.JRadioButton();
+        radiocrear = new javax.swing.JRadioButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,9 +89,9 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
         jLabel2.setText("Numero De Consultorio");
 
-        jtnum.addActionListener(new java.awt.event.ActionListener() {
+        tfbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtnumActionPerformed(evt);
+                tfbuscarActionPerformed(evt);
             }
         });
 
@@ -205,10 +213,25 @@ public class VistaConsultorio extends javax.swing.JPanel {
         ));
         jScrollPane4.setViewportView(consultorios);
 
-        jButton5.setText("Buscar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                buscarActionPerformed(evt);
+            }
+        });
+
+        grupobotones.add(radiobuscar);
+        radiobuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiobuscarActionPerformed(evt);
+            }
+        });
+
+        grupobotones.add(radiocrear);
+        radiocrear.setSelected(true);
+        radiocrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiocrearActionPerformed(evt);
             }
         });
 
@@ -227,20 +250,21 @@ public class VistaConsultorio extends javax.swing.JPanel {
                                 .addComponent(jLabel2)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(crear)
-                                            .addGap(18, 18, 18))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jcapt)
-                                            .addGap(27, 27, 27))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                        .addComponent(tfbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(apto)
+                                        .addComponent(crear))
+                                    .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(borrar)
-                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(52, 52, 52)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(borrar)
+                                                .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(radiobuscar)
+                                                .addComponent(radiocrear)))
+                                        .addComponent(jLabel5))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jtagre, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,7 +293,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salir)
                     .addComponent(jLabel1))
@@ -286,16 +310,19 @@ public class VistaConsultorio extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5))
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
-                            .addComponent(jcapt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(crear, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tfbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buscar)
+                            .addComponent(radiobuscar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(apto)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radiocrear)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(crear, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -308,12 +335,12 @@ public class VistaConsultorio extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void desactivarCodigo(){
-    jtnum.setEnabled(false);
+    tfbuscar.setEnabled(false);
     }
     
-    private void jtnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtnumActionPerformed
+    private void tfbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfbuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtnumActionPerformed
+    }//GEN-LAST:event_tfbuscarActionPerformed
 
     private void jtagreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtagreActionPerformed
      
@@ -346,93 +373,85 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
     }//GEN-LAST:event_agregarusosActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
 
-        if(jtnum.isEnabled()){
-            jtnum.setEnabled(false);
-            crear.setEnabled(true);
-            borrar.setEnabled(true);
-        }else{
-            jtnum.setEnabled(true);
-            crear.setEnabled(false);
-            borrar.setEnabled(false);
+       if(!(tfbuscar.getText().trim().isEmpty())){
+            
+             int num = Integer.valueOf(tfbuscar.getText());
+             Consultorio con = consultorio.Buscar(num);
+             
+             if (con != null) {
+            JOptionPane.showMessageDialog(null, "Ya existe un Consultorio con ese id");
         }
+       }
 
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
-
-        try {
-            int num = Integer.parseInt(jtnum.getText().trim());
-            consultorio.Eliminar(num);
-            JOptionPane.showMessageDialog(this, "Consultorio eliminado correctamente");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número de consultorio válido");
-        }
-
-        actualizarListas();
-
-    }//GEN-LAST:event_borrarActionPerformed
+    }//GEN-LAST:event_buscarActionPerformed
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
 
-        if(tablausos.getColumnCount() < 1){
+        if (usos.length == 0 && equipamiento.length == 0){
+            JOptionPane.showMessageDialog(this, "las Tablas tienen que tener porlomenos 1 arreglo cada una para crear un consultorio");
             return;
+        
         }
-        if(tablaequipamiento.getColumnCount() < 1){
-            return;
-        }
-
-        int num = Integer.valueOf(jtnum.getText());
-        Consultorio con = consultorio.Buscar(num);
-        if (con != null) {
-            JOptionPane.showMessageDialog(null, "Ya existe un Consultorio con ese id");
-        } else {
+        //-------------------------------------------------------------------------posible error
+        //----------------------------------------------------------------------------------------        
+        
+        //si hay numero de consultorio introducido                 
             Consultorio nuevo = new Consultorio();
-            nuevo.setNroConsultorio(num);
             nuevo.setEquipamiento(equipamiento);
             nuevo.setUsos(usos);
-            nuevo.setApto(jcapt.isSelected());
+            nuevo.setApto(apto.isSelected());
             consultorio.Guardar(nuevo);
-            JOptionPane.showMessageDialog(null, "Consultorio creado correctamente");
-        }
+            JOptionPane.showMessageDialog(null, "Consultorio creado correctamente"); 
 
-        actualizarListas();
+             actualizarListas();
+             actualizarArreglo(); 
     }//GEN-LAST:event_crearActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-        //se obtiene el indice con get selected row (int)
+   
+        // se selecciona cuál es el índice de la fila a borrar
         int fila = tablausos.getSelectedRow();
+        if (fila == -1) return;
 
-        // si no seleciono fila retorna (termina la funcion)
-        if (fila == -1) {
-            return;
+        // se crea un nuevo arreglo con una posición menos 
+        if (usos.length > 0) {
+            String[] nuevoUsos = new String[usos.length - 1];
+            for (int i = 0, j = 0; i < usos.length; i++) {
+                if (i != fila) { // solo copiamos si no es la fila borrada
+                    nuevoUsos[j] = usos[i];
+                    j++;
+                }
+            }
+            usos = nuevoUsos;
         }
-        //se obtiene el modelo usado
-        DefaultTableModel model = (DefaultTableModel)tablausos.getModel();
-        //se remove por medio del modelo
-        model.removeRow(fila);
 
-        tablausos.setModel(model);
+        // actualizar tabla
+        actualizarListas();
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
+        // se selecciona cuál es el índice de la fila a borrar
         int fila = tablaequipamiento.getSelectedRow();
+        if (fila == -1) return;
 
-        // si no hay fila seleccionada, salir del método
-        if (fila == -1) {
-            return;
+        // se crea un nuevo arreglo con una posición menos 
+        if (equipamiento.length > 0) {
+            String[] nuevoEquip = new String[equipamiento.length - 1];
+            for (int i = 0, j = 0; i < equipamiento.length; i++) {
+                if (i != fila) { // solo copiamos si no es la fila borrada
+                    nuevoEquip[j] = equipamiento[i];
+                    j++;
+                }
+            }
+            equipamiento = nuevoEquip;
         }
 
-        // obtener el modelo actual
-        DefaultTableModel model = (DefaultTableModel) tablaequipamiento.getModel();
-
-        // eliminar la fila seleccionada
-        model.removeRow(fila);
-
-        tablausos.setModel(model);
+        // actualizar tabla
+        actualizarListas();
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -452,7 +471,42 @@ public class VistaConsultorio extends javax.swing.JPanel {
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         this.setEnabled(false);
         this.setVisible(false);
+        men.activarTodosLosBotones();
     }//GEN-LAST:event_salirActionPerformed
+
+    private void radiocrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiocrearActionPerformed
+        
+        borrar.setEnabled(true);
+        crear.setEnabled(true);
+        apto.setEnabled(true);
+        buscar.setEnabled(false);
+        tfbuscar.setEnabled(false);
+    }//GEN-LAST:event_radiocrearActionPerformed
+
+    private void radiobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiobuscarActionPerformed
+      
+         borrar.setEnabled(false);
+        crear.setEnabled(false);
+        apto.setEnabled(false);
+        buscar.setEnabled(true);
+        tfbuscar.setEnabled(true);
+        
+    }//GEN-LAST:event_radiobuscarActionPerformed
+
+    private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
+
+       int filaAborrar = consultorios.getSelectedRow();
+       
+       if(filaAborrar == -1) {return;}       
+       
+       consultorio.Eliminar(filaAborrar);
+       
+         actualizarListas();
+         actualizarArreglo();    
+       
+    
+    
+    }//GEN-LAST:event_borrarActionPerformed
 
     
 public void actualizarListas() {
@@ -472,46 +526,40 @@ public void actualizarListas() {
 }
 
 public void actualizarArreglo() {
-    //hacer el arreglo
+    // hacer el arreglo
     List<Consultorio> lista = consultorio.Listar();
     Consultorio[] consultoriosArreglo = new Consultorio[lista.size()];
-    
-    //poner los elementos en el arreglo
+
     for (int i = 0; i < lista.size(); i++) {
         consultoriosArreglo[i] = lista.get(i);
     }
-    
-    //columnas para el table
+
     String[] Columnas = {"ID", "Equipamiento", "Usos"}; 
-    
-    // Create data for the table
-    Object[][] data = new Object[consultoriosArreglo.length][];
+    Object[][] data = new Object[consultoriosArreglo.length][3];
+
     for (int i = 0; i < consultoriosArreglo.length; i++) {
         Consultorio c = consultoriosArreglo[i];
-        
-        data[i] = new Object[]{
-        c.getNroConsultorio(),
-        String.join(", ", c.getEquipamiento()),
-        String.join(", ", c.getUsos())
-        };
-    
+        data[i][0] = c.getNroConsultorio();
+        data[i][1] = String.join(", ", c.getEquipamiento());
+        data[i][2] = String.join(", ", c.getUsos());
+    }
+
     DefaultTableModel model = new DefaultTableModel(data, Columnas);
-    
-    // Apply the model to your JTable
-    consultorios.setModel(model); // Replace with your actual JTable variable name
+    consultorios.setModel(model);
 }
 
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarequip;
     private javax.swing.JButton agregarusos;
+    private javax.swing.JCheckBox apto;
     private javax.swing.JButton borrar;
+    private javax.swing.JButton buscar;
     private javax.swing.JTable consultorios;
     private javax.swing.JButton crear;
+    private javax.swing.ButtonGroup grupobotones;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -520,13 +568,14 @@ public void actualizarArreglo() {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
-    private javax.swing.JCheckBox jcapt;
     private javax.swing.JTextField jtagre;
     private javax.swing.JTextField jtequi;
-    private javax.swing.JTextField jtnum;
+    private javax.swing.JRadioButton radiobuscar;
+    private javax.swing.JRadioButton radiocrear;
     private javax.swing.JButton salir;
     private javax.swing.JTable tablaequipamiento;
     private javax.swing.JTable tablausos;
+    private javax.swing.JTextField tfbuscar;
     // End of variables declaration//GEN-END:variables
 
 }

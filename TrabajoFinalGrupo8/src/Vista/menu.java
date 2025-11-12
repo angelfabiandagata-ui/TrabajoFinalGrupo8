@@ -1,12 +1,6 @@
 
-
-
-
-
    /*
 
-
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -243,9 +237,14 @@ public class menu extends javax.swing.JFrame {
     private JButton historial;
     private JButton configuracionAvanzada;
 
+    //botones simples del panel
+    private JButton botonClientes;
+    private JButton botonMasajistas;
+    private JButton botonAyuda;
+
     
     ConsultorioData consultoriod = new ConsultorioData();
-    VistaConsultorio vistaconsultorio = new VistaConsultorio();
+    VistaConsultorio vistaconsultorio = new VistaConsultorio(this);
     
     // constructor
     public menu() {
@@ -349,9 +348,14 @@ public class menu extends javax.swing.JFrame {
         panelFondo.add(botonCerrarTurnos);
 
         // Otros botones
-        panelFondo.add(crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes"));
-        panelFondo.add(crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
-        panelFondo.add(crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
+        botonClientes = crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes");
+        botonMasajistas = crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas");
+        botonAyuda = crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda");
+
+        panelFondo.add(botonClientes);
+        panelFondo.add(botonMasajistas);
+        panelFondo.add(botonAyuda);
+
         panelFondo.add(crearBotonInvisible(50, 50, 110, 110, this::abrirTratamiento, "Tratamientos"));
 
         jDesktopPane1.revalidate();
@@ -396,12 +400,12 @@ public class menu extends javax.swing.JFrame {
     }
 
     private void abrirMasajistas() {
-        VistaMasajistas masajistas = new VistaMasajistas();
+        VistaMasajistas masajistas = new VistaMasajistas(this);
         prepararInternalFrame(masajistas);
     }
     
      private void abrirTratamiento() {
-        VistaTratamiento tratamientos = new VistaTratamiento();
+        VistaTratamiento tratamientos = new VistaTratamiento(this);
         prepararInternalFrame(tratamientos);
     }
 
@@ -501,8 +505,8 @@ public class menu extends javax.swing.JFrame {
     int y = (jDesktopPane1.getHeight() - con.getHeight()) / 2;
     con.setLocation(x, y);
     con.setVisible(true);
-    desactivarTodosLosBotones();
     jDesktopPane1.moveToFront(con);
+    desactivarTodosLosBotones();
     
 }
 
@@ -514,6 +518,10 @@ public class menu extends javax.swing.JFrame {
         botonTurnos.setEnabled(false);
         botonCerrarConfig.setEnabled(false);
         botonCerrarTurnos.setEnabled(false);
+        jMenuItem3.setEnabled(false);
+        botonClientes.setEnabled(false);
+        botonMasajistas.setEnabled(false);
+        botonAyuda.setEnabled(false);
     }
     //volver a activar botones una vez que se cierra el panel
     public void activarTodosLosBotones() {
@@ -521,6 +529,9 @@ public class menu extends javax.swing.JFrame {
         botonTurnos.setEnabled(true);
         botonCerrarConfig.setEnabled(true);
         botonCerrarTurnos.setEnabled(true);
+        botonClientes.setEnabled(true);
+        botonMasajistas.setEnabled(true);
+        botonAyuda.setEnabled(true);    
     }
 
     private void uno(){ System.out.println("UNO"); }

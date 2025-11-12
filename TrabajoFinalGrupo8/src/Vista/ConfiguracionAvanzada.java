@@ -78,7 +78,7 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
     private void jbabrirconsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirconsultorioActionPerformed
     
     if(cons == null){
-    cons = new VistaConsultorio();
+    cons = new VistaConsultorio(menu);
     cons.setBounds(0, 0, 900, 400);
     desktop.add(cons);
     int x = (desktop.getWidth() - cons.getWidth()) / 2;
@@ -98,7 +98,7 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
        
       this.setVisible(false);
     this.setEnabled(false);
-        
+    menu.activarTodosLosBotones();
     }//GEN-LAST:event_jbsalirActionPerformed
 
 

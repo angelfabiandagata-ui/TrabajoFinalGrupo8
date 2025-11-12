@@ -21,10 +21,13 @@ import java.util.List;
  */
 public class VistaTratamiento extends javax.swing.JInternalFrame {
 
- private TratamientoData tratamientoData = new TratamientoData();
+    private TratamientoData tratamientoData = new TratamientoData();
     private DefaultTableModel modeloTabla;
-    public VistaTratamiento() {
+    menu menu;
+    
+    public VistaTratamiento(menu menu) {
         initComponents();
+        this.menu = menu;
         configurarTabla();
         actulizarTabla();
         javax.swing.JDesktopPane desktopPane = this.getDesktopPane();
@@ -556,7 +559,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttomBajaTratActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+       this.setVisible(false);
+       this.setEnabled(true);
+       menu.activarTodosLosBotones();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtCodTratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodTratActionPerformed
