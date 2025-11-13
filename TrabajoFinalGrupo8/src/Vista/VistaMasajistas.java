@@ -23,6 +23,7 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
         initComponents();
         configurarTabla();
         actualizarTabla();
+        Limpiar();
     this.setSize(800, 600);
     }
 
@@ -37,10 +38,18 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
     
     
       private Masajista obtenerMasajista(){
-  if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "La Matricula, el Nombre y el Apellido son obligatorios","faltan datos", JOptionPane.WARNING_MESSAGE);
+  if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty() || jTextField5.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Todos los datos son OBLIGATORIOS.","Faltan datos", JOptionPane.WARNING_MESSAGE);
             return null;
         }
+  if (jComboBox1.getSelectedIndex() == 0) { 
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una especialidad", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+        return null; 
+    }
+
+    // 2. Obtener el texto seleccionado
+    String especialidadSe = jComboBox1.getSelectedItem().toString().trim();
+  
         int matricula = 0;
         long telefono = 0;
         
@@ -61,16 +70,17 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
     
     Masajista nuevoMasajista = new Masajista();
  nuevoMasajista.setMatricula(matricula);
-        nuevoMasajista.setNombreyapellido(jTextField2.getText().trim() + " " + jTextField3.getText().trim());
+        nuevoMasajista.setNombre(jTextField2.getText().trim());
+        nuevoMasajista.setApellido(jTextField3.getText().trim());
         nuevoMasajista.setTelefono(telefono);
-        nuevoMasajista.setEspecialidad(jTextField6.getText().trim());
+        nuevoMasajista.setEspecialidad(especialidadSe);
         nuevoMasajista.setEstado(jCheckBox1.isSelected());
         
  return nuevoMasajista;   
 }
     
       private void configurarTabla(){
-        String[] Titulos = {"Matricula", "Nombre", "Telefono","Especialidad", "Estado"};
+        String[] Titulos = {"Matricula", "Nombre","Apellido", "Telefono","Especialidad", "Estado"};
         modeloTabla = new DefaultTableModel(Titulos, 0);
         
         jTable1.setModel(modeloTabla);
@@ -81,7 +91,6 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField5.setText("");
-        jTextField6.setText("");
         jCheckBox1.setSelected(true);
     }
     
@@ -92,13 +101,14 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
             
             
             for (Masajista m : masajistas) {
-                Object [] fila = new Object[5];
+                Object [] fila = new Object[6];
                 
                 fila[0] = m.getMatricula();
-                fila[1] = m.getNombreyapellido();
-                fila[2] = m.getTelefono();
-                fila[3] = m.getEspecialidad();
-                fila[4] = m.getEstado()? "Activo" : "Baja Logica";
+                fila[1] = m.getNombre();
+                fila[2] = m.getApellido();
+                fila[3] = m.getTelefono();
+                fila[4] = m.getEspecialidad();
+                fila[5] = m.getEstado()? "Activo" : "Baja Logica";
                 
                 modeloTabla.addRow(fila);
             }
@@ -121,9 +131,11 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        BotonAgregar = new javax.swing.JButton();
+        BotonEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -135,28 +147,31 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
+        BotonLogica = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+
+        jButton1.setText("jButton1");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
-        jButton1.setBackground(new java.awt.Color(153, 204, 255));
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BotonAgregar.setBackground(new java.awt.Color(153, 204, 255));
+        BotonAgregar.setText("Agregar");
+        BotonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BotonAgregarActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 102, 102));
-        jButton2.setText("Eliminar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        BotonEliminar.setBackground(new java.awt.Color(255, 102, 102));
+        BotonEliminar.setText("Eliminar");
+        BotonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                BotonEliminarActionPerformed(evt);
             }
         });
 
@@ -175,8 +190,10 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Estado");
 
+        buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Alta Logica");
 
+        buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Baja Logica");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +227,20 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Vista Masajistas");
 
+        BotonLogica.setText("Dar de Baja/Alta");
+        BotonLogica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonLogicaActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione una Esp--", "Facial", "Corporal", "Relajación", "estético" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -229,30 +260,32 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6))))
-                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField2)
+                            .addComponent(jTextField5)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField1)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jRadioButton2)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(147, 147, 147)
+                                    .addComponent(BotonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
+                                .addComponent(BotonLogica)
+                                .addGap(34, 34, 34)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jRadioButton1)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(73, 73, 73))))
             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -282,22 +315,23 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
                         .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
+                        .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))))
+                            .addComponent(jRadioButton2)
+                            .addComponent(BotonLogica))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(BotonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -318,7 +352,7 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed
         // TODO add your handling code here:
         Masajista nuevoMAsajista = obtenerMasajista();
        
@@ -328,7 +362,7 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
         try {
             masajistaData.agregarMasajista(nuevoMAsajista);
             
-           JOptionPane.showMessageDialog(this, "Masajista: " + nuevoMAsajista.getNombreyapellido()+ " guardado correctamente", "guardado exitoso", JOptionPane.INFORMATION_MESSAGE);
+           JOptionPane.showMessageDialog(this, "Masajista: " + nuevoMAsajista.getApellido()+ " guardado correctamente", "guardado exitoso", JOptionPane.INFORMATION_MESSAGE);
        
            Limpiar();
            actualizarTabla();
@@ -337,9 +371,9 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar masajista", "Error al guardar", JOptionPane.ERROR_MESSAGE);
         
     }            
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BotonAgregarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void BotonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarActionPerformed
         // TODO add your handling code here:
         int filaSElec = jTable1.getSelectedRow();
         
@@ -358,33 +392,78 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
             int matricula = (int) valorMAtricula;
             
             int confrimacion = JOptionPane.showConfirmDialog(this,
-                    "Seguro de eliminar un masajista ?", "Confirmar eliminar", JOptionPane.YES_NO_OPTION);
+                    "Seguro de eliminar PERMANENTEMENTE a un masajista ? Esto no se puede revertir.", "Confirmar eliminar", JOptionPane.YES_NO_OPTION);
             
             
             if (confrimacion == JOptionPane.YES_OPTION) {
                 
                 masajistaData.borrar(matricula);
-                JOptionPane.showMessageDialog(this,"Masajista dado de baja","Dada de baja existosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,"Masajista Eliminado","Dada de baja existosa", JOptionPane.INFORMATION_MESSAGE);
             
             Limpiar();
             actualizarTabla();
             
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al dar de baja, Detalle:" + e.getMessage(), "Error" , JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al eliminar masajista, Detalle:" + e.getMessage(), "Error" , JOptionPane.ERROR_MESSAGE);
         
     }     
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_BotonEliminarActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
 
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
+    private void BotonLogicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLogicaActionPerformed
+        // TODO add your handling code here:
+          try {
+        int idCambiar = Integer.parseInt(jTextField1.getText());
+
+
+        if (jRadioButton1.isSelected()) {
+            // Alta lógica (estado = 1)
+            masajistaData.altaMasajista(idCambiar);
+            JOptionPane.showMessageDialog(this, "Masajista dado de ALTA correctamente.", "Estado Cambiado", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else if (jRadioButton2.isSelected()) {
+            int confirmacion = JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro de que desea dar de BAJA LÓGICA al masajista con Matricula: " + idCambiar + "?", 
+                "Confirmar Baja", JOptionPane.YES_NO_OPTION);
+            
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                masajistaData.bajaMasajista(idCambiar);
+                JOptionPane.showMessageDialog(this, "Masajista dado de BAJA correctamente.", "Estado Cambiado", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar Alta o Baja.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+
+        actualizarTabla(); 
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Debe cargar la Matricula del masajista en el primer campo para cambiar su estado.", "Error", JOptionPane.WARNING_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al cambiar el estado: " + ex.getMessage(), "Error de BD", JOptionPane.ERROR_MESSAGE);
+    }
+        
+    }//GEN-LAST:event_BotonLogicaActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonAgregar;
+    private javax.swing.JButton BotonEliminar;
+    private javax.swing.JButton BotonLogica;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -401,6 +480,5 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

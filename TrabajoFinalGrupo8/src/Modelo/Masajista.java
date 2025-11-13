@@ -12,15 +12,17 @@ public class Masajista {
 
     //ATRIBUTOS
     private int matricula;
-    private String nombreyapellido;
+    private String nombre;
+            private String apellido;
     private long telefono;
     private String especialidad;
     private boolean estado;
 
     //CONSTRUCTOR
-    public Masajista(int matricula, String nombreyapellido, long telefono, String especialidad, boolean estado) {
+    public Masajista(int matricula, String nombre, String apellido, long telefono, String especialidad, boolean estado) {
         this.matricula = matricula;
-        this.nombreyapellido = nombreyapellido;
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.telefono = telefono;
         this.especialidad = especialidad;
         this.estado = estado;
@@ -39,13 +41,23 @@ public class Masajista {
         this.matricula = matricula;
     }
 
-    public String getNombreyapellido() {
-        return nombreyapellido;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreyapellido(String nombreyapellido) {
-        this.nombreyapellido = nombreyapellido;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+  
 
     public long getTelefono() {
         return telefono;
