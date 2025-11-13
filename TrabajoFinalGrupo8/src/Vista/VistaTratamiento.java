@@ -332,8 +332,8 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                         .addGap(285, 285, 285)
                         .addComponent(buttomBajaTrat))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(161, 161, 161)
+                        .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -372,9 +372,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                                 .addComponent(jButton3))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelTrat10)
-                        .addGap(46, 46, 46)
+                        .addGap(37, 37, 37)
                         .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelTrat5)
                             .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
