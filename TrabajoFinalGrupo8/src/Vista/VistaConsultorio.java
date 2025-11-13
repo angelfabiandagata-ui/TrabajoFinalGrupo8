@@ -84,6 +84,8 @@ public class VistaConsultorio extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(jTable1);
 
+        setForeground(new java.awt.Color(153, 255, 102));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Vista Consultorio");
 
@@ -95,6 +97,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        tablaequipamiento.setForeground(new java.awt.Color(204, 255, 255));
         tablaequipamiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -139,6 +142,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        tablausos.setForeground(new java.awt.Color(204, 255, 255));
         tablausos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -200,6 +204,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        consultorios.setBackground(new java.awt.Color(255, 204, 204));
         consultorios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
