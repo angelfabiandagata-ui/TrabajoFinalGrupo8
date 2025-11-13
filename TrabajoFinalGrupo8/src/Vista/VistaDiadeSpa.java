@@ -5,6 +5,7 @@
 package Vista;
 
 import Modelo.Cliente;
+import Persistencia.ClienteData;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VistaDiadeSpa extends javax.swing.JPanel {
 private DefaultTableModel modeloTabla;
+private ClienteData clienteData;
     /**
      * Creates new form VistaDiadeSpa
      */
@@ -21,21 +23,32 @@ private DefaultTableModel modeloTabla;
         initComponents();
         configurarTabla();
     }
- private void configurarTabla() {
-        modeloTabla = new DefaultTableModel(
-                new Object[]{"ID DEL CLIENTE"}, 0
-        );
-        jTable1.setModel(modeloTabla);
-    }
- void  mostrarClientes(List<Cliente>lista){
-     modeloTabla.setRowCount(0);
-     for (Cliente clientes : lista) {
-         modeloTabla.addRow(new Object[]{clientes.getCodCli()});
-         
-     }
-    
+private void configurarTabla() {
+    modeloTabla = new DefaultTableModel(
+            new Object[]{"ID","DNI","Nombre","Teléfono","Estado"}, 0
+    );
+    jTable1.setModel(modeloTabla);
 }
-   
+ void  mostrarClientes(){
+  modeloTabla.setRowCount(0);
+        try {
+            List<Cliente> clientes = clienteData.listarClientesActivos();
+            
+            
+            for (Cliente cliente : clientes) {
+                Object [] fila = new Object[5];
+                
+                fila[0] = cliente.getCodCli();
+                fila[1] = cliente.getDni();
+                fila[2] = cliente.getNombrecompleto();
+                fila[3] = cliente.getTelefono();
+                fila[4] = cliente.isEstado() ? "Activo" : "Baja Logica";
+                
+                modeloTabla.addRow(fila);
+            }
+        } catch (Exception e) {
+        }
+ }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
