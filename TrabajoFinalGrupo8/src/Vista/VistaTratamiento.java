@@ -21,13 +21,10 @@ import java.util.List;
  */
 public class VistaTratamiento extends javax.swing.JInternalFrame {
 
-    private TratamientoData tratamientoData = new TratamientoData();
+ private TratamientoData tratamientoData = new TratamientoData();
     private DefaultTableModel modeloTabla;
-    menu menu;
-    
-    public VistaTratamiento(menu menu) {
+    public VistaTratamiento() {
         initComponents();
-        this.menu = menu;
         configurarTabla();
         actulizarTabla();
         javax.swing.JDesktopPane desktopPane = this.getDesktopPane();
@@ -332,8 +329,8 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                         .addGap(285, 285, 285)
                         .addComponent(buttomBajaTrat))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(149, 149, 149)
+                        .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -372,9 +369,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                                 .addComponent(jButton3))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelTrat10)
-                        .addGap(37, 37, 37)
+                        .addGap(46, 46, 46)
                         .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelTrat5)
                             .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -559,9 +556,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttomBajaTratActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       this.setVisible(false);
-       this.setEnabled(true);
-       menu.activarTodosLosBotones();
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtCodTratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodTratActionPerformed

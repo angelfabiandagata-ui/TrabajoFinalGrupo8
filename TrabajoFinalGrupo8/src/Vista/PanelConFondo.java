@@ -14,20 +14,19 @@ public class PanelConFondo extends JPanel {
             System.err.println("Error al cargar imagen de fondo: " + e.getMessage());
         }
         
-        // 🔹 Acomodo corregido (Turnos a la izquierda, Configuración a la derecha)
-        if (url.equals("/Vista/Disenio/Turnos.png")) {
-            this.setSize(180, 180);
-            this.setBounds(531, 100, 225, 220); // izquierda
-        }
-        if (url.equals("/Vista/Disenio/Configuracion.png")) {
+        if(url == "/Vista/Disenio/uno.png"){
             this.setSize(200, 200);
-            this.setBounds(826, 100, 225, 220); // derecha
+            this.setBounds(531, 100, 225, 220);
         }
-
-        this.setLayout(null);
+        if(url == "/Vista/Disenio/dos.png"){
+            this.setSize(180, 180);
+            this.setBounds(826, 100, 225, 220);
+        }
+         this.setLayout(null);
     }
 
     @Override
+    // graficos sirve para pintar este panel con fondo de esa imagen
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (imagenFondo != null) {
