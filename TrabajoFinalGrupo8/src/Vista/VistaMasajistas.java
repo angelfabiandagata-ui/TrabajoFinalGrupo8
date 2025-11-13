@@ -398,7 +398,7 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
             if (confrimacion == JOptionPane.YES_OPTION) {
                 
                 masajistaData.borrar(matricula);
-                JOptionPane.showMessageDialog(this,"Masajista Eliminado","Dada de baja existosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,"Masajista Eliminado","Eliminacion existosa", JOptionPane.INFORMATION_MESSAGE);
             
             Limpiar();
             actualizarTabla();
