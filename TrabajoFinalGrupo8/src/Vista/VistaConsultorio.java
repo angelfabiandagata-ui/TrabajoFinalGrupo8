@@ -494,18 +494,22 @@ public class VistaConsultorio extends javax.swing.JPanel {
     }//GEN-LAST:event_radiobuscarActionPerformed
 
     private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
+       
+        int filaAborrar = consultorios.getSelectedRow();
+        if (filaAborrar == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.");
+            return;
+        }
 
-       int filaAborrar = consultorios.getSelectedRow();
-       
-       if(filaAborrar == -1) {return;}       
-       
-       consultorio.Eliminar(filaAborrar);
-       
-         actualizarListas();
-         actualizarArreglo();    
-       
-    
-    
+        //las columnas de la tabla empiezan en el cero
+        int aBorrar = (int) consultorios.getValueAt(filaAborrar, 0);
+
+        System.out.println("ID a borrar: " + aBorrar);
+
+        consultorio.Eliminar(aBorrar);
+        
+        actualizarArreglo();
+
     }//GEN-LAST:event_borrarActionPerformed
 
     
