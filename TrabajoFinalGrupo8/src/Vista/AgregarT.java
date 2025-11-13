@@ -4,13 +4,59 @@
  */
 package Vista;
 
+import Modelo.Consultorio;
+import Modelo.Masajista;
+import Modelo.Tratamiento;
+import Persistencia.ConsultorioData;
+import Persistencia.MasajistaData;
+import Persistencia.TratamientoData;
 import Vista.menu;
+import java.util.List;
 
 /**
  *
  * @author Ema
  */
 public class AgregarT extends javax.swing.JPanel {
+    
+    private TratamientoData tratamientoData = new TratamientoData();
+    private MasajistaData masajistaData = new MasajistaData();
+    private ConsultorioData consultorioData = new ConsultorioData();
+
+
+private void cargarTratamientosComboBox() {
+    
+   
+    jComboBoxTratamiento.removeAllItems();
+
+ 
+    List<Tratamiento> tratamientos = tratamientoData.listarTratamientos();
+
+   
+    for (Tratamiento t : tratamientos) {
+        jComboBoxTratamiento.addItem(t);
+    }
+}
+
+private void cargarMasajistasComboBox() {
+    jComboBoxMasajista.removeAllItems();
+
+    List<Masajista> masajistas = masajistaData.listarMasajista();
+
+    for (Masajista m : masajistas) {
+        jComboBoxMasajista.addItem(m);
+    }
+}
+
+private void cargarConsultoriosComboBox() {
+    jComboBoxConsultorio.removeAllItems();
+
+    List<Consultorio> consultorios = consultorioData.Listar();
+
+    for (Consultorio c : consultorios) {
+        jComboBoxConsultorio.addItem(c);
+    }
+}
 
     menu men;
     
@@ -19,6 +65,9 @@ public class AgregarT extends javax.swing.JPanel {
      */
     public AgregarT(menu men) {
         initComponents();
+        cargarTratamientosComboBox();
+        cargarMasajistasComboBox();
+        cargarConsultoriosComboBox();
         this.men = men;
     }
 
@@ -48,11 +97,11 @@ public class AgregarT extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxConsultorio = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxTratamiento = new javax.swing.JComboBox<>();
         Masajista = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        jComboBoxMasajista = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -112,15 +161,9 @@ public class AgregarT extends javax.swing.JPanel {
 
         jLabel3.setText("Consultorio");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel4.setText("Tratamiento");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         Masajista.setText("Masajista");
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -133,10 +176,10 @@ public class AgregarT extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBoxConsultorio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxMasajista, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxTratamiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -145,15 +188,15 @@ public class AgregarT extends javax.swing.JPanel {
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxConsultorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Masajista)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxMasajista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(130, Short.MAX_VALUE))
         );
 
@@ -409,12 +452,12 @@ public class AgregarT extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
+    private javax.swing.JComboBox<Consultorio> jComboBoxConsultorio;
+    private javax.swing.JComboBox<Masajista> jComboBoxMasajista;
+    private javax.swing.JComboBox<Tratamiento> jComboBoxTratamiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

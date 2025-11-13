@@ -55,6 +55,11 @@ public class Consultorio {
     public void setApto(boolean apto) {
         this.apto = apto;
     }
-    
-//fin    
+@Override
+public String toString() {
+    return String.valueOf(nroConsultorio);
 }
+}
+
+//fin    
+

@@ -83,6 +83,10 @@ public class Masajista {
         this.estado = estado;
     }
 //final  
+@Override
+public String toString() {
+    return nombre + " " + apellido;
+}
 
  
 }
