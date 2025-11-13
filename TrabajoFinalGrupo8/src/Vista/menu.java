@@ -366,15 +366,15 @@ public class menu extends javax.swing.JFrame {
         
         //turno
         agregar = crearBotonInvisible(120, 0, 110, 110, this::uno , "agregar");
-        verturnos = crearBotonInvisible(120, 110, 110,110, this::configuracionAvanzada, "a");
+        verturnos = crearBotonInvisible(120, 110, 110,110, this::seis, "a");
         eliminar = crearBotonInvisible(0, 110, 117, 110,  this::tres, "b");
-        turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::abrirTratamiento , "c");
+        turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::agregar , "c");
         
         //configuracion
         tratamientos = crearBotonInvisible(120, 0, 110, 110, this::cinco , "d");
-        instalaciones = crearBotonInvisible(120, 110, 117,110,  this::seis, "e");
+        instalaciones = crearBotonInvisible(120, 110, 117,110,  this::configuracionAvanzada, "e");
         abrirConsultorio = crearBotonInvisible(0, 110, 117, 110,  this::abrirConsultorio , "f");
-        configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::agregar , "g");        
+        configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::abrirTratamiento , "g");        
         
         // -> importante: los paneles que van a contener botones internos deben usar layout null
         // para que respeten los bounds de los botones que ya creaste arriba
