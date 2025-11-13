@@ -339,8 +339,8 @@ public class menu extends javax.swing.JFrame {
         botonTurnos = crearBotonInvisible(825, 100, 225, 220, this::abrirTurnos, "Turnos"); 
         
         // botones para cerrar paneles
-        botonCerrarConfig = crearBotonInvisible(775, 100, 50, 60, this::cerrarConfiguracion, "Cerrar Configuración");
-        botonCerrarTurnos = crearBotonInvisible(480, 100, 50, 60, this::cerrarTurnos, "Cerrar Turnos");
+        botonCerrarConfig = crearBotonInvisible(480, 100, 50, 60, this::cerrarConfiguracion, "Cerrar Configuración");
+        botonCerrarTurnos = crearBotonInvisible(775, 100, 50, 60, this::cerrarTurnos, "Cerrar Turnos");
 
         // botones
         panelFondo.add(botonConfiguracion);
@@ -484,7 +484,7 @@ public class menu extends javax.swing.JFrame {
         VistaConfiguracion.setVisible(false);
         jDesktopPane1.repaint();
         botonConfiguracion.setEnabled(true);
-        botonConfiguracion.setVisible(true); // 🔹 vuelve a mostrarse
+        botonConfiguracion.setVisible(true); 
     }
 
     private void cerrarTurnos() {
