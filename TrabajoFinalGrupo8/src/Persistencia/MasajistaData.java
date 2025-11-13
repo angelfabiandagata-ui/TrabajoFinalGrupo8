@@ -143,13 +143,8 @@ public class MasajistaData {
                       m.setEstado(rs.getBoolean("estado"));
                    masajistas.add(m);
                   }
-              } catch (Exception e) {
-                  // *******************************************************
-        // 🚨 CAMBIO CRÍTICO: Muestra la traza completa (STACK TRACE)
-        System.err.println("------------------------------------------");
-        System.err.println("⚠️ ERROR FATAL AL LISTAR MASAJISTAS:");
-        e.printStackTrace(); 
-        System.err.println("------------------------------------------");
+              } catch (SQLException e) {
+                  System.out.println("Error al listar masajistas" + e.getMessage());
               }
               return masajistas;
           }
