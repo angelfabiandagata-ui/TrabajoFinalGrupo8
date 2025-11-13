@@ -221,10 +221,11 @@ public class menu extends javax.swing.JFrame {
     private JButton botonCerrarTurnos;
 
     // paneles
-    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/uno.png");
-    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/dos.png");
+    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/Turnos.png");
+    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/Configuracion.png");
+
     
-    //botones dentro de paneles
+    private VistaConsultorio cons;
     //turnos
     private JButton agregar;
     private JButton verturnos;
@@ -234,7 +235,7 @@ public class menu extends javax.swing.JFrame {
     //configuracion
     private JButton tratamientos;
     private JButton instalaciones;
-    private JButton historial;
+    private JButton abrirConsultorio;
     private JButton configuracionAvanzada;
 
     //botones simples del panel
@@ -334,9 +335,9 @@ public class menu extends javax.swing.JFrame {
         jDesktopPane1.add(panelFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         // 🔸 Botones principales
-        botonConfiguracion = crearBotonInvisible(825, 100, 225, 220, this::abrirConfiguracion, "Configuración");
-        botonTurnos = crearBotonInvisible(530, 100, 225, 220, this::abrirTurnos, "Turnos");
-
+        botonConfiguracion = crearBotonInvisible(530, 100, 225, 220, this::abrirConfiguracion, "Configuración");
+        botonTurnos = crearBotonInvisible(825, 100, 225, 220, this::abrirTurnos, "Turnos"); 
+        
         // botones para cerrar paneles
         botonCerrarConfig = crearBotonInvisible(775, 100, 50, 60, this::cerrarConfiguracion, "Cerrar Configuración");
         botonCerrarTurnos = crearBotonInvisible(480, 100, 50, 60, this::cerrarTurnos, "Cerrar Turnos");
@@ -372,7 +373,7 @@ public class menu extends javax.swing.JFrame {
         //configuracion
         tratamientos = crearBotonInvisible(120, 0, 110, 110, this::cinco , "d");
         instalaciones = crearBotonInvisible(120, 110, 117,110,  this::seis, "e");
-        historial = crearBotonInvisible(0, 110, 117, 110,  this::siete , "f");
+        abrirConsultorio = crearBotonInvisible(0, 110, 117, 110,  this::abrirConsultorio , "f");
         configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::agregar , "g");        
         
         // -> importante: los paneles que van a contener botones internos deben usar layout null
@@ -409,6 +410,24 @@ public class menu extends javax.swing.JFrame {
         prepararInternalFrame(tratamientos);
     }
 
+    private void abrirConsultorio(){
+        
+         if(cons == null){
+    cons = new VistaConsultorio(this);
+    cons.setBounds(0, 0, 900, 400);
+    jDesktopPane1.add(cons);
+    int x = (this.getWidth() - cons.getWidth()) / 2;
+    int y = (this.getHeight() - cons.getHeight()) / 2;
+    cons.setLocation(x, y);
+    }
+    jDesktopPane1.moveToFront(cons);
+    
+    cons.setEnabled(true);
+    cons.setVisible(true);
+    
+    desactivarTodosLosBotones();
+    
+    }
     
     //--------------turnos--------------
     private void abrirTurnos() {
@@ -421,7 +440,7 @@ public class menu extends javax.swing.JFrame {
         //añadir el panel turnos a la vista del desktop frame
         if (VistaTurnos.getParent() == null) {
             jDesktopPane1.add(VistaTurnos);
-            VistaTurnos.setBounds(530, 100, 225, 220); // 🔹 posición fija
+            VistaTurnos.setBounds(825, 100, 225, 220); 
 
             //añadir botones (solo una vez)
             if (VistaTurnos.getComponentCount() == 0) {
@@ -446,13 +465,13 @@ public class menu extends javax.swing.JFrame {
 
         if (VistaConfiguracion.getParent() == null) {
             jDesktopPane1.add(VistaConfiguracion);
-            VistaConfiguracion.setBounds(825, 100, 225, 220); // 🔹 posición fija
+            VistaConfiguracion.setBounds(530, 100, 225, 220); // 🔹 posición fija
 
             //añadir botones solo una vez
             if (VistaConfiguracion.getComponentCount() == 0) {
                 VistaConfiguracion.add(tratamientos);
                 VistaConfiguracion.add(instalaciones);
-                VistaConfiguracion.add(historial);
+                VistaConfiguracion.add(abrirConsultorio);
                 VistaConfiguracion.add(configuracionAvanzada);
             }
         }
@@ -540,7 +559,6 @@ public class menu extends javax.swing.JFrame {
     private void cuatro(){ System.out.println("cuatro"); }
     private void cinco(){ System.out.println("cinco"); }
     private void seis(){ System.out.println("seis"); }
-    private void siete(){ System.out.println("nueve"); }
     private void ocho(){ System.out.println("ocho"); }
 
     private void prepararInternalFrame(JInternalFrame frame) {
