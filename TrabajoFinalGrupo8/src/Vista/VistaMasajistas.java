@@ -234,7 +234,7 @@ public class VistaMasajistas extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione una Esp--", "Facial", "Corporal", "Relajación", "estético" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione una Esp--", "Facial", "Corporal", "Relajación", "Estético" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);

@@ -218,6 +218,8 @@ public class menu extends javax.swing.JFrame {
     private Clip clipMusica;
     private PanelConFondo panelFondo;
 
+    VistaConsultorio cons;
+    
     // abrir paneles
     private JButton botonConfiguracion;
     private JButton botonTurnos;
@@ -227,8 +229,8 @@ public class menu extends javax.swing.JFrame {
     private JButton botonCerrarTurnos;
 
     // paneles
-    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/uno.png");
-    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/dos.png");
+    private PanelConFondo VistaTurnos = new PanelConFondo("/Vista/Disenio/unoa.png");
+    private PanelConFondo VistaConfiguracion = new PanelConFondo("/Vista/Disenio/dosa.png");
     
     //botones dentro de paneles
     //turnos
@@ -362,7 +364,7 @@ public class menu extends javax.swing.JFrame {
         //turno
         agregar = crearBotonInvisible(120, 0, 110, 110, this::uno , "agregar");
         verturnos = crearBotonInvisible(120, 110, 110,110, this::configuracionAvanzada, "a");
-        eliminar = crearBotonInvisible(0, 110, 117, 110,  this::tres, "b");
+        eliminar = crearBotonInvisible(0, 110, 117, 110,  this::abrirConsultorio, "b");
         turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::abrirTratamiento , "c");
         
         //configuracion
@@ -505,8 +507,23 @@ public class menu extends javax.swing.JFrame {
     jDesktopPane1.moveToFront(con);
     
 }
-
-
+    public void abrirConsultorio(){
+    if(cons == null){
+    cons = new VistaConsultorio();
+    cons.setBounds(0, 0, 900, 400);
+    jDesktopPane1.add(cons);
+    int x = (this.getWidth() - cons.getWidth()) / 2;
+    int y = (this.getHeight() - cons.getHeight()) / 2;
+    cons.setLocation(x, y);
+    }
+    jDesktopPane1.moveToFront(cons);
+    
+    cons.setEnabled(true);
+    cons.setVisible(true);
+    
+    desactivarTodosLosBotones();
+    }
+    
     
     // se usa para cuando un panel se agranda y no quieres que interfiera con otros del panel abierto
     public void desactivarTodosLosBotones() {
@@ -525,7 +542,6 @@ public class menu extends javax.swing.JFrame {
 
     private void uno(){ System.out.println("UNO"); }
     private void dos(){ System.out.println("dos"); }
-    private void tres(){ System.out.println("tres"); }
     private void cuatro(){ System.out.println("cuatro"); }
     private void cinco(){ System.out.println("cinco"); }
     private void seis(){ System.out.println("seis"); }

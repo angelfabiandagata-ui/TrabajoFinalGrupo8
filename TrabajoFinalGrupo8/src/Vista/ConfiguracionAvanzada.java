@@ -77,20 +77,7 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
 
     private void jbabrirconsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirconsultorioActionPerformed
     
-    if(cons == null){
-    cons = new VistaConsultorio();
-    cons.setBounds(0, 0, 900, 400);
-    desktop.add(cons);
-    int x = (desktop.getWidth() - cons.getWidth()) / 2;
-    int y = (desktop.getHeight() - cons.getHeight()) / 2;
-    cons.setLocation(x, y);
-    }
-    desktop.moveToFront(cons);
     
-    cons.setEnabled(true);
-    cons.setVisible(true);
-    
-    menu.desactivarTodosLosBotones();
     }//GEN-LAST:event_jbabrirconsultorioActionPerformed
 
     private void jbsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbsalirActionPerformed

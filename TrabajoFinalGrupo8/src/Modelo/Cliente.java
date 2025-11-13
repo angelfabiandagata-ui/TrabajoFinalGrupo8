@@ -7,35 +7,39 @@ package Modelo;
 public class Cliente {
        
     //ATRIBUTOS
-    private int codCli;
+    private int codCliente;
     private long dni;
-    private String nombrecompleto;
+    private String nombre;
+    private String apellido;
     private long telefono;
     private int edad;
     private String afeciones;
     private boolean estado;
     
     //CONSTRUCTOR
-    public Cliente(int codCli, long dni, String nombrecompleto, long telefono, int edad, String afeciones, boolean estado) {
-        this.codCli = codCli;
+
+    public Cliente(int codCliente, long dni, String nombre, String apellido, long telefono, int edad, String afeciones, boolean estado) {
+        this.codCliente = codCliente;
         this.dni = dni;
-        this.nombrecompleto = nombrecompleto;
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.telefono = telefono;
         this.edad = edad;
         this.afeciones = afeciones;
         this.estado = estado;
-    }    
+    }
+  
 
     public Cliente() {
     }
     
     //GETTERS AND SETTERS
     public int getCodCli() {
-        return codCli;
+        return codCliente;
     }
 
     public void setCodCli(int codCli) {
-        this.codCli = codCli;
+        this.codCliente = codCli;
     }
 
     public long getDni() {
@@ -46,13 +50,23 @@ public class Cliente {
         this.dni = dni;
     }
 
-    public String getNombrecompleto() {
-        return nombrecompleto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombrecompleto(String nombrecompleto) {
-        this.nombrecompleto = nombrecompleto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+ 
 
     public long getTelefono() {
         return telefono;
