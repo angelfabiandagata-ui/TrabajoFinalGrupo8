@@ -313,7 +313,7 @@
                 <StringItem index="1" value="Facial"/>
                 <StringItem index="2" value="Corporal"/>
                 <StringItem index="3" value="Relajaci&#xf3;n"/>
-                <StringItem index="4" value="est&#xe9;tico"/>
+                <StringItem index="4" value="Est&#xe9;tico"/>
               </StringArray>
             </Property>
           </Properties>

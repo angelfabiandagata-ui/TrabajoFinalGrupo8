@@ -38,16 +38,17 @@ public class ClienteData {
 
     }
     public void guardarCliente(Cliente cliente){
-        String sql = "INSERT INTO cliente (dni, nombre, telefono, edad, afecciones, estado) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO cliente (dni, nombre, apellido, telefono, edad, afecciones, estado) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             
             ps.setLong(1, cliente.getDni());
-            ps.setString(2, cliente.getNombrecompleto());
-            ps.setLong(3, cliente.getTelefono());
-            ps.setInt(4, cliente.getEdad());
-            ps.setString(5, cliente.getAfeciones());
-            ps.setBoolean(6, cliente.isEstado());
+            ps.setString(2, cliente.getNombre());
+            ps.setString(3, cliente.getApellido());
+            ps.setLong(4, cliente.getTelefono());
+            ps.setInt(5, cliente.getEdad());
+            ps.setString(6, cliente.getAfeciones());
+            ps.setBoolean(7, cliente.isEstado());
             ps.executeUpdate();
             
         
@@ -67,15 +68,16 @@ public class ClienteData {
     }
     
     public void modificarCliente(Cliente cliente) {
-        String sql = "UPDATE cliente SET dni=?, nombre=?, telefono=?, edad=?, afecciones=?, estado=? WHERE codCli=?";
+        String sql = "UPDATE cliente SET dni=?, nombre=?,apellido=? telefono=?, edad=?, afecciones=?, estado=? WHERE codCli=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, cliente.getDni());
-            ps.setString(2, cliente.getNombrecompleto());
-            ps.setLong(3, cliente.getTelefono());
-            ps.setInt(4, cliente.getEdad());
-            ps.setString(5, cliente.getAfeciones());
-            ps.setInt(6, cliente.isEstado()? 1 : 0);
-            ps.setInt(7, cliente.getCodCli());
+            ps.setString(2, cliente.getNombre());
+            ps.setString(3, cliente.getApellido());
+            ps.setLong(4, cliente.getTelefono());
+            ps.setInt(5, cliente.getEdad());
+            ps.setString(6, cliente.getAfeciones());
+            ps.setInt(7, cliente.isEstado()? 1 : 0);
+            ps.setInt(8, cliente.getCodCli());
             ps.executeUpdate();
             System.out.println("Cliente modificado correctamente.");
         } catch (SQLException e) {
@@ -83,12 +85,12 @@ public class ClienteData {
         }
     }
     
-     public void eliminarCliente(int codCli) {
-        String sql = "UPDATE cliente SET estado='0' WHERE codCliente=?";
+     public void eliminarCliente(int codCliente) {
+        String sql = "DELETE FROM  cliente WHERE codCliente=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, codCli);
+            ps.setInt(1, codCliente);
             ps.executeUpdate();
-            System.out.println("Cliente dado de baja correctamente.");
+            System.out.println("Cliente eliminado correctamente.");
         } catch (SQLException e) {
             System.out.println("Error al eliminar cliente: " + e.getMessage());
         }
@@ -104,7 +106,8 @@ public class ClienteData {
                 cliente = new Cliente();
                 cliente.setCodCli(rs.getInt("codCli"));
                 cliente.setDni(rs.getLong("dni"));
-                cliente.setNombrecompleto(rs.getString("nombre"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("nombre"));
                 cliente.setTelefono(rs.getLong("telefono"));
                 cliente.setEdad(rs.getInt("edad"));
                 cliente.setAfeciones(rs.getString("afecciones"));
@@ -127,7 +130,8 @@ public class ClienteData {
                 cliente = new Cliente();
                 cliente.setCodCli(rs.getInt("codCli"));
                 cliente.setDni(rs.getLong("dni"));
-                cliente.setNombrecompleto(rs.getString("nombre"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("nombre"));
                 cliente.setTelefono(rs.getLong("telefono"));
                 cliente.setEdad(rs.getInt("edad"));
                 cliente.setAfeciones(rs.getString("afecciones"));
@@ -140,17 +144,17 @@ public class ClienteData {
     }
 
    
-    public List<Cliente> listarClientesActivos() {
+    public List<Cliente> listarClientes() {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM cliente WHERE estado='1'";
+        String sql = "SELECT * FROM cliente ";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setCodCli(rs.getInt("codCliente"));
                 c.setDni(rs.getLong("dni"));
-                c.setNombrecompleto(rs.getString("nombre"));
-                
+                c.setNombre(rs.getString("nombre"));
+                c.setApellido(rs.getString("nombre"));
                 c.setTelefono(rs.getLong("telefono"));
                 c.setEdad(rs.getInt("edad"));
                 c.setAfeciones(rs.getString("afecciones"));
@@ -162,6 +166,28 @@ public class ClienteData {
         }
         return clientes;
     }
-     
+ 
+public void bajaCliente(int codCliente){
+           String sql = "UPDATE cliente SET estado = 0 WHERE codCliente = ?" ;
+           try {
+               PreparedStatement ps = con.prepareStatement(sql);
+              ps.setLong(1, codCliente);
+              ps.executeUpdate();
+              ps.close();
+           } catch (SQLException e) {
+               System.out.println("Error al dar de baja al cliente" + e.getMessage());
+           }
+       }
+        public void altaCliente(int codCliente){
+           String sql = "UPDATE cliente SET estado = 1 WHERE codCliente = ?" ;
+           try {
+               PreparedStatement ps = con.prepareStatement(sql);
+              ps.setLong(1, codCliente);
+              ps.executeUpdate();
+              ps.close();
+           } catch (SQLException e) {
+               System.out.println("Error al dar de alta al cliente" + e.getMessage());
+           }
+       }    
 }
 
