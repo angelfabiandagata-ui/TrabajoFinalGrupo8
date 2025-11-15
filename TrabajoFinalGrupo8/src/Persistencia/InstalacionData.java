@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 public class InstalacionData {
 
-    private Connection con = null;
+    private  Connection con = null;
 
     public InstalacionData(java.sql.Connection conexion) {
         this.con = conexion;
@@ -38,16 +38,17 @@ public class InstalacionData {
     
 public void guardarInstalacion(Instalacion inst) { 
     // ERROR: Tienes 4 columnas pero 5 parámetros (?)
-    String sql = "INSERT INTO `instalacion`(`nombre`, `detalle_uso`, `precio30m`, `estado`) VALUES (?,?,?,?)";
+    String sql = "INSERT INTO `instalacion`(`codInstalacion`, `nombre`, `detalle_uso`, `precio30m`, `estado`) VALUES (?,?,?,?,?)";
     
     try{
         
         PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         
-        ps.setString(1, inst.getNombre());
-        ps.setString(2, inst.getDetalleUso());
-        ps.setDouble(3, inst.getPrecio30min());
-        ps.setBoolean(4, inst.isEstado());
+        ps.setInt(1, inst.getCodInstal());
+        ps.setString(2, inst.getNombre());
+        ps.setString(3, inst.getDetalleUso());
+        ps.setDouble(4, inst.getPrecio30min());
+        ps.setBoolean(5, inst.isEstado());
         
         int filas = ps.executeUpdate();
         
@@ -69,7 +70,7 @@ public void guardarInstalacion(Instalacion inst) {
 
     public Instalacion buscarInstalacion(int id) {
        
-        String sql = "SELECT * FROM `instalacion` WHERE id = ?";
+        String sql = "SELECT * FROM `instalacion` WHERE codInstalacion = ?";
         Instalacion inst = null; 
     
     try {
@@ -80,11 +81,11 @@ public void guardarInstalacion(Instalacion inst) {
         if (rs.next()) { 
             inst = new Instalacion(); 
             
-            inst.setCodInstal(rs.getInt(0));
-            inst.setNombre(rs.getString(1));
-            inst.setDetalleUso(rs.getString(2));
-            inst.setPrecio30min(rs.getDouble(3));
-            inst.setEstado(rs.getBoolean(4));                  
+            inst.setCodInstal(rs.getInt(1));
+            inst.setNombre(rs.getString(2));
+            inst.setDetalleUso(rs.getString(3));
+            inst.setPrecio30min(rs.getDouble(4));
+            inst.setEstado(rs.getBoolean(5));                  
             rs.close();
             ps.close();
         }           
@@ -94,9 +95,35 @@ public void guardarInstalacion(Instalacion inst) {
     return inst; 
     }
     
+     public  boolean existeInstalacion(int codInstalacion) {
+    String sql = "SELECT codInstalacion FROM instalacion WHERE codInstalacion = ?";
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, codInstalacion);
+        rs = ps.executeQuery();
+
+        
+        boolean existe = rs.next(); 
+        
+        ps.close();
+        rs.close();
+        
+        return existe;
+
+    } catch (SQLException ex) {
+        
+        System.out.println("Error al verificar la existencia de la Instalacion: " + ex.getMessage());
+        return true; 
+    }
+}
+    
+    
     public void actualizarInstalacion(Instalacion inst) {
         try {
-            String sql = "UPDATE `instalacion` SET `codInstalacion`=?,`nombre`=?,`detalle_uso`=?,`precio30m`=?,`estado`=? WHERE 1";
+            String sql = "UPDATE `instalacion` SET `codInstalacion`=?,`nombre`=?,`detalle_uso`=?,`precio30m`=?,`estado`=? WHERE `codInstalacion`=?";
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps.setInt(1, inst.getCodInstal());
@@ -132,7 +159,7 @@ public void guardarInstalacion(Instalacion inst) {
 
      public List<Instalacion> listarInstalasciones() {
         List<Instalacion> instalaciones = new ArrayList<>();
-        String sql = "SELECT * FROM `alumno` WHERE `estado` = true";
+        String sql = "SELECT * FROM `instalaciones` WHERE `estado` = true";
         
           try {
         PreparedStatement ps = con.prepareStatement(sql);
@@ -141,11 +168,11 @@ public void guardarInstalacion(Instalacion inst) {
         while (rs.next()) {
             Instalacion inst = new Instalacion();    
             
-            inst.setCodInstal(rs.getInt(0));
-            inst.setNombre(rs.getString(1));
-            inst.setDetalleUso(rs.getString(2));
-            inst.setPrecio30min(rs.getDouble(3));
-            inst.setEstado(rs.getBoolean(4)); 
+            inst.setCodInstal(rs.getInt(1));
+            inst.setNombre(rs.getString(2));
+            inst.setDetalleUso(rs.getString(3));
+            inst.setPrecio30min(rs.getDouble(4));
+            inst.setEstado(rs.getBoolean(5)); 
                        
             inst.setEstado(true);
             instalaciones.add(inst);

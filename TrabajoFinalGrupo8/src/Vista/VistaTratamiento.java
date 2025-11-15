@@ -112,7 +112,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     return nuevoTratamiento; 
 }
     private void configurarTabla(){
-        String[] Titulos = {"codigoTratamiento", "nombre", "Nombre", "detalle", "producto","duracion","costo","estado"};
+        String[] Titulos = {"codigoTratamiento", "Nombre", "detalle", "producto","duracion","costo","estado"};
         modeloTabla = new DefaultTableModel(Titulos, 0);
         
         jTable1.setModel(modeloTabla);

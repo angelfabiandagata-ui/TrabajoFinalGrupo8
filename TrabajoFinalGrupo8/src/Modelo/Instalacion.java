@@ -3,7 +3,7 @@ package Modelo;
 
 public class Instalacion {
     //Atributos
-    private int codInstal;
+    private int codInstalacion;
     private String nombre;
     private String detalleUso;
     private double precio30min;
@@ -13,7 +13,7 @@ public class Instalacion {
     }
 
     public Instalacion(int codInstal, String nombre, String detalleUso, double precio30min, boolean estado) {
-        this.codInstal = codInstal;
+        this.codInstalacion = codInstalacion;
         this.nombre = nombre;
         this.detalleUso = detalleUso;
         this.precio30min = precio30min;
@@ -21,11 +21,11 @@ public class Instalacion {
     }
     //Getters y Setters
     public int getCodInstal() {
-        return codInstal;
+        return codInstalacion;
     }
 
     public void setCodInstal(int codInstal) {
-        this.codInstal = codInstal;
+        this.codInstalacion = codInstal;
     }
 
     public String getNombre() {

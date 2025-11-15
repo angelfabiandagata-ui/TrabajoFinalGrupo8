@@ -314,6 +314,7 @@ public class menu extends javax.swing.JFrame {
 
         jMenu8.setText("Instalación");
         jMenuItem7.setText("Gestionar Instalaciones");
+        jMenuItem7.addActionListener(evt -> abrirInstalaciones());
         jMenu8.add(jMenuItem7);
         jMenuBar1.add(jMenu8);
 
@@ -355,14 +356,14 @@ public class menu extends javax.swing.JFrame {
         panelFondo.add(crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
         panelFondo.add(crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
         panelFondo.add(crearBotonInvisible(50, 50, 110, 110, this::abrirTratamiento, "Tratamientos"));
-
+        panelFondo.add(crearBotonInvisible(50, 50, 110, 110, this::abrirInstalaciones, "Instalaciones"));      
         jDesktopPane1.revalidate();
         jDesktopPane1.repaint();
         
         //botones dentro de los paneles
         
         //turno
-        agregar = crearBotonInvisible(120, 0, 110, 110, this::uno , "agregar");
+        agregar = crearBotonInvisible(120, 0, 110, 110, this::abrirInstalaciones , "Instalaciones");
         verturnos = crearBotonInvisible(120, 110, 110,110, this::configuracionAvanzada, "a");
         eliminar = crearBotonInvisible(0, 110, 117, 110,  this::abrirConsultorio, "b");
         turnosVacios = crearBotonInvisible(0, 0, 117, 110,  this::abrirTratamiento , "c");
@@ -402,6 +403,11 @@ public class menu extends javax.swing.JFrame {
         prepararInternalFrame(dias);
     }
 */
+      private void abrirInstalaciones() {
+        VistaInstalacion instalaciones = new VistaInstalacion();
+        prepararInternalFrame(instalaciones);
+    }
+    
     private void abrirMasajistas() {
         VistaMasajistas masajistas = new VistaMasajistas();
         prepararInternalFrame(masajistas);
