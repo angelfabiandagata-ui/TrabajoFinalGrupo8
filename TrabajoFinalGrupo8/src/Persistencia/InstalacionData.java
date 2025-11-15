@@ -157,9 +157,9 @@ public void guardarInstalacion(Instalacion inst) {
 
     }
 
-     public List<Instalacion> listarInstalasciones() {
+     public List<Instalacion> listarInstalaciones() {
         List<Instalacion> instalaciones = new ArrayList<>();
-        String sql = "SELECT * FROM `instalaciones` WHERE `estado` = true";
+        String sql = "SELECT * FROM `instalacion` WHERE `estado` = true";
         
           try {
         PreparedStatement ps = con.prepareStatement(sql);
@@ -174,12 +174,11 @@ public void guardarInstalacion(Instalacion inst) {
             inst.setPrecio30min(rs.getDouble(4));
             inst.setEstado(rs.getBoolean(5)); 
                        
-            inst.setEstado(true);
             instalaciones.add(inst);
         }
           ps.close();
     } catch (SQLException ex) {
-        System.out.println("Error al listar alumnos: " + ex.getMessage());
+        System.out.println("Error al listar Instalaciones: " + ex.getMessage());
     }
     return instalaciones;
 

@@ -27,12 +27,10 @@ private InstalacionData instalacionData = new InstalacionData();
     public VistaInstalacion() {
         initComponents();
         configurarTabla();
+        actulizarTabla();
     }
     
-    
-    
-    
-    
+      
      private Instalacion obtenerInstalacion(){
  
     int codInstal = 0;
@@ -72,13 +70,12 @@ private InstalacionData instalacionData = new InstalacionData();
      }
      
      
-     private void configurarTabla(){
-        String[] Titulos = {"codInstalacion", "Nombre", "detalle","costo","estado"};
-        modeloTabla = new DefaultTableModel(Titulos, 0);
-        
-        jTable1.setModel(modeloTabla);
-    }
-    
+private void configurarTabla(){
+    String[] Titulos = {"codInstalacion", "Nombre", "detalle","costo","estado"};
+    modeloTabla = new DefaultTableModel(Titulos, 0);
+    jTable1.setModel(modeloTabla);
+}
+
     
     private void Limpiar(){
         txtCodins.setText("");
@@ -92,7 +89,7 @@ private InstalacionData instalacionData = new InstalacionData();
        
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel(); 
     modelo.setRowCount(0); 
-    List<Instalacion> instalaciones = instalacionData.listarInstalasciones();
+    List<Instalacion> instalaciones = instalacionData.listarInstalaciones();
     System.out.println("Instalaciones cargadas de DB: " + instalaciones.size());
   
     for (Instalacion t : instalaciones) {
