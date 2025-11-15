@@ -191,6 +191,8 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import Vista.AgregarT;
+
 
 /**
  * (Tu clase menu - se mantuvo estructura, comentarios y nombres)
