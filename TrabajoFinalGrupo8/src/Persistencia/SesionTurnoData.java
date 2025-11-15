@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -228,6 +230,122 @@ String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado FR
     public void AsignarMasajistaSegunEspecialidad(SesionTurno sesionturno) {
 
     }
+     public boolean estaConsultorioOcupado(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, int nroConsultorio) {
+        String sql = "SELECT * FROM sesion WHERE nroConsultorio = ? AND estado = 1 AND "
+                   + "((fechaHoraInicio < ? AND fechaHoraFin > ?) OR "
+                   + "(fechaHoraInicio >= ? AND fechaHoraInicio < ?) OR "
+                   + "(fechaHoraFin > ? AND fechaHoraFin <= ?))";
+        
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, nroConsultorio);
+            ps.setTimestamp(2, java.sql.Timestamp.valueOf(fechaHoraFin));
+            ps.setTimestamp(3, java.sql.Timestamp.valueOf(fechaHoraInicio));
+            ps.setTimestamp(4, java.sql.Timestamp.valueOf(fechaHoraInicio));
+            ps.setTimestamp(5, java.sql.Timestamp.valueOf(fechaHoraFin));
+            ps.setTimestamp(6, java.sql.Timestamp.valueOf(fechaHoraInicio));
+            ps.setTimestamp(7, java.sql.Timestamp.valueOf(fechaHoraFin));
+            
+            ResultSet rs = ps.executeQuery();
+            return rs.next();             
+        } catch (SQLException ex) {
+            System.out.println("Error al validar consultorio: " + ex.getMessage());
+            return true; 
+}
+    }
+     
+       public boolean estaInstalacionOcupada(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, int nroConsultorio) {
+        String sql = "SELECT * FROM sesion s "
+                   + "INNER JOIN sesion_instalacion si ON s.codSesion = si.codSesion "
+                   + "WHERE si.codInstalacion = ? AND s.estado = 1 AND "
+                   + "((s.fechaHoraInicio < ? AND s.fechaHoraFin > ?) OR "
+                   + "(s.fechaHoraInicio >= ? AND s.fechaHoraInicio < ?) OR "
+                   + "(s.fechaHoraFin > ? AND s.fechaHoraFin <= ?))";
+        
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, nroConsultorio);
+            ps.setTimestamp(2, java.sql.Timestamp.valueOf(fechaHoraFin));
+            ps.setTimestamp(3, java.sql.Timestamp.valueOf(fechaHoraInicio));
+            ps.setTimestamp(4, java.sql.Timestamp.valueOf(fechaHoraInicio));
+            ps.setTimestamp(5, java.sql.Timestamp.valueOf(fechaHoraFin));
+            ps.setTimestamp(6, java.sql.Timestamp.valueOf(fechaHoraInicio));
+            ps.setTimestamp(7, java.sql.Timestamp.valueOf(fechaHoraFin));
+            
+            ResultSet rs = ps.executeQuery();
+            return rs.next();             
+        } catch (SQLException ex) {
+            System.out.println("Error al validar isntalacion: " + ex.getMessage());
+            return true; 
+}
+    }
+
+    
+    public List<LocalDateTime> obtenerHoraiosDisponi_Consul(LocalDate fecha, int nroConsultorio, int duracionMinutos){
+        List<LocalDateTime> horariosDisponibles = new ArrayList<>();
+        LocalTime inicioDia = LocalTime.of(9,0); //abre el spa
+        LocalTime finDia = LocalTime.of(22,0); // cierrra el spa
+        
+        LocalDateTime fechayhotaActual = fecha.atTime(inicioDia);
+        
+        while (fechayhotaActual.toLocalTime().isBefore(finDia)) {            
+            LocalDateTime fechaHoraFin = fechayhotaActual.plusMinutes(duracionMinutos);
+            
+            if (!estaConsultorioOcupado(fechaHoraFin, fechaHoraFin, nroConsultorio)) {
+                horariosDisponibles.add(fechayhotaActual);
+            }
+            fechayhotaActual = fechayhotaActual.plusMinutes(60); //Una hora por instalacon
+        }
+        return  horariosDisponibles;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
         /*    
         } catch (SQLException ex) {
