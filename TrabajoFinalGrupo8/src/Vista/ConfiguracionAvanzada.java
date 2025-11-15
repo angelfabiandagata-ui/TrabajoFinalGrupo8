@@ -75,11 +75,6 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbabrirconsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirconsultorioActionPerformed
-    
-    
-    }//GEN-LAST:event_jbabrirconsultorioActionPerformed
-
     private void jbsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbsalirActionPerformed
       
        
@@ -87,6 +82,10 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
     this.setEnabled(false);
         
     }//GEN-LAST:event_jbsalirActionPerformed
+
+    private void jbabrirconsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirconsultorioActionPerformed
+
+    }//GEN-LAST:event_jbabrirconsultorioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
