@@ -7,6 +7,7 @@ package Vista;
 import Modelo.Cliente;
 import Persistencia.ClienteData;
 import java.util.List;
+import javax.swing.JInternalFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,7 +33,10 @@ private void configurarTabla() {
  void  mostrarClientes(){
   modeloTabla.setRowCount(0);
         try {
-            List<Cliente> clientes = clienteData.listarClientesActivos();
+            
+            //Cambie listar Cliente(F)
+            List<Cliente> clientes = clienteData.listarClientes();
+        //    List<Cliente> clientes = clienteData.listarClientesActivos();
             
             
             for (Cliente cliente : clientes) {
@@ -40,9 +44,15 @@ private void configurarTabla() {
                 
                 fila[0] = cliente.getCodCli();
                 fila[1] = cliente.getDni();
-                fila[2] = cliente.getNombrecompleto();
+                // separe el nombre y apellido (F)
+                fila[2] = cliente.getNombre();
+                fila[3] = cliente.getApellido();
+                fila[4] = cliente.getTelefono();
+                fila[5] = cliente.isEstado() ? "Activo" : "Baja Logica";  
+                
+             /* fila[2] = cliente.getNombrecompleto();
                 fila[3] = cliente.getTelefono();
-                fila[4] = cliente.isEstado() ? "Activo" : "Baja Logica";
+                fila[4] = cliente.isEstado() ? "Activo" : "Baja Logica";  */
                 
                 modeloTabla.addRow(fila);
             }

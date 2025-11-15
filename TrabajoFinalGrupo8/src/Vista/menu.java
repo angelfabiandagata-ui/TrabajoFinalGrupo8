@@ -396,7 +396,12 @@ public class menu extends javax.swing.JFrame {
         VistaClientes clientes = new VistaClientes();
         prepararInternalFrame(clientes);
     }
-
+    
+   /* private void abrirDiaDeSpa() {
+        VistaDiadeSpa dias = new VistaDiadeSpa();
+        prepararInternalFrame(dias);
+    }
+*/
     private void abrirMasajistas() {
         VistaMasajistas masajistas = new VistaMasajistas();
         prepararInternalFrame(masajistas);
