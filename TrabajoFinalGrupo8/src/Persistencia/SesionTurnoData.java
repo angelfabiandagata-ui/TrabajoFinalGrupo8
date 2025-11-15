@@ -230,73 +230,117 @@ String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado FR
     public void AsignarMasajistaSegunEspecialidad(SesionTurno sesionturno) {
 
     }
-     public boolean estaConsultorioOcupado(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, int nroConsultorio) {
-        String sql = "SELECT * FROM sesion WHERE nroConsultorio = ? AND estado = 1 AND "
-                   + "((fechaHoraInicio < ? AND fechaHoraFin > ?) OR "
-                   + "(fechaHoraInicio >= ? AND fechaHoraInicio < ?) OR "
-                   + "(fechaHoraFin > ? AND fechaHoraFin <= ?))";
-        
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, nroConsultorio);
-            ps.setTimestamp(2, java.sql.Timestamp.valueOf(fechaHoraFin));
-            ps.setTimestamp(3, java.sql.Timestamp.valueOf(fechaHoraInicio));
-            ps.setTimestamp(4, java.sql.Timestamp.valueOf(fechaHoraInicio));
-            ps.setTimestamp(5, java.sql.Timestamp.valueOf(fechaHoraFin));
-            ps.setTimestamp(6, java.sql.Timestamp.valueOf(fechaHoraInicio));
-            ps.setTimestamp(7, java.sql.Timestamp.valueOf(fechaHoraFin));
-            
-            ResultSet rs = ps.executeQuery();
-            return rs.next();             
-        } catch (SQLException ex) {
-            System.out.println("Error al validar consultorio: " + ex.getMessage());
-            return true; 
-}
-    }
-     
-       public boolean estaInstalacionOcupada(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, int nroConsultorio) {
-        String sql = "SELECT * FROM sesion s "
-                   + "INNER JOIN sesion_instalacion si ON s.codSesion = si.codSesion "
-                   + "WHERE si.codInstalacion = ? AND s.estado = 1 AND "
-                   + "((s.fechaHoraInicio < ? AND s.fechaHoraFin > ?) OR "
-                   + "(s.fechaHoraInicio >= ? AND s.fechaHoraInicio < ?) OR "
-                   + "(s.fechaHoraFin > ? AND s.fechaHoraFin <= ?))";
-        
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, nroConsultorio);
-            ps.setTimestamp(2, java.sql.Timestamp.valueOf(fechaHoraFin));
-            ps.setTimestamp(3, java.sql.Timestamp.valueOf(fechaHoraInicio));
-            ps.setTimestamp(4, java.sql.Timestamp.valueOf(fechaHoraInicio));
-            ps.setTimestamp(5, java.sql.Timestamp.valueOf(fechaHoraFin));
-            ps.setTimestamp(6, java.sql.Timestamp.valueOf(fechaHoraInicio));
-            ps.setTimestamp(7, java.sql.Timestamp.valueOf(fechaHoraFin));
-            
-            ResultSet rs = ps.executeQuery();
-            return rs.next();             
-        } catch (SQLException ex) {
-            System.out.println("Error al validar isntalacion: " + ex.getMessage());
-            return true; 
-}
-    }
-
-    
-    public List<LocalDateTime> obtenerHoraiosDisponi_Consul(LocalDate fecha, int nroConsultorio, int duracionMinutos){
-        List<LocalDateTime> horariosDisponibles = new ArrayList<>();
-        LocalTime inicioDia = LocalTime.of(9,0); //abre el spa
-        LocalTime finDia = LocalTime.of(22,0); // cierrra el spa
-        
-        LocalDateTime fechayhotaActual = fecha.atTime(inicioDia);
-        
-        while (fechayhotaActual.toLocalTime().isBefore(finDia)) {            
-            LocalDateTime fechaHoraFin = fechayhotaActual.plusMinutes(duracionMinutos);
-            
-            if (!estaConsultorioOcupado(fechaHoraFin, fechaHoraFin, nroConsultorio)) {
-                horariosDisponibles.add(fechayhotaActual);
-            }
-            fechayhotaActual = fechayhotaActual.plusMinutes(60); //Una hora por instalacon
-        }
-        return  horariosDisponibles;
-    }
-    
+//     public boolean estaConsultorioOcupado(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, int nroConsultorio) {
+//        String sql = "SELECT * FROM sesion WHERE nroConsultorio = ? AND estado = 1 AND "
+//                   + "((fechaHoraInicio < ? AND fechaHoraFin > ?) OR "
+//                   + "(fechaHoraInicio >= ? AND fechaHoraInicio < ?) OR "
+//                   + "(fechaHoraFin > ? AND fechaHoraFin <= ?))";
+//        
+//        try (PreparedStatement ps = con.prepareStatement(sql)) {
+//            ps.setInt(1, nroConsultorio);
+//            ps.setTimestamp(2, java.sql.Timestamp.valueOf(fechaHoraFin));
+//            ps.setTimestamp(3, java.sql.Timestamp.valueOf(fechaHoraInicio));
+//            ps.setTimestamp(4, java.sql.Timestamp.valueOf(fechaHoraInicio));
+//            ps.setTimestamp(5, java.sql.Timestamp.valueOf(fechaHoraFin));
+//            ps.setTimestamp(6, java.sql.Timestamp.valueOf(fechaHoraInicio));
+//            ps.setTimestamp(7, java.sql.Timestamp.valueOf(fechaHoraFin));
+//            
+//            ResultSet rs = ps.executeQuery();
+//            return rs.next();             
+//        } catch (SQLException ex) {
+//            System.out.println("Error al validar consultorio: " + ex.getMessage());
+//            return true; 
+//}
+//    }
+//     
+//       public boolean estaInstalacionOcupada(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, int nroConsultorio) {
+//        String sql = "SELECT * FROM sesion s "
+//                   + "INNER JOIN sesion_instalacion si ON s.codSesion = si.codSesion "
+//                   + "WHERE si.codInstalacion = ? AND s.estado = 1 AND "
+//                   + "((s.fechaHoraInicio < ? AND s.fechaHoraFin > ?) OR "
+//                   + "(s.fechaHoraInicio >= ? AND s.fechaHoraInicio < ?) OR "
+//                   + "(s.fechaHoraFin > ? AND s.fechaHoraFin <= ?))";
+//        
+//        try (PreparedStatement ps = con.prepareStatement(sql)) {
+//            ps.setInt(1, nroConsultorio);
+//            ps.setTimestamp(2, java.sql.Timestamp.valueOf(fechaHoraFin));
+//            ps.setTimestamp(3, java.sql.Timestamp.valueOf(fechaHoraInicio));
+//            ps.setTimestamp(4, java.sql.Timestamp.valueOf(fechaHoraInicio));
+//            ps.setTimestamp(5, java.sql.Timestamp.valueOf(fechaHoraFin));
+//            ps.setTimestamp(6, java.sql.Timestamp.valueOf(fechaHoraInicio));
+//            ps.setTimestamp(7, java.sql.Timestamp.valueOf(fechaHoraFin));
+//            
+//            ResultSet rs = ps.executeQuery();
+//            return rs.next();             
+//        } catch (SQLException ex) {
+//            System.out.println("Error al validar isntalacion: " + ex.getMessage());
+//            return true; 
+//}
+//    }
+//
+//    
+//    public List<LocalDateTime> obtenerHoraiosDisponi_Consul(LocalDate fecha, int nroConsultorio, int duracionMinutos){
+//        List<LocalDateTime> horariosDisponibles = new ArrayList<>();
+//        LocalTime inicioDia = LocalTime.of(9,0); //abre el spa
+//        LocalTime finDia = LocalTime.of(22,0); // cierrra el spa
+//        
+//        LocalDateTime fechayhotaActual = fecha.atTime(inicioDia);
+//        
+//        while (fechayhotaActual.toLocalTime().isBefore(finDia)) {            
+//            LocalDateTime fechaHoraFin = fechayhotaActual.plusMinutes(duracionMinutos);
+//            
+//            if (!estaConsultorioOcupado(fechaHoraFin, fechaHoraFin, nroConsultorio)) {
+//                horariosDisponibles.add(fechayhotaActual);
+//            }
+//            fechayhotaActual = fechayhotaActual.plusMinutes(30); // media hora por consultorio
+//        }
+//        return  horariosDisponibles;
+//    }
+//    
+//     public List<LocalDateTime> obtenerHoraiosDisponi_Instalacion(LocalDate fecha, int nroConsultorio, int duracionMinutos){
+//        List<LocalDateTime> horariosDisponibles = new ArrayList<>();
+//        LocalTime inicioDia = LocalTime.of(9,0); //abre el spa
+//        LocalTime finDia = LocalTime.of(22,0); // cierrra el spa
+//        
+//        LocalDateTime fechayhotaActual = fecha.atTime(inicioDia);
+//        
+//        while (fechayhotaActual.toLocalTime().isBefore(finDia)) {            
+//            LocalDateTime fechaHoraFin = fechayhotaActual.plusMinutes(duracionMinutos);
+//            
+//            if (!estaConsultorioOcupado(fechaHoraFin, fechaHoraFin, nroConsultorio)) {
+//                horariosDisponibles.add(fechayhotaActual);
+//            }
+//            fechayhotaActual = fechayhotaActual.plusMinutes(60); //Una hora por instalacon
+//        }
+//        return  horariosDisponibles;
+//    }
+//     
+//     public boolean ValidarDisponivilidad(SesionTurno sesionTurno){
+//         if (sesionTurno.getConsultorio() != null) {
+//             if (estaConsultorioOcupado(sesionTurno.getFechaHoraInicio(), sesionTurno.getFechaHoraFin(), sesionTurno.getConsultorio().getNroConsultorio())) {
+//                 System.out.println("El consultorio esta ocupado en este horario");
+//                 return false;
+//             }
+//         }
+//          if (sesionTurno.getMasajista()!= null) {
+//             if (estaConsultorioOcupado(sesionTurno.getFechaHoraInicio(), sesionTurno.getFechaHoraFin(), sesionTurno.getMasajista().getMatricula())) {
+//                 System.out.println("El masajista no esta disponible en este horario");
+//                 return false;
+//             }
+//         }
+//           if (sesionTurno.getInstalacionesList()!= null) {
+//               for (Instalacion instalacion : sesionTurno.getInstalacionesList()) {
+//                    if (estaInstalacionOcupada(sesionTurno.getFechaHoraInicio(), sesionTurno.getFechaHoraFin(),instalacion.getCodInstal())) {
+//                 System.out.println("La instalacion no esta disponible en este horario");
+//                 return false;
+//             }
+//               }
+//            
+//         }
+//           crearSesion(sesionTurno);
+//         return true;
+//     }
+//    
     
     
     
