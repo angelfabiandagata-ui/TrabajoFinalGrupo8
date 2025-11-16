@@ -399,33 +399,39 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
 
-      if (!jtnum.getText().trim().isEmpty()) {
+     if (!jtnum.getText().trim().isEmpty()) {
 
-    int numABuscar = Integer.valueOf(jtnum.getText().trim());
-    Consultorio consul = consultorio.Buscar(numABuscar);
+        int numABuscar = Integer.valueOf(jtnum.getText().trim());
+        Consultorio consul = consultorio.Buscar(numABuscar);
 
-    if (consul == null) {
-        JOptionPane.showMessageDialog(this, "No existe un consultorio con ese ID");
-        return;
-    }
+        if (consul == null) {
+            JOptionPane.showMessageDialog(this, "No existe un consultorio con ese ID");
+            return;
+        }
 
-    String[] variabledeApoyo = consul.getUsos();
-    int cantidad = variabledeApoyo.length;
+        //equipamiento
+        String[] eqApoyo = consul.getEquipamiento();
+        String[][] equipamientoBuscar = new String[eqApoyo.length][1];
+        for (int f = 0; f < eqApoyo.length; f++) {
+            equipamientoBuscar[f][0] = eqApoyo[f];
+        }
+        String[] equipCols = {"Equipamiento"};
+        DefaultTableModel eq = new DefaultTableModel(equipamientoBuscar, equipCols);
+        tablaequipamiento.setModel(eq);
 
-    String[][] equipamientoBuscar = new String[cantidad][1];
-    for (int f = 0; f < cantidad; f++) {
-        equipamientoBuscar[f][0] = variabledeApoyo[f];
-    }
-
-        String[] equipamientoBuscarcol = {"Usos"};
-
-        DefaultTableModel us = new DefaultTableModel(equipamientoBuscar, equipamientoBuscarcol);
+        //usos
+        String[] usosApoyo = consul.getUsos();
+        String[][] usosBuscar = new String[usosApoyo.length][1];
+        for (int f = 0; f < usosApoyo.length; f++) {
+            usosBuscar[f][0] = usosApoyo[f];
+        }
+        String[] usosCols = {"Usos"};
+        DefaultTableModel us = new DefaultTableModel(usosBuscar, usosCols);
         tablausos.setModel(us);
 
     } else {
         JOptionPane.showMessageDialog(this, " No ha introducido un ID a buscar ");
     }
-
        
     }//GEN-LAST:event_BuscarActionPerformed
 
