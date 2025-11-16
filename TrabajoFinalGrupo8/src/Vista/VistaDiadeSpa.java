@@ -66,9 +66,9 @@ for (Cliente c : clientes) {
         }
            
         int id = (int) modeloTabla.getValueAt(fila, 0);
-        int dni = (int) modeloTabla.getValueAt(fila, 1);
+        long dni = (long) modeloTabla.getValueAt(fila, 1);
         String nombre = (String) modeloTabla.getValueAt(fila, 2);
-        String telefono = (String) modeloTabla.getValueAt(fila, 3);
+        long telefono = (long) modeloTabla.getValueAt(fila, 3);
         String estado = (String) modeloTabla.getValueAt(fila, 4);
 
        

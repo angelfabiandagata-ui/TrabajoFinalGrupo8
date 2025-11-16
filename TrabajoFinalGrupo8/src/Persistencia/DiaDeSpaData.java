@@ -1,23 +1,68 @@
 package Persistencia;
 
+import Modelo.Conexion;
 import Modelo.DiaDeSpa;
 import Modelo.SesionTurno;
+import java.beans.Statement;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiaDeSpaData {
+    private java.sql.Connection con = null;
+
+    public DiaDeSpaData(java.sql.Connection conexion) {
+        this.con = conexion;
+    }
+    public DiaDeSpaData(){
+      String url = "jdbc:mariadb://localhost:3306/spa_grupo_8";
+        String usuario = "root";
+        String password = "";
+
+        try {
+            Conexion conAux = new Conexion(url, usuario, password);
+            this.con = conAux.buscarConexion();
+            
+            if (this.con == null) {
+            throw new SQLException("La conexión falló. Revise credenciales o estado del servidor de BD.");
+        }
+        } catch (Exception e) {
+            System.err.print("Error al conectar" + e.getMessage());
+        }
+        if (this.con == null) {
+            throw new RuntimeException("Fallo Crítico: La conexión a la base de datos es nula. Revise los parámetros del constructor o la clase Conexion.");
+        }
+    
+}
 
     private List<DiaDeSpa> listaspa = new ArrayList<>();
 
     public void Crear(DiaDeSpa diadespa) {
-
-        listaspa.add(diadespa);
-        System.out.println("Se creo un dia de spa" + diadespa.getCodPack());
-
+  String sql = "INSERT INTO `dia_de_spa`(`codPack`, `fechaYHora`, `preferencias`, `codCliente`,`estado`,`codSesion`,`estadoPago`) VALUES (?,?,?,?,?,?)";
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            
+            ps.setInt(1, diadespa.getCodPack());
+            ps.setTimestamp(2, java.sql.Timestamp.valueOf(diadespa.getFechaHora()));
+            ps.setString(3, diadespa.getPreferencia());
+            ps.setInt(4,diadespa.getCodCliente());
+            ps.setBoolean(5,diadespa.isEstado());
+            ps.setInt(6, diadespa.getCodSesion());
+            ps.setBoolean(7,diadespa.isEstadoPago());
+            
+          
+            System.out.println("Dia de Spa agregado correctamente.");
+            
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Error al guardar Dia de Spa: " + e.getMessage());
+            throw new RuntimeException("Error al guardar Dia de Spa en la BD: " + e.getMessage());
+        }
     }
 
+
     public void AsociarSesiones(DiaDeSpa diadespa) {
-        System.out.println("Asociar sesiones al Dia de Spa " + diadespa.getCodPack());
+    /*    System.out.println("Asociar sesiones al Dia de Spa " + diadespa.getCodPack());
 
         List<SesionTurno> sesioneslist = diadespa.getSesiones();
         if (sesioneslist == null || sesioneslist.isEmpty()) {
@@ -30,11 +75,11 @@ public class DiaDeSpaData {
             System.out.println("Inicio " + sesionTurno.getFechaHoraInicio());
             System.out.println("Instalaciones: " + sesionTurno.getInstalacioneslist());
             
-        }
+        }*/
     }
 
     public void CalcularMonto(DiaDeSpa diadespa) {
-        double total= 0 ;
+     /*   double total= 0 ;
         List<SesionTurno> sesionTurnos = diadespa.getSesiones();
         if (sesionTurnos != null) {
             for (SesionTurno sesionconTurno : sesionTurnos) {
@@ -43,12 +88,12 @@ public class DiaDeSpaData {
             }
             
         }
-
+*/
     }
 
     public void ListarDias(DiaDeSpa diadespa) {
 
-        System.out.println("Dias de spa");
+       System.out.println("Dias de spa");
         if (listaspa.isEmpty()) {
             System.out.println("Aun no hay dias de spa registrados. ");
             return;
@@ -56,28 +101,27 @@ public class DiaDeSpaData {
         }
         for (DiaDeSpa diaDeSpa : listaspa) {
             System.out.println("Codigo: " + diaDeSpa.getCodPack());
-            System.out.println("Cliente: " + diaDeSpa.getCliente());
-            System.out.println("fecha y Hora: " + diaDeSpa.getFechaHora());
+            System.out.println("Cliente: " + diaDeSpa.getCodCliente());
+            System.out.println("fecha: " + diaDeSpa.getFechaHora());
             System.out.println("Preferencia: " + diaDeSpa.getPreferencia());
-            System.out.println("Monto: $" + diaDeSpa.getMonto());
 
         }
 
     }
 
-    public void MostrarDetalle(DiaDeSpa diadespa) {
+    /*public void MostrarDetalle(DiaDeSpa diadespa) {
         System.out.println("Detalle del Dia de Spa " + diadespa.getCodPack());
-        System.out.println("Cliente: " + diadespa.getCliente() + "Fecha y Hora: " + diadespa.getFechaHora() + "Preferencia: " + diadespa.getPreferencia() + "Monto total: " + diadespa.getMonto());
+        System.out.println("Cliente: " + diadespa.getCodCliente() + "Fecha: " + diadespa.getFechaHora() + "Preferencia: " + diadespa.getPreferencia());
 
-        if (diadespa.getSesiones() == null || diadespa.getSesiones().isEmpty()) {
+        if (diadespa.getCodSesion()== null || diadespa.getCodSesion().isEmpty()) {
 
         } else {
-            for (SesionTurno sesiones : diadespa.getSesiones()) {
+            for (SesionTurno sesiones : diadespa.getCodSesion()) {
                 System.out.println("Sesion " + sesiones.getCodSesion() + " Inicio: " + sesiones.getFechaHoraInicio() + "Instalaciones: " + sesiones.getInstalacioneslist());
 
             }
         }
-    }
+    }*/
     
     public DiaDeSpa buscarPorCodigo(int codPack) {
     for (DiaDeSpa d : listaspa) {
@@ -88,10 +132,10 @@ public class DiaDeSpaData {
     return null;
 }
 
-public List<DiaDeSpa> buscarPorCliente(String cliente) {
+public List<DiaDeSpa> buscarPorCliente(int codCliente) {
     List<DiaDeSpa> encontrados = new ArrayList<>();
     for (DiaDeSpa d : listaspa) {
-        if (d.getCliente() != null && d.getCliente().toLowerCase().contains(cliente.toLowerCase())) {
+        if (d.getCodCliente() == codCliente) {
             encontrados.add(d);
         }
     }

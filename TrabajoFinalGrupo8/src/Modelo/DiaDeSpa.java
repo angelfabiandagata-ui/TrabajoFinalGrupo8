@@ -10,17 +10,43 @@ public class DiaDeSpa {
     private int codPack;
     private LocalDateTime  fechaHora;
     private String preferencia;
-    private String cliente;
-    private ArrayList<SesionTurno> sesiones = new ArrayList<>();
-    private double monto;
+    private int codCliente;
+    private boolean estado;
+    private int codSesion;
+    private boolean estadoPago;
 
-    public DiaDeSpa(int codPack, LocalDateTime fechaHora, String preferencia, String cliente, List<SesionTurno> sesiones, double monto) {
+    public DiaDeSpa(int codPack, LocalDateTime fechaHora, String preferencia, int codCliente,boolean estado, int codSesion, boolean estadoPago) {
         this.codPack = codPack;
         this.fechaHora = fechaHora;
         this.preferencia = preferencia;
-        this.cliente = cliente;
-        this.sesiones = new ArrayList<>();
-        this.monto = monto;
+        this.codCliente = codCliente;
+        this.estado = estado;
+        this.codSesion = codSesion;
+        this.estadoPago = estadoPago;
+    }
+
+    public boolean isEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(boolean estadoPago) {
+        this.estadoPago = estadoPago;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public int getCodSesion() {
+        return codSesion;
+    }
+
+    public void setCodSesion(int codSesion) {
+        this.codSesion = codSesion;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public int getCodPack() {
@@ -47,33 +73,18 @@ public class DiaDeSpa {
         this.preferencia = preferencia;
     }
 
-    public String getCliente() {
-        return cliente;
+    public int getCodCliente() {
+        return codCliente;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+    public void setCliente(int codCliente) {
+        this.codCliente = codCliente;
     }
 
-    public ArrayList<SesionTurno> getSesiones() {
-        return (ArrayList<SesionTurno>) sesiones;
-    }
-
-    public void setSesiones(ArrayList<SesionTurno> sesiones) {
-        this.sesiones = sesiones;
-    }
-
-    public double getMonto() {
-        return monto;
-    }
-
-    public void setMonto(double monto) {
-        this.monto = monto;
-    }
 
     @Override
     public String toString() {
-        return "Dia-De-Spa " + "codPack=" + codPack + ", fechaHora=" + fechaHora + ", preferencia=" + preferencia + ", cliente=" + cliente + ", sesiones=" + sesiones + ", monto=" + monto + '}';
+        return "Dia-De-Spa " + "codPack=" + codPack + ", fechaHora=" + fechaHora + ", preferencia=" + preferencia + ", cliente=" + codCliente + ", estado=" + estado + ", sesiones=" + codSesion + ", estadoPago=" + estadoPago + '}';
     } 
         
 }

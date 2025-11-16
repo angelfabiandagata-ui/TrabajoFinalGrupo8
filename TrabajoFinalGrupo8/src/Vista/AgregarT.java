@@ -136,7 +136,7 @@ System.out.println("Consultorios encontrados: " + consultorios.size());
 }
 
 private void buscarDiaDeSpa() {
-    modeloTablaDiaSpa.setRowCount(0);
+ /*   modeloTablaDiaSpa.setRowCount(0);
     String texto = jTextFieldBuscar.getText().trim();
 
     if (texto.isEmpty()) {
@@ -146,9 +146,12 @@ private void buscarDiaDeSpa() {
 
     try {
         int cod = Integer.parseInt(texto);
-        DiaDeSpa dia = diaDeSpaData.buscarPorCodigo(cod);
-        if (dia != null) {
-            modeloTablaDiaSpa.addRow(new Object[]{dia.getCodPack(), dia.getCliente()});
+        List<DiaDeSpa> resultados = diaDeSpaData.buscarPorCliente(cod);
+        if (resultados != null && !resultados.isEmpty()) {
+            for (DiaDeSpa dia : resultados) {
+                 modeloTablaDiaSpa.addRow(new Object[]{dia.getCodPack(), dia.getCodCliente()});
+            }
+           
         } else {
             JOptionPane.showMessageDialog(this, "No se encontró un Día de Spa con ese código.");
         }
@@ -160,7 +163,7 @@ private void buscarDiaDeSpa() {
         if (lista.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No se encontraron clientes con ese nombre.");
         }
-    }
+    }*/
 }
 
     menu men;
