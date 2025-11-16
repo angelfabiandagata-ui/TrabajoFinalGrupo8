@@ -78,5 +78,25 @@ public class DiaDeSpaData {
             }
         }
     }
+    
+    public DiaDeSpa buscarPorCodigo(int codPack) {
+    for (DiaDeSpa d : listaspa) {
+        if (d.getCodPack() == codPack) {
+            return d;
+        }
+    }
+    return null;
+}
+
+public List<DiaDeSpa> buscarPorCliente(String cliente) {
+    List<DiaDeSpa> encontrados = new ArrayList<>();
+    for (DiaDeSpa d : listaspa) {
+        if (d.getCliente() != null && d.getCliente().toLowerCase().contains(cliente.toLowerCase())) {
+            encontrados.add(d);
+        }
+    }
+    return encontrados;
+}
+
 
 }

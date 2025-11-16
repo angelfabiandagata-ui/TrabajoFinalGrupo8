@@ -5,14 +5,18 @@
 package Vista;
 
 import Modelo.Consultorio;
+import Modelo.DiaDeSpa;
 import Modelo.Masajista;
 import Modelo.Tratamiento;
 import Persistencia.ConsultorioData;
+import Persistencia.DiaDeSpaData;
 import Persistencia.MasajistaData;
 import Persistencia.TratamientoData;
 import Vista.menu;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,6 +27,9 @@ public class AgregarT extends javax.swing.JPanel {
     private TratamientoData tratamientoData = new TratamientoData();
     private MasajistaData masajistaData = new MasajistaData();
     private ConsultorioData consultorioData = new ConsultorioData();
+    private DiaDeSpaData diaDeSpaData = new DiaDeSpaData();
+    private DefaultTableModel modeloTablaDiaSpa;
+
 
 
 private void cargarTratamientosComboBox() {
@@ -121,6 +128,40 @@ System.out.println("Consultorios encontrados: " + consultorios.size());
     jTextFieldTotal.setText(String.format("%.2f", total));
 }
 
+     private void configurarTablaDiaSpa() {
+    modeloTablaDiaSpa = new DefaultTableModel(
+            new Object[]{"Código Día de Spa", "Cliente"}, 0
+    );
+    jTableDiaDeSpa.setModel(modeloTablaDiaSpa);
+}
+
+private void buscarDiaDeSpa() {
+    modeloTablaDiaSpa.setRowCount(0);
+    String texto = jTextFieldBuscar.getText().trim();
+
+    if (texto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingrese un código o un nombre para buscar.");
+        return;
+    }
+
+    try {
+        int cod = Integer.parseInt(texto);
+        DiaDeSpa dia = diaDeSpaData.buscarPorCodigo(cod);
+        if (dia != null) {
+            modeloTablaDiaSpa.addRow(new Object[]{dia.getCodPack(), dia.getCliente()});
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró un Día de Spa con ese código.");
+        }
+    } catch (NumberFormatException e) {
+        List<DiaDeSpa> lista = diaDeSpaData.buscarPorCliente(texto);
+        for (DiaDeSpa d : lista) {
+            modeloTablaDiaSpa.addRow(new Object[]{d.getCodPack(), d.getCliente()});
+        }
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron clientes con ese nombre.");
+        }
+    }
+}
 
     menu men;
     
@@ -129,6 +170,7 @@ System.out.println("Consultorios encontrados: " + consultorios.size());
      */
     public AgregarT(menu men) {
         initComponents();
+        configurarTablaDiaSpa();
          this.men = men;
         jComboBoxHoraInicio.removeAllItems();
         jComboBoxHoraFin.removeAllItems();
@@ -216,9 +258,9 @@ jComboBox3.setEnabled(true);
         jLabel5 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldBuscar = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        Tabla_BTPA = new javax.swing.JTable();
+        jTableDiaDeSpa = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         Masajista1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -357,7 +399,7 @@ jComboBox3.setEnabled(true);
                 .addContainerGap(195, Short.MAX_VALUE))
         );
 
-        Tabla_BTPA.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDiaDeSpa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -376,7 +418,7 @@ jComboBox3.setEnabled(true);
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(Tabla_BTPA);
+        jScrollPane2.setViewportView(jTableDiaDeSpa);
 
         jLabel12.setText("Ingrese el codigo o el apellido:");
 
@@ -425,7 +467,7 @@ jComboBox3.setEnabled(true);
                         .addGap(37, 37, 37)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,7 +529,6 @@ jComboBox3.setEnabled(true);
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
                                     .addComponent(jComboBoxHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -503,7 +544,7 @@ jComboBox3.setEnabled(true);
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
@@ -566,7 +607,6 @@ botonTratamiento.setEnabled(true);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Masajista;
     private javax.swing.JLabel Masajista1;
-    private javax.swing.JTable Tabla_BTPA;
     private javax.swing.JButton botonInstalacion;
     private javax.swing.JButton botonTratamiento;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -598,7 +638,8 @@ botonTratamiento.setEnabled(true);
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable jTableDiaDeSpa;
+    private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
 }
