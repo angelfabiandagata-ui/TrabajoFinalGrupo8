@@ -11,10 +11,11 @@ public class Consultorio {
     private boolean apto;
     
     //CONSTRUCTOR
-    public Consultorio( String []usos, String []equipamiento, boolean apto) {
+    public Consultorio( int id,String []usos, String []equipamiento, boolean apto) {
         this.usos = usos;
         this.equipamiento = equipamiento;
         this.apto = apto;
+        nroConsultorio= id;
     }
 
     public Consultorio() {
