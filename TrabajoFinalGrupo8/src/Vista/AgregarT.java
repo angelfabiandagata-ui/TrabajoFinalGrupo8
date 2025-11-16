@@ -53,6 +53,7 @@ private void cargarConsultoriosComboBox() {
     jComboBoxConsultorio.removeAllItems();
 
     List<Consultorio> consultorios = consultorioData.Listar();
+System.out.println("Consultorios encontrados: " + consultorios.size());
 
     for (Consultorio c : consultorios) {
         jComboBoxConsultorio.addItem(c);
