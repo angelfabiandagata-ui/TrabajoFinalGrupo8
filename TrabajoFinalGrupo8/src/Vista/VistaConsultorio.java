@@ -28,6 +28,16 @@ public class VistaConsultorio extends javax.swing.JPanel {
         consultorio = new ConsultorioData();
         actualizarArreglo();
         desactivarCodigo();
+        buttonGroup1.add(radio1);
+        buttonGroup1.add(radio2);
+        
+        //desabilito todos los botones
+        jtnum.setEnabled(false);
+        Buscar.setEnabled(false);
+        
+        crear.setEnabled(false);
+        borrar.setEnabled(false);
+        jcapt.setEnabled(false);
     }
 
     /**
@@ -41,6 +51,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jtnum = new javax.swing.JTextField();
@@ -62,6 +73,8 @@ public class VistaConsultorio extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         consultorios = new javax.swing.JTable();
         Buscar = new javax.swing.JButton();
+        radio1 = new javax.swing.JRadioButton();
+        radio2 = new javax.swing.JRadioButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -89,7 +102,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
-        tablaequipamiento.setForeground(new java.awt.Color(204, 255, 255));
+        tablaequipamiento.setForeground(new java.awt.Color(255, 51, 0));
         tablaequipamiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -134,7 +147,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
-        tablausos.setForeground(new java.awt.Color(204, 255, 255));
+        tablausos.setForeground(new java.awt.Color(255, 51, 0));
         tablausos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -217,6 +230,18 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        radio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio1ActionPerformed(evt);
+            }
+        });
+
+        radio2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,34 +249,46 @@ public class VistaConsultorio extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(crear)
-                                            .addGap(18, 18, 18))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jcapt)
-                                            .addGap(27, 27, 27))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(borrar)
-                                        .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(52, 52, 52)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jtagre, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(agregarusos))
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jcapt)
+                                                .addComponent(crear)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(borrar)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(radio2))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(radio1))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(12, 12, 12)
+                                            .addComponent(jLabel5)))
+                                    .addGap(15, 15, 15))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jtagre, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(agregarusos))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)))
@@ -290,17 +327,20 @@ public class VistaConsultorio extends javax.swing.JPanel {
                         .addGap(19, 19, 19)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Buscar))
-                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Buscar))
+                            .addComponent(radio1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jcapt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(crear, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(radio2)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -323,15 +363,18 @@ public class VistaConsultorio extends javax.swing.JPanel {
     private void jtagreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtagreActionPerformed
      
     String nuevoUso = jtagre.getText().trim();
+    //el contrario de is empty = !isempty es igual a , si no esta vacio
     if (!nuevoUso.isEmpty()) {
     
     //copyOf sirve para copiar exactamente el mismo arreglo pero cambiandole el tamaño en la segunda columna    
     usos = Arrays.copyOf(usos, usos.length + 1);
+    
+    //se inserta en la ultima posicion el nuevo uso
     usos[usos.length - 1] = nuevoUso;
     actualizarListas();
     jtagre.setText("");
 }
-
+    //#chequeado#
     }//GEN-LAST:event_jtagreActionPerformed
 
     private void jtequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtequiActionPerformed
@@ -351,60 +394,90 @@ public class VistaConsultorio extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Ingrese un uso válido");
         }
 
+        //#chequeado#
     }//GEN-LAST:event_agregarusosActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
 
-        if(jtnum.isEnabled()){
-            jtnum.setEnabled(false);
-            crear.setEnabled(true);
-            borrar.setEnabled(true);
-        }else{
-            jtnum.setEnabled(true);
-            crear.setEnabled(false);
-            borrar.setEnabled(false);
-        }
+      if (!jtnum.getText().trim().isEmpty()) {
 
+    int numABuscar = Integer.valueOf(jtnum.getText().trim());
+    Consultorio consul = consultorio.Buscar(numABuscar);
+
+    if (consul == null) {
+        JOptionPane.showMessageDialog(this, "No existe un consultorio con ese ID");
+        return;
+    }
+
+    String[] variabledeApoyo = consul.getUsos();
+    int cantidad = variabledeApoyo.length;
+
+    String[][] equipamientoBuscar = new String[cantidad][1];
+    for (int f = 0; f < cantidad; f++) {
+        equipamientoBuscar[f][0] = variabledeApoyo[f];
+    }
+
+        String[] equipamientoBuscarcol = {"Usos"};
+
+        DefaultTableModel us = new DefaultTableModel(equipamientoBuscar, equipamientoBuscarcol);
+        tablausos.setModel(us);
+
+    } else {
+        JOptionPane.showMessageDialog(this, " No ha introducido un ID a buscar ");
+    }
+
+       
     }//GEN-LAST:event_BuscarActionPerformed
 
     private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
 
-        try {
-            int num = Integer.parseInt(jtnum.getText().trim());
-            consultorio.Eliminar(num);
-            JOptionPane.showMessageDialog(this, "Consultorio eliminado correctamente");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número de consultorio válido");
+
+         int filaAborrar = consultorios.getSelectedRow();
+        if (filaAborrar == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.");
+            return;
         }
 
+        //las columnas de la tabla empiezan en el cero
+        int aBorrar = (int) consultorios.getValueAt(filaAborrar, 0);
+
+        System.out.println("ID a borrar: " + aBorrar);
+
+        consultorio.Eliminar(aBorrar);
+        
+        actualizarArreglo();
         actualizarListas();
 
     }//GEN-LAST:event_borrarActionPerformed
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
-
-        if(tablausos.getColumnCount() < 1){
-            return;
-        }
-        if(tablaequipamiento.getColumnCount() < 1){
+    
+        // se usan los arreglos para ver que no esten vacios    
+        if (usos.length < 1 || equipamiento.length < 1) {
             return;
         }
 
-        int num = Integer.valueOf(jtnum.getText());
-        Consultorio con = consultorio.Buscar(num);
-        if (con != null) {
-            JOptionPane.showMessageDialog(null, "Ya existe un Consultorio con ese id");
-        } else {
-            Consultorio nuevo = new Consultorio();
-            nuevo.setNroConsultorio(num);
-            nuevo.setEquipamiento(equipamiento);
-            nuevo.setUsos(usos);
-            nuevo.setApto(jcapt.isSelected());
+        //crear un nuevo objeto para guardar
+        Consultorio nuevo = new Consultorio();
+        nuevo.setEquipamiento(equipamiento);
+        nuevo.setUsos(usos);
+        nuevo.setApto(jcapt.isSelected());
+
+        try {
+            // Guardar — se asume que la capa de persistencia asigna el ID automáticamente
             consultorio.Guardar(nuevo);
             JOptionPane.showMessageDialog(null, "Consultorio creado correctamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el consultorio: " );
+            return;
         }
 
+        usos = new String[0];
+        equipamiento = new String[0];
         actualizarListas();
+        actualizarArreglo();
+       
+
     }//GEN-LAST:event_crearActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -461,6 +534,27 @@ public class VistaConsultorio extends javax.swing.JPanel {
         this.setVisible(false);
     }//GEN-LAST:event_salirActionPerformed
 
+    private void radio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio1ActionPerformed
+     
+        jtnum.setEnabled(true);
+        Buscar.setEnabled(true);
+        
+        crear.setEnabled(false);
+        borrar.setEnabled(false);
+        jcapt.setEnabled(false);
+    }//GEN-LAST:event_radio1ActionPerformed
+
+    private void radio2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio2ActionPerformed
+       
+        jtnum.setEnabled(false);
+        Buscar.setEnabled(false);
+        
+        crear.setEnabled(true);
+        borrar.setEnabled(true);
+        jcapt.setEnabled(true);
+        
+    }//GEN-LAST:event_radio2ActionPerformed
+
     
 public void actualizarListas() {
     // ----- Tabla de usos -----
@@ -481,6 +575,9 @@ public void actualizarListas() {
 public void actualizarArreglo() {
     //hacer el arreglo
     List<Consultorio> lista = consultorio.Listar();
+    
+    if(!lista.isEmpty()){
+    
     Consultorio[] consultoriosArreglo = new Consultorio[lista.size()];
     
     //poner los elementos en el arreglo
@@ -507,7 +604,10 @@ public void actualizarArreglo() {
     // Apply the model to your JTable
     consultorios.setModel(model); // Replace with your actual JTable variable name
 }
-
+    }
+    else{
+    consultorios.setModel(new DefaultTableModel());
+    }
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -515,6 +615,7 @@ public void actualizarArreglo() {
     private javax.swing.JButton agregarequip;
     private javax.swing.JButton agregarusos;
     private javax.swing.JButton borrar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTable consultorios;
     private javax.swing.JButton crear;
     private javax.swing.JButton jButton3;
@@ -531,6 +632,8 @@ public void actualizarArreglo() {
     private javax.swing.JTextField jtagre;
     private javax.swing.JTextField jtequi;
     private javax.swing.JTextField jtnum;
+    private javax.swing.JRadioButton radio1;
+    private javax.swing.JRadioButton radio2;
     private javax.swing.JButton salir;
     private javax.swing.JTable tablaequipamiento;
     private javax.swing.JTable tablausos;
