@@ -61,7 +61,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
         salir = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         consultorios = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
+        Buscar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -210,10 +210,10 @@ public class VistaConsultorio extends javax.swing.JPanel {
         ));
         jScrollPane4.setViewportView(consultorios);
 
-        jButton5.setText("Buscar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                BuscarActionPerformed(evt);
             }
         });
 
@@ -244,7 +244,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel5)
                                         .addComponent(borrar)
-                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(52, 52, 52)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
@@ -292,7 +292,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5))
+                            .addComponent(Buscar))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
@@ -324,6 +324,8 @@ public class VistaConsultorio extends javax.swing.JPanel {
      
     String nuevoUso = jtagre.getText().trim();
     if (!nuevoUso.isEmpty()) {
+    
+    //copyOf sirve para copiar exactamente el mismo arreglo pero cambiandole el tamaño en la segunda columna    
     usos = Arrays.copyOf(usos, usos.length + 1);
     usos[usos.length - 1] = nuevoUso;
     actualizarListas();
@@ -351,7 +353,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
     }//GEN-LAST:event_agregarusosActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
 
         if(jtnum.isEnabled()){
             jtnum.setEnabled(false);
@@ -363,7 +365,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             borrar.setEnabled(false);
         }
 
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_BuscarActionPerformed
 
     private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
 
@@ -509,6 +511,7 @@ public void actualizarArreglo() {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
     private javax.swing.JButton agregarequip;
     private javax.swing.JButton agregarusos;
     private javax.swing.JButton borrar;
@@ -516,7 +519,6 @@ public void actualizarArreglo() {
     private javax.swing.JButton crear;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
