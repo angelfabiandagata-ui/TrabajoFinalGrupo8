@@ -583,6 +583,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         this.setEnabled(false);
         this.setVisible(false);
+        men.desactivarTodosLosBotones();
     }//GEN-LAST:event_salirActionPerformed
 
     private void radio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio1ActionPerformed
