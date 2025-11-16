@@ -540,7 +540,7 @@ public class menu extends javax.swing.JFrame {
     private void agregar() {
         // constructor que recibe "this" (menu), según tu versión
         AgregarT agregar = new AgregarT(this);
-        agregar.setBounds(0, 0, 900, 500);
+        agregar.setBounds(0,0, 900, 500);
         jDesktopPane1.add(agregar, 20);
         jDesktopPane1.moveToFront(agregar); 
         agregar.setVisible(true);
