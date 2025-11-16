@@ -538,19 +538,43 @@ public class menu extends javax.swing.JFrame {
     
     //----------------- botones internos de conf y turn--------------
     private void agregar() {
-        // constructor que recibe "this" (menu), según tu versión
+           // constructor que recibe "this" (menu), según tu versión
         AgregarT agregar = new AgregarT(this);
-        agregar.setBounds(0,0, 900, 500);
-        jDesktopPane1.add(agregar, 20);
+        agregar.setBounds(0, 0,900, 500);
+        
+        javax.swing.JInternalFrame internalFrame = new javax.swing.JInternalFrame("Agregar Turno",
+                                                                                    true,
+                                                                                    true,
+                                                                                    true,
+                                                                                    true);
+        
+        internalFrame.setContentPane(agregar);
+        internalFrame.pack();
+        prepararInternalFrame(internalFrame);
+        
+        internalFrame.setSize(900,500);
+        
+        
+        int x = (jDesktopPane1.getWidth()- internalFrame.getWidth()) / 2;
+        int y = (jDesktopPane1.getHeight()- internalFrame.getHeight()) / 2;
+        internalFrame.setLocation(Math.max(0, x), Math.max(0, y));
+        
+        internalFrame.setVisible(true);
+        internalFrame.toFront();
+        
+        desactivarTodosLosBotones();
+        
+      /*  jDesktopPane1.add(agregar, 20);
         jDesktopPane1.moveToFront(agregar); 
         agregar.setVisible(true);
-        
+       
         //una forma de ponerlo al medio es poniendo el padre - el panel a agregar y todo eso dividido por dos
         int x = (jDesktopPane1.getWidth() - agregar.getWidth()) / 2;
         int y = (jDesktopPane1.getHeight() - agregar.getHeight()) / 2;
        
         agregar.setLocation(x, y);
-        desactivarTodosLosBotones();
+        desactivarTodosLosBotones(); */
+
     }
     
     
