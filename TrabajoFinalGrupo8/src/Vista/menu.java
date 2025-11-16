@@ -375,7 +375,7 @@ public class menu extends javax.swing.JFrame {
         
         //configuracion
         tratamientos = crearBotonInvisible(120, 0, 110, 110, this::abrirVerTurnos , "d");
-        instalaciones = crearBotonInvisible(120, 110, 117,110,  this::seis, "e");
+        instalaciones = crearBotonInvisible(120, 110, 117,110,  this::abrirDiaDeSpa, "e");
         historial = crearBotonInvisible(0, 110, 117, 110,  this::siete , "f");
         configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::agregar , "g");        
         
@@ -403,11 +403,39 @@ public class menu extends javax.swing.JFrame {
         prepararInternalFrame(clientes);
     }
     
-   /* private void abrirDiaDeSpa() {
-        VistaDiadeSpa dias = new VistaDiadeSpa();
-        prepararInternalFrame(dias);
+    private void abrirDiaDeSpa() {
+       VistaDiadeSpa dias = new VistaDiadeSpa(); 
+
+    // 2. Establecer la capa (debe ser ALTA para superar el fondo, ej. 100)
+    jDesktopPane1.setLayer(dias, 100);
+
+    // 3. Configuración para visibilidad del JPanel
+    dias.setOpaque(true); 
+    dias.setVisible(true);
+    // Opcional: Dale un color de fondo para distinguirlo del fondo
+    dias.setBackground(java.awt.Color.LIGHT_GRAY); 
+
+    // 4. Definir tamaño (W, H)
+    int ancho = 800;
+    int alto = 600;
+
+    // 5. Centrar el JPanel en el JDesktopPane
+    int x = (jDesktopPane1.getWidth() - ancho) / 2;
+    int y = (jDesktopPane1.getHeight() - alto) / 2;
+
+    dias.setBounds(Math.max(0, x), Math.max(0, y), ancho, alto);
+
+    // 6. Añadir al JDesktopPane (si no está ya dentro)
+    if (dias.getParent() == null) {
+        jDesktopPane1.add(dias);
     }
-*/
+    
+    jDesktopPane1.moveToFront(dias);
+    
+    // Si usas el método de botones para desactivar, llámalo aquí:
+    // desactivarTodosLosBotones();
+    }
+
       private void abrirInstalaciones() {
         VistaInstalacion instalaciones = new VistaInstalacion();
         prepararInternalFrame(instalaciones);

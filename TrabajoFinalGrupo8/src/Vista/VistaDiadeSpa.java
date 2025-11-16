@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author teito
  */
-public class VistaDiadeSpa extends javax.swing.JPanel {
+public class VistaDiadeSpa extends javax.swing.JPanel{
 private DefaultTableModel modeloTabla;
 private ClienteData clienteData;
     /**
