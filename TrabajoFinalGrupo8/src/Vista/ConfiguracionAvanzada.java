@@ -80,7 +80,9 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
        
       this.setVisible(false);
     this.setEnabled(false);
-        
+   menu.activarTodosLosBotones();
+    
+    
     }//GEN-LAST:event_jbsalirActionPerformed
 
     private void jbabrirconsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirconsultorioActionPerformed

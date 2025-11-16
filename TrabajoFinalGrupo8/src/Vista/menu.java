@@ -336,6 +336,7 @@ public class menu extends javax.swing.JFrame {
     // metodo para crear los botones
     public void crearYOrdenarComponentes() {
 
+        
         panelFondo = new PanelConFondo("/Vista/Disenio/radio.jpg");
         panelFondo.setLayout(null);
         jDesktopPane1.removeAll();
@@ -349,7 +350,7 @@ public class menu extends javax.swing.JFrame {
         // botones para cerrar paneles
         botonCerrarConfig = crearBotonInvisible(775, 100, 50, 60, this::cerrarConfiguracion, "Cerrar Configuración");
         botonCerrarTurnos = crearBotonInvisible(480, 100, 50, 60, this::cerrarTurnos, "Cerrar Turnos");
-
+        
         // botones
         panelFondo.add(botonConfiguracion);
         panelFondo.add(botonTurnos);
@@ -589,6 +590,7 @@ public class menu extends javax.swing.JFrame {
         botonTurnos.setEnabled(false);
         botonCerrarConfig.setEnabled(false);
         botonCerrarTurnos.setEnabled(false);
+        
     }
     //volver a activar botones una vez que se cierra el panel
     public void activarTodosLosBotones() {

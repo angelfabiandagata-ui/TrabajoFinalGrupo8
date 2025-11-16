@@ -107,7 +107,6 @@ public class ConsultorioData {
                 String equipamiento = rs.getString("equipamiento");
                 
                 c = new Consultorio(
-                    rs.getInt("nroConsultorio"),
                     usos.split(","), 
                     equipamiento.split(","),
                     rs.getBoolean("apto")
@@ -139,7 +138,6 @@ public class ConsultorioData {
                 String equipamiento = rs.getString("equipamiento");
                 
                 Consultorio c = new Consultorio(
-                    rs.getInt("nroConsultorio"),
                     usos.split(","),
                     equipamiento.split(","),
                     rs.getBoolean("apto")
