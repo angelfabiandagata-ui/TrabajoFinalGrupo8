@@ -39,27 +39,48 @@ public class DiaDeSpaData {
     private List<DiaDeSpa> listaspa = new ArrayList<>();
 
     public void Crear(DiaDeSpa diadespa) {
-  String sql = "INSERT INTO `dia_de_spa`(`codPack`, `fechaYHora`, `preferencias`, `codCliente`,`estado`,`codSesion`,`estadoPago`) VALUES (?,?,?,?,?,?)";
-        try (PreparedStatement ps = con.prepareStatement(sql)){
-            
-            ps.setInt(1, diadespa.getCodPack());
-            ps.setTimestamp(2, java.sql.Timestamp.valueOf(diadespa.getFechaHora()));
-            ps.setString(3, diadespa.getPreferencia());
-            ps.setInt(4,diadespa.getCodCliente());
-            ps.setBoolean(5,diadespa.isEstado());
-            ps.setInt(6, diadespa.getCodSesion());
-            ps.setBoolean(7,diadespa.isEstadoPago());
-            
-          
-            System.out.println("Dia de Spa agregado correctamente.");
-            
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println("Error al guardar Dia de Spa: " + e.getMessage());
-            throw new RuntimeException("Error al guardar Dia de Spa en la BD: " + e.getMessage());
+  String sql = "INSERT INTO `dia_de_spa`(`codPack`, `fechaYHora`, `preferencias`, `codCliente`,`estado`,`estadoPago`) VALUES (?,?,?,?,?,?)"; 
+
+    // Usamos try-with-resources, lo que cierra ps y con (si con fuera local)
+    try (PreparedStatement ps = con.prepareStatement(sql)){
+        
+        ps.setInt(1, diadespa.getCodPack());
+        ps.setTimestamp(2, java.sql.Timestamp.valueOf(diadespa.getFechaHora()));
+        ps.setString(3, diadespa.getPreferencia());
+        ps.setInt(4,diadespa.getCodCliente());
+        ps.setBoolean(5,diadespa.isEstado());
+        ps.setBoolean(6,diadespa.isEstadoPago());
+        
+        // CORRECCIÓN B: ¡Ejecutar la consulta!
+        int filasAfectadas = ps.executeUpdate(); 
+        
+        if (filasAfectadas > 0) {
+            System.out.println("✅ Dia de Spa agregado correctamente.");
+        } else {
+            System.out.println("⚠️ Advertencia: No se insertaron filas en la BD.");
         }
+        
+        // El ps.close() dentro del try-with-resources es redundante, lo puedes quitar.
+        
+    } catch (SQLException e) {
+        System.out.println("❌ Error al guardar Dia de Spa: " + e.getMessage());
+        throw new RuntimeException("Error al guardar Dia de Spa en la BD: " + e.getMessage());
+    }
     }
 
+    
+    public void borrarDiadeSpa(int codPack) {
+        try {
+            String sql = "DELETE FROM `dia_de_spa` WHERE codPack = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, codPack);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Dia de Spa borrado con exito");
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar dia de spa" + ex.getMessage());
+        }
+    }
 
     public void AsociarSesiones(DiaDeSpa diadespa) {
     /*    System.out.println("Asociar sesiones al Dia de Spa " + diadespa.getCodPack());

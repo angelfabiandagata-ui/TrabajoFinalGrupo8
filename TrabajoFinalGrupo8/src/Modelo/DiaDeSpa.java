@@ -12,16 +12,14 @@ public class DiaDeSpa {
     private String preferencia;
     private int codCliente;
     private boolean estado;
-    private int codSesion;
     private boolean estadoPago;
 
-    public DiaDeSpa(int codPack, LocalDateTime fechaHora, String preferencia, int codCliente,boolean estado, int codSesion, boolean estadoPago) {
+    public DiaDeSpa(int codPack, LocalDateTime fechaHora, String preferencia, int codCliente,boolean estado, boolean estadoPago) {
         this.codPack = codPack;
         this.fechaHora = fechaHora;
         this.preferencia = preferencia;
         this.codCliente = codCliente;
         this.estado = estado;
-        this.codSesion = codSesion;
         this.estadoPago = estadoPago;
     }
 
@@ -37,13 +35,6 @@ public class DiaDeSpa {
         return estado;
     }
 
-    public int getCodSesion() {
-        return codSesion;
-    }
-
-    public void setCodSesion(int codSesion) {
-        this.codSesion = codSesion;
-    }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
@@ -84,7 +75,7 @@ public class DiaDeSpa {
 
     @Override
     public String toString() {
-        return "Dia-De-Spa " + "codPack=" + codPack + ", fechaHora=" + fechaHora + ", preferencia=" + preferencia + ", cliente=" + codCliente + ", estado=" + estado + ", sesiones=" + codSesion + ", estadoPago=" + estadoPago + '}';
+        return "Dia-De-Spa " + "codPack=" + codPack + ", fechaHora=" + fechaHora + ", preferencia=" + preferencia + ", cliente=" + codCliente + ", estado=" + estado + ", estadoPago=" + estadoPago + '}';
     } 
         
 }

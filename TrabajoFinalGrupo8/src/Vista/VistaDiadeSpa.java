@@ -5,11 +5,15 @@
 package Vista;
 
 import Modelo.Cliente;
+import Modelo.DiaDeSpa;
+import Persistencia.DiaDeSpaData;
 import Persistencia.ClienteData;
 import java.util.List;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  *
@@ -56,68 +60,7 @@ for (Cliente c : clientes) {
     modeloTabla.addRow(fila);
 }
  }//Boton de guardar
-  private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-
-       
-        int fila = jTable1.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccioná un cliente primero.");
-            return;
-        }
-           
-        int id = (int) modeloTabla.getValueAt(fila, 0);
-        long dni = (long) modeloTabla.getValueAt(fila, 1);
-        String nombre = (String) modeloTabla.getValueAt(fila, 2);
-        long telefono = (long) modeloTabla.getValueAt(fila, 3);
-        String estado = (String) modeloTabla.getValueAt(fila, 4);
-
-       
-        java.util.Date fechaUtil = jCalendar1.getDate();
-        java.sql.Date fechaSQL = new java.sql.Date(fechaUtil.getTime());
-
-         
-        JOptionPane.showMessageDialog(this,
-                "Cliente guardado:\n" +
-                "ID: " + id + "\n" +
-                "DNI: " + dni + "\n" +
-                "Nombre: " + nombre + "\n" +
-                "Teléfono: " + telefono + "\n" +
-                "Estado: " + estado + "\n" +
-                "Fecha: " + fechaSQL);
-    }
-  //Boton eliminar
-  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-
-        int fila = jTable1.getSelectedRow();
-
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccioná un cliente para eliminar.");
-            return;
-        }
-
-        int id = (int) modeloTabla.getValueAt(fila, 0);
-
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "¿Estas seguro que querés eliminar al cliente con ID: " + id + "?",
-                "Aceptar",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        try {
-            clienteData.eliminarCliente(id);
-        } catch (Exception e) {
-            System.out.println("Error en base de datos.Se va eliminar en la aplicacion");
-        }
-
-        modeloTabla.removeRow(fila);
-
-        JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
-    }
+ 
 
  
     @SuppressWarnings("unchecked")
@@ -178,8 +121,18 @@ for (Cliente c : clientes) {
         });
 
         jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Guarda");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -270,6 +223,88 @@ for (Cliente c : clientes) {
        this.setVisible(false);
        menu.activarTodosLosBotones();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+    int fila = jTable1.getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccioná un cliente primero.");
+        return;
+    }
+            
+    // Obtener los datos del cliente seleccionado
+    int idCliente = (int) modeloTabla.getValueAt(fila, 0); // Asumo que este ID es codCliente
+    long dni = (long) modeloTabla.getValueAt(fila, 1);
+    String nombre = (String) modeloTabla.getValueAt(fila, 2);
+    long telefono = (long) modeloTabla.getValueAt(fila, 3);
+    String estado = (String) modeloTabla.getValueAt(fila, 4);
+
+    // Obtener la fecha seleccionada
+    java.util.Date fechaUtil = jCalendar1.getDate();
+    
+    // NOTA: Para tu clase DiaDeSpa, necesitas un objeto java.time.LocalDateTime.
+    // Debes convertir java.util.Date a LocalDateTime.
+    java.time.LocalDateTime fechaHora = fechaUtil.toInstant()
+                                          .atZone(java.time.ZoneId.systemDefault())
+                                          .toLocalDateTime();
+
+    DiaDeSpa nuevoDiaSpa = new DiaDeSpa(
+        0,              // codPack (ID generado por DB o placeholder 0)
+        fechaHora,      // fechaYHora (LocalDateTime)
+        "Sin Preferencia", // preferencia (Asume valor predeterminado)
+        idCliente,      // codCliente (el ID que seleccionaste)
+        true,           // estado (Asume activo)
+        false           // estadoPago (Asume no pagado)
+    );
+    
+    // B) Crear una instancia del DAO (Data Access Object)
+    DiaDeSpaData dataManager = new DiaDeSpaData();
+    
+    try {
+        // C) Llamar al método Crear para guardar en la DB
+        dataManager.Crear(nuevoDiaSpa);
+        
+        // --- 3. MOSTRAR MENSAJE DE ÉXITO REAL ---
+        JOptionPane.showMessageDialog(this, "✅ Nuevo Día de Spa guardado para el cliente: " + nombre, "Guardado Exitoso", JOptionPane.INFORMATION_MESSAGE);
+        
+    } catch (Exception ex) {
+        // Si tu método Crear lanza una excepción, captúrala y notifica al usuario.
+        JOptionPane.showMessageDialog(this, "❌ Error al guardar el Día de Spa: " + ex.getMessage(), "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       
+        int fila = jTable1.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccioná un cliente para eliminar.");
+            return;
+        }
+
+        int id = (int) modeloTabla.getValueAt(fila, 0);
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estas seguro que querés eliminar al cliente con ID: " + id + "?",
+                "Aceptar",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            clienteData.eliminarCliente(id);
+        } catch (Exception e) {
+            System.out.println("Error en base de datos.Se va eliminar en la aplicacion");
+        }
+
+        modeloTabla.removeRow(fila);
+
+        JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
