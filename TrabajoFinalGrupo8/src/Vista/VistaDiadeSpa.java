@@ -17,47 +17,39 @@ import javax.swing.table.DefaultTableModel;
 public class VistaDiadeSpa extends javax.swing.JPanel{
 private DefaultTableModel modeloTabla;
 private ClienteData clienteData;
+
     /**
      * Creates new form VistaDiadeSpa
      */
     public VistaDiadeSpa() {
         initComponents();
         configurarTabla();
+         clienteData = new ClienteData();
+        mostrarClientes();
+        
+
     }
 private void configurarTabla() {
-    modeloTabla = new DefaultTableModel(
-            new Object[]{"ID","DNI","Nombre","Teléfono","Estado"}, 0
-    );
-    jTable1.setModel(modeloTabla);
+  modeloTabla = new DefaultTableModel(
+        new Object[]{"ID", "DNI", "Nombre", "Teléfono", "Estado"}, 0
+) {
+    @Override public boolean isCellEditable(int r, int c) { return false; }
+};
+jTable1.setModel(modeloTabla);
 }
  void  mostrarClientes(){
-  modeloTabla.setRowCount(0);
-        try {
-            
-            //Cambie listar Cliente(F)
-            List<Cliente> clientes = clienteData.listarClientes();
-        //    List<Cliente> clientes = clienteData.listarClientesActivos();
-            
-            
-            for (Cliente cliente : clientes) {
-                Object [] fila = new Object[5];
-                
-                fila[0] = cliente.getCodCli();
-                fila[1] = cliente.getDni();
-                // separe el nombre y apellido (F)
-                fila[2] = cliente.getNombre();
-                fila[3] = cliente.getApellido();
-                fila[4] = cliente.getTelefono();
-                fila[5] = cliente.isEstado() ? "Activo" : "Baja Logica";  
-                
-             /* fila[2] = cliente.getNombrecompleto();
-                fila[3] = cliente.getTelefono();
-                fila[4] = cliente.isEstado() ? "Activo" : "Baja Logica";  */
-                
-                modeloTabla.addRow(fila);
-            }
-        } catch (Exception e) {
-        }
+modeloTabla.setRowCount(0);
+List<Cliente> clientes = clienteData.listarClientes();
+
+for (Cliente c : clientes) {
+    Object[] fila = new Object[5];
+    fila[0] = c.getCodCli();
+    fila[1] = c.getDni();
+    fila[2] = c.getNombre() + " " + c.getApellido(); // 👈 nombre completo
+    fila[3] = c.getTelefono();
+    fila[4] = c.isEstado() ? "Activo" : "Baja";
+    modeloTabla.addRow(fila);
+}
  }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

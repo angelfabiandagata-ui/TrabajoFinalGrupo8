@@ -189,5 +189,42 @@ public void bajaCliente(int codCliente){
                System.out.println("Error al dar de alta al cliente" + e.getMessage());
            }
        }    
+        
+        public List<Cliente> buscarPorCodigoOApellido(String texto) {
+    List<Cliente> clientes = new ArrayList<>();
+    String sql = "SELECT * FROM cliente WHERE codCliente = ? OR apellido LIKE ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        try {
+            ps.setInt(1, Integer.parseInt(texto));
+        } catch (NumberFormatException e) {
+            ps.setInt(1, -1); // si no es número, no matchea por ID
+        }
+
+        ps.setString(2, "%" + texto + "%");
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Cliente c = new Cliente();
+            c.setCodCli(rs.getInt("codCliente"));
+            c.setDni(rs.getInt("dni"));
+            c.setNombre(rs.getString("nombre"));
+            c.setApellido(rs.getString("apellido"));
+            c.setTelefono(rs.getLong("telefono"));
+            c.setEstado(rs.getBoolean("estado"));
+            clientes.add(c);
+        }
+
+        rs.close();
+        ps.close();
+    } catch (SQLException ex) {
+        System.out.println("Error al buscar cliente: " + ex.getMessage());
+    }
+
+    return clientes;
+}
+
 }
 
