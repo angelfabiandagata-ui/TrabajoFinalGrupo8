@@ -251,7 +251,7 @@ public class menu extends javax.swing.JFrame {
 
     
     ConsultorioData consultoriod = new ConsultorioData();
-    VistaConsultorio vistaconsultorio = new VistaConsultorio();
+    VistaConsultorio vistaconsultorio = new VistaConsultorio(this);
     
     
     // constructor
@@ -568,7 +568,7 @@ public class menu extends javax.swing.JFrame {
 }
     public void abrirConsultorio(){
     if(cons == null){
-    cons = new VistaConsultorio();
+    cons = new VistaConsultorio(this);
     cons.setBounds(0, 0, 900, 400);
     jDesktopPane1.add(cons);
     int x = (this.getWidth() - cons.getWidth()) / 2;

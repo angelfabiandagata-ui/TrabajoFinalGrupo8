@@ -23,9 +23,10 @@ public class VistaConsultorio extends javax.swing.JPanel {
    
    
    
-    public VistaConsultorio() {
+    public VistaConsultorio(menu menu) {
         initComponents();
         consultorio = new ConsultorioData();
+        men = menu;
         actualizarArreglo();
         desactivarCodigo();
         buttonGroup1.add(radio1);
@@ -583,7 +584,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         this.setEnabled(false);
         this.setVisible(false);
-        men.desactivarTodosLosBotones();
+        men.activarTodosLosBotones();
     }//GEN-LAST:event_salirActionPerformed
 
     private void radio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio1ActionPerformed
