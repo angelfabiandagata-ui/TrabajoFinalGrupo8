@@ -428,17 +428,19 @@ public class VistaConsultorio extends javax.swing.JPanel {
     }//GEN-LAST:event_jtequiActionPerformed
 
     private void agregarusosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarusosActionPerformed
-
-        String nuevoUso = jtagre.getText();
-
-        if (!nuevoUso.isEmpty()) {
-            usos = Arrays.copyOf(usos, usos.length + 1);
-            usos[usos.length - 1] = nuevoUso;
+        
+        String nuevoEq = jtequi.getText().trim();
+        if (!nuevoEq.isEmpty()) {
+            equipamiento = Arrays.copyOf(equipamiento, equipamiento.length + 1);
+            equipamiento[equipamiento.length - 1] = nuevoEq;
             actualizarListas();
-            jtagre.setText("");
+            jtequi.setText("");
         } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un uso válido");
+            JOptionPane.showMessageDialog(this, "Ingrese un equipamiento válido");
         }
+        
+        
+
 
         //#chequeado#
     }//GEN-LAST:event_agregarusosActionPerformed
@@ -570,14 +572,15 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
     private void agregarequipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarequipActionPerformed
 
-        String nuevoEq = jtequi.getText().trim();
-        if (!nuevoEq.isEmpty()) {
-            equipamiento = Arrays.copyOf(equipamiento, equipamiento.length + 1);
-            equipamiento[equipamiento.length - 1] = nuevoEq;
+                String nuevoUso = jtagre.getText();
+
+        if (!nuevoUso.isEmpty()) {
+            usos = Arrays.copyOf(usos, usos.length + 1);
+            usos[usos.length - 1] = nuevoUso;
             actualizarListas();
-            jtequi.setText("");
+            jtagre.setText("");
         } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un equipamiento válido");
+            JOptionPane.showMessageDialog(this, "Ingrese un uso válido");
         }
     }//GEN-LAST:event_agregarequipActionPerformed
 

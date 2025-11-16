@@ -574,6 +574,7 @@ public class menu extends javax.swing.JFrame {
     int x = (this.getWidth() - cons.getWidth()) / 2;
     int y = (this.getHeight() - cons.getHeight()) / 2;
     cons.setLocation(x, y);
+    desactivarTodosLosBotones();
     }
     jDesktopPane1.moveToFront(cons);
     
