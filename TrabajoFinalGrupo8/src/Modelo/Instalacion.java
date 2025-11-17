@@ -13,7 +13,7 @@ public class Instalacion {
     }
 
     public Instalacion(int codInstal, String nombre, String detalleUso, double precio30min, boolean estado) {
-        this.codInstalacion = codInstalacion;
+        this.codInstalacion = codInstal;
         this.nombre = nombre;
         this.detalleUso = detalleUso;
         this.precio30min = precio30min;
