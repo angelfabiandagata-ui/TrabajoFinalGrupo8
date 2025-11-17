@@ -576,7 +576,7 @@ public class menu extends javax.swing.JFrame {
     public void abrirConsultorio(){
     if(cons == null){
     cons = new VistaConsultorio(this);
-    cons.setBounds(0, 0, 900, 400);
+    cons.setBounds(0, 0, 1100, 400);
     jDesktopPane1.add(cons);
     int x = (this.getWidth() - cons.getWidth()) / 2;
     int y = (this.getHeight() - cons.getHeight()) / 2;
