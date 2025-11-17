@@ -1,0 +1,53 @@
+Introducir una por una a las consultas.
+
+----------------
+INSERT INTO cliente (codCliente, dni, nombre, apellido, telefono, edad, afecciones, estado) VALUES
+(1, 40123456, 'Valeria', 'Sosa', 1123456789, 28, 'Ninguna', 1),
+(2, 38567890, 'Lucas', 'Fernandez', 1132984567, 35, 'Cervicalgia', 1),
+(3, 42987654, 'Ana', 'Mendez', 1167845566, 22, 'Estrés', 1),
+(4, 39876543, 'Bruno', 'Garcia', 1145678890, 31, 'Lumbalgia', 1),
+(5, 37456123, 'Micaela', 'Ruiz', 1178942233, 26, 'Ansiedad', 1);
+
+---------------
+INSERT INTO consultorio (nroConsultorio, usos, equipamiento, apto) VALUES
+(1, 'Masajes relajantes', 'Camilla, aceites esenciales', 1),
+(2, 'Masajes intensos', 'Camilla reforzada, compresas', 1),
+(3, 'Reflexología', 'Sillón especial, accesorios', 1),
+(4, 'Tratamientos faciales', 'Lámpara LED, vapor frío', 1),
+(5, 'Piedras calientes', 'Rocas volcánicas, manta térmica', 1);
+
+
+----------------
+INSERT INTO instalacion (codInstalacion, nombre, detalle_uso, precio30m, estado) VALUES
+(1, 'Sauna seco', 'Relajación y desintoxicación', 2500.00, 1),
+(2, 'Sauna húmedo', 'Humectación y limpieza profunda', 2400.00, 1),
+(3, 'Piscina climatizada', 'Ejercicios y relajación muscular', 2000.00, 1),
+(4, 'Sala de meditación', 'Respiración guiada y mindfulness', 1800.00, 1);
+
+
+-------------------
+INSERT INTO tratamiento (codTratamiento, nombre, detalle, productos, duracion, costo, estado) VALUES
+(1, 'Masaje Relajante', 'Reduce estrés y tensión', 'Aceites esenciales', 60, 8000.00, 1),
+(2, 'Masaje Descontracturante', 'Elimina nudos musculares', 'Aceite mentolado', 60, 9000.00, 1),
+(3, 'Reflexología Podal', 'Estimulación de puntos energéticos', 'Crema hidratante', 45, 7000.00, 1),
+(4, 'Tratamiento Facial Antiage', 'Rejuvenece la piel', 'Mascarilla colágeno', 50, 8500.00, 1),
+(5, 'Piedras Calientes', 'Relajación profunda con calor', 'Piedras volcánicas', 75, 9500.00, 1),
+(6, 'Exfoliación Corporal', 'Renueva la piel', 'Sales minerales', 40, 6000.00, 1),
+(7, 'Masaje Deportivo', 'Preparación muscular', 'Gel frío', 50, 8800.00, 1),
+(8, 'Limpieza Facial Profunda', 'Elimina impurezas', 'Vapor frío + tónico', 45, 6500.00, 1),
+(9, 'Drenaje Linfático', 'Mejora circulación', 'Aceite neutro', 60, 9200.00, 1),
+(10, 'Aromaterapia', 'Técnicas con esencias', 'Aromas naturales', 40, 5000.00, 1);
+
+
+----------------------
+INSERT INTO tratamiento (codTratamiento, nombre, detalle, productos, duracion, costo, estado) VALUES
+(1, 'Masaje Relajante', 'Reduce estrés y tensión', 'Aceites esenciales', 60, 8000.00, 1),
+(2, 'Masaje Descontracturante', 'Elimina nudos musculares', 'Aceite mentolado', 60, 9000.00, 1),
+(3, 'Reflexología Podal', 'Estimulación de puntos energéticos', 'Crema hidratante', 45, 7000.00, 1),
+(4, 'Tratamiento Facial Antiage', 'Rejuvenece la piel', 'Mascarilla colágeno', 50, 8500.00, 1),
+(5, 'Piedras Calientes', 'Relajación profunda con calor', 'Piedras volcánicas', 75, 9500.00, 1),
+(6, 'Exfoliación Corporal', 'Renueva la piel', 'Sales minerales', 40, 6000.00, 1),
+(7, 'Masaje Deportivo', 'Preparación muscular', 'Gel frío', 50, 8800.00, 1),
+(8, 'Limpieza Facial Profunda', 'Elimina impurezas', 'Vapor frío + tónico', 45, 6500.00, 1),
+(9, 'Drenaje Linfático', 'Mejora circulación', 'Aceite neutro', 60, 9200.00, 1),
+(10, 'Aromaterapia', 'Técnicas con esencias', 'Aromas naturales', 40, 5000.00, 1);
