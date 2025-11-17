@@ -358,6 +358,77 @@ String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado FR
         }
     }
     
+    private boolean isRecursoOcupado(SesionTurno sesion, String campo, Object valor) throws SQLException {
+    String sql = "SELECT COUNT(*) FROM sesion " +
+                 "WHERE " + campo + " = ? " +
+                 // Condición de solapamiento
+                 "AND fechaHoraInicio < ? " + 
+                 "AND fechaHoraFin > ?"; 
+    
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        // 1. Valor del recurso (ej: nroConsultorio = 5)
+        if (valor instanceof Long) {
+            ps.setLong(1, (Long) valor);
+        } else if (valor instanceof Integer) {
+            ps.setInt(1, (Integer) valor);
+        } else {
+            // Manejar otros tipos si es necesario
+            ps.setObject(1, valor); 
+        }
+
+        // 2. Inicio existente < Fin nuevo (Inicio 1 < Fin 2)
+        ps.setTimestamp(2, java.sql.Timestamp.valueOf(sesion.getFechaHoraFin()));
+        // 3. Inicio nuevo < Fin existente (Inicio 2 < Fin 1)
+        ps.setTimestamp(3, java.sql.Timestamp.valueOf(sesion.getFechaHoraInicio()));
+        
+        try (java.sql.ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Retorna TRUE si encuentra al menos 1 sesión solapada
+            }
+        }
+    }
+    return false;
+}
+    
+    public boolean verificarDisponibilidad(SesionTurno nuevaSesion) throws SQLException {
+    
+    // Obtenemos el tipo de sesión para saber qué verificar
+    boolean esSesionInstalacion = nuevaSesion.getCodInstalacion() != null;
+    
+    // Definimos el campo a verificar y su valor
+    String campoRecurso = "";
+    Object valorRecurso = null;
+
+    if (esSesionInstalacion) {
+        // Caso Instalación
+        campoRecurso = "codInstalacion";
+        valorRecurso = nuevaSesion.getCodInstalacion().getCodInstal();
+    } else {
+        // Caso Tratamiento: Se verifican Consultorio Y Masajista
+        
+        // **OPCIÓN 1: Verificar Consultorio**
+        campoRecurso = "nroConsultorio";
+        valorRecurso = nuevaSesion.getNroConsultorio().getNroConsultorio();
+        if (isRecursoOcupado(nuevaSesion, campoRecurso, valorRecurso)) {
+            return true; // Consultorio ocupado
+        }
+        
+        // **OPCIÓN 2: Verificar Masajista**
+        campoRecurso = "matricula";
+        valorRecurso = nuevaSesion.getMatricula().getMatricula();
+        if (isRecursoOcupado(nuevaSesion, campoRecurso, valorRecurso)) {
+            return true; // Masajista ocupado
+        }
+        
+        // Si no es Instalación y no encontramos ocupación en Consultorio o Masajista:
+        return false;
+    }
+    
+    // Si es Instalación, solo verificamos la Instalación
+    return isRecursoOcupado(nuevaSesion, campoRecurso, valorRecurso);
+}
+    
 
     public void AsignarMasajistaSegunEspecialidad(SesionTurno sesionturno) {
 

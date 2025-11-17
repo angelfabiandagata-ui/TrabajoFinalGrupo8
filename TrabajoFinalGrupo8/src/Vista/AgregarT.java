@@ -5,20 +5,29 @@
 package Vista;
 
 import Modelo.Cliente;
+import Modelo.Conexion;
 import Modelo.Consultorio;
 import Modelo.DiaDeSpa;
 import Modelo.Masajista;
 import Modelo.Tratamiento;
+import Modelo.SesionTurno;
+import Modelo.Instalacion;
 import Persistencia.ClienteData;
 import Persistencia.ConsultorioData;
 import Persistencia.DiaDeSpaData;
 import Persistencia.MasajistaData;
 import Persistencia.TratamientoData;
+import Persistencia.SesionTurnoData;
+import java.time.LocalDate;
 import Vista.menu;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 
 /**
  *
@@ -31,6 +40,9 @@ public class AgregarT extends javax.swing.JPanel {
     private ConsultorioData consultorioData = new ConsultorioData();
     private DiaDeSpaData diaDeSpaData = new DiaDeSpaData();
     private DefaultTableModel modeloTablaDiaSpa;
+    private SesionTurnoData sesionTurnoData;
+    private Conexion con;
+    
 
 
 
@@ -243,11 +255,12 @@ private void configurarTablaDiaSpa() {
     /**
      * Creates new form NewJPanel
      */
-    public AgregarT(menu men) {
+    public AgregarT(menu men, java.sql.Connection con) {
         initComponents();
         configurarTablaDiaSpa();
          this.men = men;
          this.diaDeSpaData = new DiaDeSpaData();
+         this.sesionTurnoData = new Persistencia.SesionTurnoData();
         jComboBoxHoraInicio.removeAllItems();
         jComboBoxHoraFin.removeAllItems();
         cargarTratamientosComboBox();
@@ -321,7 +334,6 @@ jComboHoras.setEnabled(true);
         jScrollBar1 = new javax.swing.JScrollBar();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -340,7 +352,7 @@ jComboHoras.setEnabled(true);
         jTableDiaDeSpa = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         Masajista1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BtnAgregar = new javax.swing.JButton();
         jComboBoxHoraInicio = jComboBoxHoraInicio = new javax.swing.JComboBox<>(new javax.swing.DefaultComboBoxModel<String>());
         ;
         jComboBoxHoraFin = jComboBoxHoraFin = new javax.swing.JComboBox<>(new javax.swing.DefaultComboBoxModel<String>());
@@ -348,6 +360,8 @@ jComboHoras.setEnabled(true);
         jTextFieldTotal = new javax.swing.JTextField();
         botonInstalacion = new javax.swing.JButton();
         botonTratamiento = new javax.swing.JButton();
+        txtCodSesion = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Agregar Turno");
@@ -376,13 +390,6 @@ jComboHoras.setEnabled(true);
         jLabel2.setText("Agregar Turno");
 
         jLabel6.setText("Horario Inicio");
-
-        jButton2.setText("Agregar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton4.setText("X Salir X");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -505,10 +512,10 @@ jComboHoras.setEnabled(true);
 
         Masajista1.setText("Total $");
 
-        jButton1.setText("AGREGAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnAgregar.setText("AGREGAR");
+        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnAgregarActionPerformed(evt);
             }
         });
 
@@ -538,6 +545,8 @@ jComboHoras.setEnabled(true);
             }
         });
 
+        jLabel7.setText("Ingrese codigo de sesion");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -545,14 +554,10 @@ jComboHoras.setEnabled(true);
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Masajista1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9))))
+                        .addGap(82, 82, 82)
+                        .addComponent(Masajista1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -566,7 +571,7 @@ jComboHoras.setEnabled(true);
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(24, 24, 24)
                                         .addComponent(botonTratamiento)
@@ -575,21 +580,23 @@ jComboHoras.setEnabled(true);
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(72, 72, 72)
-                                                .addComponent(jLabel10)
-                                                .addGap(30, 30, 30))
+                                                .addGap(82, 82, 82)
+                                                .addComponent(jLabel6))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel6)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel7)
+                                                    .addComponent(jLabel10))))
+                                        .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jComboBoxHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBoxHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(jComboBoxHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtCodSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(109, 109, 109)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(14, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -612,15 +619,11 @@ jComboHoras.setEnabled(true);
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(83, 83, 83)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
+                                .addGap(143, 143, 143)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jComboBoxHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10))
-                                .addGap(38, 38, 38)
+                                    .addComponent(txtCodSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(botonTratamiento)
                                     .addComponent(botonInstalacion))
@@ -635,9 +638,6 @@ jComboHoras.setEnabled(true);
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -651,9 +651,19 @@ jComboHoras.setEnabled(true);
                             .addComponent(Masajista1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)))))
+                                .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(29, 29, 29))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jComboBoxHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -664,14 +674,6 @@ jComboHoras.setEnabled(true);
        men.activarTodosLosBotones();
        
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBoxHoraFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHoraFinActionPerformed
         // TODO add your handling code here:
@@ -703,6 +705,117 @@ botonTratamiento.setEnabled(true);
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
        buscar();
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
+
+    private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
+    try {
+        // SUPOSICIÓN 1: Código de Sesión (jTextFieldCodSesion)
+        // DEBES REEMPLAZAR 'jTextFieldCodSesion' con el nombre de tu campo de texto para el ID.
+        int codSesion = Integer.parseInt(txtCodSesion.getText().trim()); 
+        
+        // 1.1. Obtención de Pack y la FECHA DESDE EL OBJETO DiaDeSpa
+        
+        int filaSeleccionada = jTableDiaDeSpa.getSelectedRow();
+        if (filaSeleccionada == -1) {
+             JOptionPane.showMessageDialog(this, "Debe seleccionar un Día de Spa/Pack de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+             return;
+        }
+        
+        int codPack = (int) modeloTablaDiaSpa.getValueAt(filaSeleccionada, 0);
+        
+        // Buscamos el objeto DiaDeSpa para obtener la fecha
+        DiaDeSpa diaSpa = diaDeSpaData.buscarPorCodigo(codPack);
+        
+        if (diaSpa == null || diaSpa.getFechaHora()== null) {
+            JOptionPane.showMessageDialog(this, "No se pudo obtener la fecha asociada al Pack seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Obtenemos la fecha del objeto (asumo que getFecha() devuelve LocalDate)
+        LocalDate fecha = diaSpa.getFechaHora().toLocalDate();
+
+        // 1.2. Obtención de Horarios
+        String horaInicioStr = (String) jComboBoxHoraInicio.getSelectedItem();
+        String horaFinStr = (String) jComboBoxHoraFin.getSelectedItem();
+        
+        if (horaInicioStr == null || horaFinStr == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione los horarios de inicio y fin.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // El formato de tus ComboBox es "HH:00", LocalTime.parse lo maneja
+        LocalTime horaInicio = LocalTime.parse(horaInicioStr); 
+        LocalTime horaFin = LocalTime.parse(horaFinStr);
+        
+        // Combinamos la fecha del Pack con las horas seleccionadas
+        LocalDateTime inicio = LocalDateTime.of(fecha, horaInicio);
+        LocalDateTime fin = LocalDateTime.of(fecha, horaFin);
+        
+        // 1.3. Obtención de Monto y Estado
+        String montoStr = jTextFieldTotal.getText().trim().replace(',', '.');
+        double monto = Double.parseDouble(montoStr);
+
+        boolean estado = true; // Asumimos estado por defecto (o puedes usar un checkbox)
+
+        // --- 2. Determinación del Tipo de Sesión y Recursos ---
+        
+        // La lógica de los botones indica el modo: si 'botonTratamiento' está habilitado, estamos en modo Instalación.
+        boolean esSesionInstalacion = botonTratamiento.isEnabled(); 
+        
+        Tratamiento tr = null;
+        Consultorio co = null;
+        Masajista ma = null;
+        Instalacion inst = null;
+
+        if (esSesionInstalacion) {
+            // Caso Instalación
+            // *** LÍNEA CORREGIDA ***: Se añaden "Detalle por defecto" (String) y "true" (boolean)
+            inst = new Instalacion(1, "Instalacion Predeterminada", "Detalle por defecto", 5000.0, true);
+
+        } else {
+            // Caso Tratamiento
+            tr = (Tratamiento) jComboBoxTratamiento.getSelectedItem();
+            co = (Consultorio) jComboBoxConsultorio.getSelectedItem();
+            ma = (Masajista) jComboBoxMasajista.getSelectedItem();
+
+            if (tr == null || co == null || ma == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar Tratamiento, Consultorio y Masajista.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+
+        // 3. Creación del objeto SesionTurno
+        SesionTurno nuevaSesion = new SesionTurno(
+            codSesion, inicio, fin, 
+            tr, co, ma, 
+            inst, // Instancia de Instalacion (o null si es Tratamiento)
+            codPack, estado, monto
+        );
+        
+        // --- 4. VALIDACIÓN DE DISPONIBILIDAD (Llamada al método de SesionData) ---
+        if (sesionTurnoData.verificarDisponibilidad(nuevaSesion)) {
+             JOptionPane.showMessageDialog(this, 
+                 "El recurso (Consultorio, Masajista o Instalación) ya está ocupado en el horario seleccionado.", 
+                 "Error de Disponibilidad", JOptionPane.WARNING_MESSAGE);
+             return; // Detiene la creación
+        }
+
+        // --- 5. LLAMADA AL MÉTODO DE CREACIÓN (Si está disponible) ---
+        sesionTurnoData.crearSesion(nuevaSesion);
+        
+        JOptionPane.showMessageDialog(this, "Sesión creada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Error de formato: Asegúrese de que ID de Sesión, Horas e Importe Total sean números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "Error al parsear el horario. Revise el formato.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (java.sql.SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error inesperado al guardar la sesión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_BtnAgregarActionPerformed
 
     private void buscar() {
 
@@ -762,6 +875,7 @@ botonTratamiento.setEnabled(true);
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAgregar;
     private javax.swing.JLabel Masajista;
     private javax.swing.JLabel Masajista1;
     private javax.swing.JButton botonInstalacion;
@@ -769,8 +883,6 @@ botonTratamiento.setEnabled(true);
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<Consultorio> jComboBoxConsultorio;
     private javax.swing.JComboBox<String> jComboBoxHoraFin;
@@ -787,6 +899,7 @@ botonTratamiento.setEnabled(true);
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -799,5 +912,6 @@ botonTratamiento.setEnabled(true);
     private javax.swing.JTable jTableDiaDeSpa;
     private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldTotal;
+    private javax.swing.JTextField txtCodSesion;
     // End of variables declaration//GEN-END:variables
 }

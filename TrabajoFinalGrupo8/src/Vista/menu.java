@@ -192,6 +192,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import Vista.AgregarT;
+import java.sql.SQLException;
 
 
 /**
@@ -248,6 +249,8 @@ public class menu extends javax.swing.JFrame {
     private JButton instalaciones;
     private JButton historial;
     private JButton configuracionAvanzada;
+    
+    private java.sql.Connection con;
 
     
     ConsultorioData consultoriod = new ConsultorioData();
@@ -261,6 +264,10 @@ public class menu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         crearYOrdenarComponentes();
         reproducirMusicaFondo();
+        Modelo.Conexion miConexion = new Modelo.Conexion();
+        this.con = miConexion.buscarConexion();
+
+
     }
 
     
@@ -542,7 +549,7 @@ public class menu extends javax.swing.JFrame {
     //----------------- botones internos de conf y turn--------------
     private void agregar() {
            // constructor que recibe "this" (menu), según tu versión
-        AgregarT agregarT = new AgregarT(this);
+        AgregarT agregarT = new AgregarT(this, this.con);
         agregarT.setBounds(0, 0,900, 500);
         jDesktopPane1.add(agregarT,30);
         agregarT.setLocation((1600 - agregarT.getWidth()) / 2, 20);
