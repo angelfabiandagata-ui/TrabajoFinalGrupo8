@@ -38,17 +38,17 @@ public class ClienteData {
 
     }
     public void guardarCliente(Cliente cliente){
-        String sql = "INSERT INTO cliente (dni, nombre, apellido, telefono, edad, afecciones, estado) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO cliente (codCliente, dni, nombre, apellido, telefono, edad, afecciones, estado) VALUES (?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            
-            ps.setLong(1, cliente.getDni());
-            ps.setString(2, cliente.getNombre());
-            ps.setString(3, cliente.getApellido());
-            ps.setLong(4, cliente.getTelefono());
-            ps.setInt(5, cliente.getEdad());
-            ps.setString(6, cliente.getAfeciones());
-            ps.setBoolean(7, cliente.isEstado());
+            ps.setInt(1, cliente.getCodCli());
+            ps.setLong(2, cliente.getDni());
+            ps.setString(3, cliente.getNombre());
+            ps.setString(4, cliente.getApellido());
+            ps.setLong(5, cliente.getTelefono());
+            ps.setInt(6, cliente.getEdad());
+            ps.setString(7, cliente.getAfeciones());
+            ps.setBoolean(8, cliente.isEstado());
             ps.executeUpdate();
             
         
@@ -107,7 +107,7 @@ public class ClienteData {
                 cliente.setCodCli(rs.getInt("codCliente"));
                 cliente.setDni(rs.getLong("dni"));
                 cliente.setNombre(rs.getString("nombre"));
-                cliente.setApellido(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
                 cliente.setTelefono(rs.getLong("telefono"));
                 cliente.setEdad(rs.getInt("edad"));
                 cliente.setAfeciones(rs.getString("afecciones"));
@@ -131,7 +131,7 @@ public class ClienteData {
                 cliente.setCodCli(rs.getInt("codCliente"));
                 cliente.setDni(rs.getLong("dni"));
                 cliente.setNombre(rs.getString("nombre"));
-                cliente.setApellido(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
                 cliente.setTelefono(rs.getLong("telefono"));
                 cliente.setEdad(rs.getInt("edad"));
                 cliente.setAfeciones(rs.getString("afecciones"));
@@ -154,7 +154,7 @@ public class ClienteData {
                 c.setCodCli(rs.getInt("codCliente"));
                 c.setDni(rs.getLong("dni"));
                 c.setNombre(rs.getString("nombre"));
-                c.setApellido(rs.getString("nombre"));
+                c.setApellido(rs.getString("apellido"));
                 c.setTelefono(rs.getLong("telefono"));
                 c.setEdad(rs.getInt("edad"));
                 c.setAfeciones(rs.getString("afecciones"));
