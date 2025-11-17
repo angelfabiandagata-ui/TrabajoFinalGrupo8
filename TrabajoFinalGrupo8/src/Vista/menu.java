@@ -221,6 +221,9 @@ public class menu extends javax.swing.JFrame {
     private Clip clipMusica;
     private PanelConFondo panelFondo;
 
+    //boton parar musica
+    private JButton musicaIntercambiar;
+    
     VistaConsultorio cons;
 
     // abrir paneles
@@ -243,8 +246,8 @@ public class menu extends javax.swing.JFrame {
     private JButton turnosVacios;
     
     //paneles simples
-    private JButton abrirClientes;      // Declarado como variable de clase
-    private JButton abrirMasajistas;    // Declarado como variable de clase
+    private JButton abrirClientes;     
+    private JButton abrirMasajistas;    
     VistaMasajistas masajistasboton;
     VistaClientes clientesboton;
     
@@ -252,7 +255,7 @@ public class menu extends javax.swing.JFrame {
     private JButton tratamientos;
     private JButton instalaciones;
     private JButton historial;
-    private JButton botonConfigAvanzada;  // Renombrado para evitar conflicto con método
+    private JButton botonConfigAvanzada;  
     
     private java.sql.Connection con;
 
@@ -265,8 +268,8 @@ public class menu extends javax.swing.JFrame {
         initComponents();
         setSize(1600, 600);
         setLocationRelativeTo(null);
+        reproducirMusicaFondo();     
         crearYOrdenarComponentes();
-        reproducirMusicaFondo();
         Modelo.Conexion miConexion = new Modelo.Conexion();
         this.con = miConexion.buscarConexion();
     }
@@ -340,7 +343,6 @@ public class menu extends javax.swing.JFrame {
 
     // metodo para crear los botones
     public void crearYOrdenarComponentes() {
-
         panelFondo = new PanelConFondo("/Vista/Disenio/radio.jpg");
         panelFondo.setLayout(null);
         jDesktopPane1.removeAll();
@@ -384,9 +386,16 @@ public class menu extends javax.swing.JFrame {
         instalaciones = crearBotonInvisible(120, 110, 117,110,  this::abrirDiaDeSpa, "e");
         historial = crearBotonInvisible(0, 110, 117, 110,  this::siete , "f");
         botonConfigAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::configuracionAvanzada , "g");
-
+        
+        
         VistaTurnos.setLayout(null);
         VistaConfiguracion.setLayout(null);
+        
+        if (musicaIntercambiar == null) {
+            musicaIntercambiar = crearBotonInvisible(1032, 350, 50, 50, this::intercambiarMusica, "musica");
+            jDesktopPane1.add(musicaIntercambiar);
+            jDesktopPane1.moveToFront(musicaIntercambiar);
+        }
     }
 
     private JButton crearBotonInvisible(int x, int y, int w, int h, Runnable accion, String tooltip) {
@@ -394,7 +403,7 @@ public class menu extends javax.swing.JFrame {
         boton.setBounds(x, y, w, h);
         boton.setOpaque(false); 
         boton.setContentAreaFilled(false);
-        boton.setBorderPainted(false);
+        boton.setBorderPainted(true);
         boton.setFocusPainted(false);
         boton.setToolTipText(tooltip);
         boton.addActionListener(e -> accion.run());
@@ -608,23 +617,50 @@ public class menu extends javax.swing.JFrame {
         }
     }
 
-    // ========= MÚSICA =========
-    private void reproducirMusicaFondo() {
-        try {
-            URL url = getClass().getResource("/Vista/Sonido/cancion.wav");
-            if (url == null) {
-                System.err.println("No se encontró el archivo de sonido.");
-                return;
-            }
-            AudioInputStream audioInput = AudioSystem.getAudioInputStream(url);
-            clipMusica = AudioSystem.getClip();
-            clipMusica.open(audioInput);
-            clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
-            clipMusica.start();
-            System.out.println("🎵 Música de fondo iniciada...");
-        } catch (Exception e) {
-            e.printStackTrace();
+        
+          // ========= MÚSICA =========
+    
+private void intercambiarMusica() {
+    if (clipMusica == null) {
+        System.err.println("Clip de música no inicializado. No se puede intercambiar estado.");
+        return;
+    }
+
+//    if (clipMusica.isRunning()) {
+//        clipMusica.stop();
+//        try { clipMusica.flush(); } catch (Exception ignored) {}
+//        System.out.println("Música detenida.");
+//    } else {
+//        try {
+//            clipMusica.setFramePosition(0);
+//            clipMusica.start();
+//            clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
+//            System.out.println("Música iniciada.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+}
+
+private void reproducirMusicaFondo() {
+    try {
+        URL url = getClass().getResource("/Vista/Sonido/cancion.wav");
+        if (url == null) {
+            System.err.println("No se encontró el archivo de sonido.");
+            return;
         }
+
+        AudioInputStream audioInput = AudioSystem.getAudioInputStream(url);
+        clipMusica = AudioSystem.getClip();
+        clipMusica.open(audioInput);
+        clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
+        clipMusica.start();
+        System.out.println("🎵 Música de fondo iniciada...");
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 }
 
+//final
+}
