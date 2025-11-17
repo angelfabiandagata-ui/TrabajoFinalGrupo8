@@ -12,27 +12,82 @@ public class SesionTurno {
     private int codSesion;
     private LocalDateTime fechaHoraInicio;
     private LocalDateTime fechaHoraFin;
-    private Tratamiento tratamiento; 
-    private Consultorio consultorio;
-    private Masajista masajista;
-    private List<Instalacion> instalacionesList;
-    private LocalDate DiaDeSpa;
+    private Tratamiento codTratamiento; 
+    private Consultorio nroConsultorio;
+    private Masajista matricula;
+    private Instalacion codInstalacion;
+    private int codPack;
     private boolean estado;
+    private double monto;
 
 
 
 
 //Constructor
-    public SesionTurno(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento tratamiento, Consultorio consultorio, Masajista masajista, List<Instalacion> instalacionesList, LocalDate DiaDeSpa, boolean estado) {   
+    public SesionTurno(int codSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Tratamiento codTratamiento, Consultorio nroConsultorio, Masajista matricula, Instalacion codInstalacion, int codPack, boolean estado, double monto) {   
         this.codSesion = codSesion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
-        this.tratamiento = tratamiento;
-        this.consultorio = consultorio;
-        this.masajista = masajista;
-        this.instalacionesList = instalacionesList;
-        this.DiaDeSpa = DiaDeSpa;
+        this.codTratamiento = codTratamiento;
+        this.nroConsultorio = nroConsultorio;
+        this.matricula = matricula;
+        this.codInstalacion = codInstalacion;
+        this.codPack = codPack;
         this.estado = estado;
+        this.monto = monto;
+    }
+
+    @Override
+    public String toString() {
+        return "SesionTurno{" + "codSesion=" + codSesion + ", fechaHoraInicio=" + fechaHoraInicio + ", fechaHoraFin=" + fechaHoraFin + ", codTratamiento=" + codTratamiento + ", nroConsultorio=" + nroConsultorio + ", matricula=" + matricula + ", codInstalacion=" + codInstalacion + ", codPack=" + codPack + ", estado=" + estado + ", monto=" + monto + '}';
+    }
+
+    public Tratamiento getCodTratamiento() {
+        return codTratamiento;
+    }
+
+    public void setCodTratamiento(Tratamiento codTratamiento) {
+        this.codTratamiento = codTratamiento;
+    }
+
+    public Consultorio getNroConsultorio() {
+        return nroConsultorio;
+    }
+
+    public void setNroConsultorio(Consultorio nroConsultorio) {
+        this.nroConsultorio = nroConsultorio;
+    }
+
+    public Masajista getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Masajista matricula) {
+        this.matricula = matricula;
+    }
+
+    public Instalacion getCodInstalacion() {
+        return codInstalacion;
+    }
+
+    public void setCodInstalacion(Instalacion codInstalacion) {
+        this.codInstalacion = codInstalacion;
+    }
+
+    public int getCodPack() {
+        return codPack;
+    }
+
+    public void setCodPack(int codPack) {
+        this.codPack = codPack;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(double monto) {
+        this.monto = monto;
     }
 
     public SesionTurno() {
@@ -63,13 +118,7 @@ public class SesionTurno {
         this.fechaHoraFin = fechaHoraFin;
     }
 
-    public List<Instalacion> getInstalacionesList() {
-        return instalacionesList;
-    }
 
-    public void setInstalacionesList(List<Instalacion> instalacionesList) {
-        this.instalacionesList = instalacionesList;
-    }
 
     public boolean getEstado() {
         return estado;
@@ -79,55 +128,6 @@ public class SesionTurno {
         this.estado = estado;
     }
 
-    public Tratamiento getTratamiento() {
-        return tratamiento;
-    }
-
-    public void setTratamiento(Tratamiento tratamiento) {
-        this.tratamiento = tratamiento;
-    }
-
-    public Consultorio getConsultorio() {
-        return consultorio;
-    }
-
-    public void setConsultorio(Consultorio consultorio) {
-        this.consultorio = consultorio;
-    }
-
-    public Masajista getMasajista() {
-        return masajista;
-    }
-
-    public void setMasajista(Masajista masajista) {
-        this.masajista = masajista;
-    }
-
-    
-
  
-    public List<Instalacion> getInstalacioneslist() {
-        return instalacionesList;
-    }
-
-    public void setInstalacioneslist(List<Instalacion> instalacioneslist) {
-        this.instalacionesList = instalacioneslist;
-    }
-
-    public LocalDate getDiaDeSpa() {
-        return DiaDeSpa;
-    }
-
-    public void setDiaDeSpa(LocalDate diaDeSpa) {
-        this.DiaDeSpa = diaDeSpa;
-    }
-//toString
-    @Override
-    public String toString() {
-        return "Sesion-Turno" + "codSesion=" + codSesion + " fechaHoraInicio=" + fechaHoraInicio + " fechaHoraFin = "  + fechaHoraFin + " tratamiento = " + tratamiento + " consultorio = " + consultorio + " masajista = " + masajista + " instalaciones = " + instalacionesList + "  diaDeSpa = " + DiaDeSpa ;
-    }
-     
-            
-    
 }
 

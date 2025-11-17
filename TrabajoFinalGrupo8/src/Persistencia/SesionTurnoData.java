@@ -49,8 +49,70 @@ public class SesionTurnoData {
     }
 
     public void crearSesion(SesionTurno sesionturno) {
-        String sql = "INSERT INTO `sesion`(`codSesion`, `fechaHoraInicio`, `fechaHoraFin`, `codTratamiento`, `nroConsultorio`, `matricula`, `codInstalacion`, `codPack`, `estado`) VALUES "
-                + "(?,?,?,?,?,?,?,?,?)";
+     
+    String sqlTratamiento = "INSERT INTO `sesion`(`codSesion`, `fechaHoraInicio`, `fechaHoraFin`, `codTratamiento`, `nroConsultorio`, `matricula`, `codPack`, `estado`, `monto`) "
+            + "VALUES (?,?,?,?,?,?,?,?,?)"; 
+    
+    String sqlInstalacion = "INSERT INTO `sesion`(`codSesion`, `fechaHoraInicio`, `fechaHoraFin`, `codInstalacion`, `codPack`, `estado`, `monto`) "
+            + "VALUES (?,?,?,?,?,?,?)"; 
+
+    String sql = "";
+    boolean esInstalacion = sesionturno.getCodInstalacion() != null;
+
+    // Asignamos el SQL correcto y definimos la lógica de inserción
+    if (esInstalacion) {
+        sql = sqlInstalacion;
+        System.out.println("DEBUG: Creando sesión de Instalación.");
+    } else {
+        sql = sqlTratamiento;
+        System.out.println("DEBUG: Creando sesión de Tratamiento/Turno.");
+    }
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        // Parámetros comunes (Índices 1, 2 y 3)
+        ps.setInt(1, sesionturno.getCodSesion());
+        ps.setTimestamp(2, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraInicio()));
+        ps.setTimestamp(3, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraFin()));
+        
+        int offset = 3; 
+
+        if (esInstalacion) {
+            // Caso Instalación: Insertamos Instalacion, luego Pack, Estado, Monto
+            // 4. codInstalacion
+            ps.setInt(++offset, sesionturno.getCodInstalacion().getCodInstal()); 
+            
+        } else {
+            // Caso Tratamiento: Insertamos Tratamiento, Consultorio, Masajista
+            // 4. codTratamiento
+            ps.setInt(++offset, sesionturno.getCodTratamiento().getCodTratamiento());
+            // 5. nroConsultorio
+            ps.setInt(++offset, sesionturno.getNroConsultorio().getNroConsultorio());
+            // 6. matricula
+            ps.setLong(++offset, sesionturno.getMatricula().getMatricula());
+        }
+
+        // Parámetros comunes restantes (Pack, Estado, Monto)
+        // Siguen al último índice asignado, ya sea 6 (Tratamiento) o 4 (Instalacion)
+        ps.setInt(++offset, sesionturno.getCodPack()); 
+        ps.setBoolean(++offset, sesionturno.getEstado());
+        ps.setDouble(++offset, sesionturno.getMonto());
+
+        ps.executeUpdate();
+        
+        System.out.println("Sesion creada con exito");
+
+    } catch (SQLException ex) {
+        System.out.println("Error al crear la sesión: " + ex.getMessage());
+        // Manejar o relanzar la excepción
+    }
+        
+        
+        
+      
+        
+        /*  String sql = "INSERT INTO `sesion`(`codSesion`, `fechaHoraInicio`, `fechaHoraFin`, `codTratamiento`, `nroConsultorio`, `matricula`, `codInstalacion`, `codPack`, `estado`,`monto`) VALUES "
+                + "(?,?,?,?,?,?,?,?,?,?)";
         String sqlInstalacion = "INSERT INTO `sesion_instalacion`(`codSesion`, `codInstalacion`) VALUES (?,?)";
        try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -78,11 +140,81 @@ public class SesionTurnoData {
            
         } catch (SQLException ex) {
             System.out.println("Error al crear excepcion" + ex.getMessage());
-        }
+        }*/
     }
 
     public void Modificar(SesionTurno sesionturno) {
-        String sql = "UPDATE `sesion` SET `fechaHoraInicio`=?,`fechaHoraFin`=?,`codTratamiento`=?,`nroConsultorio`=?,`matricula`=?,estado=? WHERE codSesion = ?";
+       
+      String sql = "UPDATE `sesion` SET "
+            + "`fechaHoraInicio`=?, `fechaHoraFin`=?, " 
+            + "`codTratamiento`=?, `nroConsultorio`=?, `matricula`=?, " // Campos de Tratamiento
+            + "`codInstalacion`=?, `codPack`=?, `estado`=?, `monto`=? " // Campos de Instalación/Comunes
+            + "WHERE `codSesion` = ?"; // 10 parámetros
+    
+    // 2. Determinamos el tipo de sesión
+    // Usamos Instalacion para determinar si es sesión de Instalación (TRUE) o Tratamiento (FALSE)
+    boolean esInstalacion = sesionturno.getCodInstalacion() != null; 
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        // --- 1. CONFIGURACIÓN DEL UPDATE ---
+        
+        // Parámetros 1 y 2: Comunes
+        ps.setTimestamp(1, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraInicio()));
+        ps.setTimestamp(2, java.sql.Timestamp.valueOf(sesionturno.getFechaHoraFin()));
+        
+        int paramIndex = 2; // Inicia después de fechaHoraFin
+        
+        if (esInstalacion) {
+            System.out.println("DEBUG: Modificando sesión como tipo Instalación.");
+            
+            // Parámetros 3, 4, 5: Campos de Tratamiento (Se establecen a NULL)
+            ps.setNull(++paramIndex, java.sql.Types.INTEGER); // codTratamiento
+            ps.setNull(++paramIndex, java.sql.Types.INTEGER); // nroConsultorio
+            ps.setNull(++paramIndex, java.sql.Types.BIGINT);  // matricula
+            
+            // Parámetro 6: codInstalacion (Se rellena)
+            ps.setInt(++paramIndex, sesionturno.getCodInstalacion().getCodInstal()); 
+            
+        } else {
+            System.out.println("DEBUG: Modificando sesión como tipo Tratamiento/Turno.");
+
+            // Parámetros 3, 4, 5: Campos de Tratamiento (Se rellenan)
+            ps.setInt(++paramIndex, sesionturno.getCodTratamiento().getCodTratamiento());
+            ps.setInt(++paramIndex, sesionturno.getNroConsultorio().getNroConsultorio());
+            ps.setLong(++paramIndex, sesionturno.getMatricula().getMatricula());
+            
+            // Parámetro 6: codInstalacion (Se establece a NULL)
+            ps.setNull(++paramIndex, java.sql.Types.INTEGER);
+        }
+
+        // Parámetros 7, 8, 9: Comunes restantes (codPack, estado, monto)
+        ps.setInt(++paramIndex, sesionturno.getCodPack());
+        ps.setBoolean(++paramIndex, sesionturno.getEstado());
+        ps.setDouble(++paramIndex, sesionturno.getMonto());
+        
+        // Parámetro 10: WHERE Clause
+        ps.setInt(++paramIndex, sesionturno.getCodSesion());
+
+        // --- 2. EJECUCIÓN Y CIERRE ---
+        ps.executeUpdate();
+        
+        System.out.println("Sesion correctamente modificada :)");
+        
+    } catch (SQLException ex) {
+        System.out.println("Error al modificar sesión: " + ex.getMessage());
+        // En un entorno real, es vital manejar la excepción para hacer rollback si usas transacciones
+    }  
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*String sql = "UPDATE `sesion` SET `fechaHoraInicio`=?,`fechaHoraFin`=?,`codTratamiento`=?,`nroConsultorio`=?,`matricula`=?,estado=? WHERE codSesion = ?";
         String sqlDelete = "DELETE FROM sesion WHERE codSesion = ?";
         String sqlInsert = "INSERT INTO sesion (codSesion, codInstalacion) VALUES (?, ?)";
 
@@ -113,7 +245,7 @@ public class SesionTurnoData {
         } catch (SQLException ex) {
             System.out.println("Error al crear masajsita" + ex.getMessage());
 
-        }
+        }*/
     }
 
     public void ListarSesionesXDia(LocalDate fecha) throws SQLException {
