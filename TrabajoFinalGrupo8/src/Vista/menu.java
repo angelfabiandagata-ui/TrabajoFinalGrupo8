@@ -178,7 +178,6 @@
     // End of variables declaration//GEN-END:variables
 
 */
-
 package Vista;
 
 import Persistencia.ConsultorioData;
@@ -194,14 +193,13 @@ import javax.swing.JOptionPane;
 import Vista.AgregarT;
 import java.sql.SQLException;
 
-
 /**
  * (Tu clase menu - se mantuvo estructura, comentarios y nombres)
  */
 public class menu extends javax.swing.JFrame {
 
-    
     VistaTurnos verturnoshechos;
+
     // ========= VARIABLES =========
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
@@ -224,7 +222,7 @@ public class menu extends javax.swing.JFrame {
     private PanelConFondo panelFondo;
 
     VistaConsultorio cons;
-    
+
     // abrir paneles
     private JButton botonConfiguracion;
     private JButton botonTurnos;
@@ -244,15 +242,20 @@ public class menu extends javax.swing.JFrame {
     private JButton eliminar;
     private JButton turnosVacios;
     
+    //paneles simples
+    private JButton abrirClientes;      // Declarado como variable de clase
+    private JButton abrirMasajistas;    // Declarado como variable de clase
+    VistaMasajistas masajistasboton;
+    VistaClientes clientesboton;
+    
     //configuracion
     private JButton tratamientos;
     private JButton instalaciones;
     private JButton historial;
-    private JButton configuracionAvanzada;
+    private JButton botonConfigAvanzada;  // Renombrado para evitar conflicto con método
     
     private java.sql.Connection con;
 
-    
     ConsultorioData consultoriod = new ConsultorioData();
     VistaConsultorio vistaconsultorio = new VistaConsultorio(this);
     
@@ -266,12 +269,8 @@ public class menu extends javax.swing.JFrame {
         reproducirMusicaFondo();
         Modelo.Conexion miConexion = new Modelo.Conexion();
         this.con = miConexion.buscarConexion();
-
-
     }
 
-    
-    
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
@@ -291,7 +290,6 @@ public class menu extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
-       
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -343,14 +341,13 @@ public class menu extends javax.swing.JFrame {
     // metodo para crear los botones
     public void crearYOrdenarComponentes() {
 
-        
         panelFondo = new PanelConFondo("/Vista/Disenio/radio.jpg");
         panelFondo.setLayout(null);
         jDesktopPane1.removeAll();
         panelFondo.setBounds(0, 0, jDesktopPane1.getWidth(), jDesktopPane1.getHeight());
         jDesktopPane1.add(panelFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        // 🔸 Botones principales
+        // botones para paneles
         botonConfiguracion = crearBotonInvisible(825, 100, 225, 220, this::abrirConfiguracion, "Configuración");
         botonTurnos = crearBotonInvisible(530, 100, 225, 220, this::abrirTurnos, "Turnos");
 
@@ -358,15 +355,18 @@ public class menu extends javax.swing.JFrame {
         botonCerrarConfig = crearBotonInvisible(775, 100, 50, 60, this::cerrarConfiguracion, "Cerrar Configuración");
         botonCerrarTurnos = crearBotonInvisible(480, 100, 50, 60, this::cerrarTurnos, "Cerrar Turnos");
         
+        //paneles simples
+        abrirClientes = crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes");
+        abrirMasajistas = crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas");
+
         // botones
         panelFondo.add(botonConfiguracion);
         panelFondo.add(botonTurnos);
         panelFondo.add(botonCerrarConfig);
         panelFondo.add(botonCerrarTurnos);
+        panelFondo.add(abrirClientes);
+        panelFondo.add(abrirMasajistas);
 
-        // Otros botones
-        panelFondo.add(crearBotonInvisible(515, 384, 210, 38, this::abrirClientes, "Clientes"));
-        panelFondo.add(crearBotonInvisible(740, 384, 269, 38, this::abrirMasajistas, "Masajistas"));
         panelFondo.add(crearBotonInvisible(955, 430, 170, 40, this::mostrarAyuda, "Ayuda"));
         panelFondo.add(crearBotonInvisible(50, 50, 110, 110, this::abrirTratamiento, "Tratamientos"));
         panelFondo.add(crearBotonInvisible(50, 50, 110, 110, this::abrirInstalaciones, "Instalaciones"));      
@@ -374,8 +374,6 @@ public class menu extends javax.swing.JFrame {
         jDesktopPane1.repaint();
         
         //botones dentro de los paneles
-        
-        //turno
         agregar = crearBotonInvisible(120, 0, 110, 110, this::abrirInstalaciones , "Instalaciones");
         verturnos = crearBotonInvisible(120, 110, 110,110, this::configuracionAvanzada, "a");
         eliminar = crearBotonInvisible(0, 110, 117, 110,  this::abrirConsultorio, "b");
@@ -385,10 +383,8 @@ public class menu extends javax.swing.JFrame {
         tratamientos = crearBotonInvisible(120, 0, 110, 110, this::abrirVerTurnos , "d");
         instalaciones = crearBotonInvisible(120, 110, 117,110,  this::abrirDiaDeSpa, "e");
         historial = crearBotonInvisible(0, 110, 117, 110,  this::siete , "f");
-        configuracionAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::agregar , "g");        
-        
-        // -> importante: los paneles que van a contener botones internos deben usar layout null
-        // para que respeten los bounds de los botones que ya creaste arriba
+        botonConfigAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::configuracionAvanzada , "g");
+
         VistaTurnos.setLayout(null);
         VistaConfiguracion.setLayout(null);
     }
@@ -407,88 +403,77 @@ public class menu extends javax.swing.JFrame {
 
     // metodos de los botones
     private void abrirClientes() {
-        VistaClientes clientes = new VistaClientes();
-        prepararInternalFrame(clientes);
+        if(clientesboton == null){
+        clientesboton = new VistaClientes(this);
+        jDesktopPane1.add(clientesboton);
+        clientesboton.setBounds((this.getWidth()- clientesboton.getWidth()) /2, 0, 800, 600);
+        }
+        clientesboton.setEnabled(true);
+        clientesboton.setVisible(true);
+        jDesktopPane1.moveToFront(clientesboton);
+        desactivarTodosLosBotones();         
+        
+    }
+    
+        private void abrirMasajistas() {
+            if(masajistasboton == null){
+         masajistasboton = new VistaMasajistas(this);
+        jDesktopPane1.add(masajistasboton);
+        masajistasboton.setBounds((this.getWidth()- masajistasboton.getWidth()) /2, 25, 800, 500);
+        }
+        masajistasboton.setEnabled(true);
+        masajistasboton.setVisible(true);
+        jDesktopPane1.moveToFront(masajistasboton);
+        desactivarTodosLosBotones();               
     }
     
     private void abrirDiaDeSpa() {
        VistaDiadeSpa dias = new VistaDiadeSpa(this); 
-
-    // 2. Establecer la capa (debe ser ALTA para superar el fondo, ej. 100)
-    jDesktopPane1.setLayer(dias, 100);
-
-    // 3. Configuración para visibilidad del JPanel
-    dias.setOpaque(true); 
-    dias.setVisible(true);
-    // Opcional: Dale un color de fondo para distinguirlo del fondo
-    dias.setBackground(java.awt.Color.LIGHT_GRAY); 
-
-    // 4. Definir tamaño (W, H)
-    int ancho = 800;
-    int alto = 600;
-
-    // 5. Centrar el JPanel en el JDesktopPane
-    int x = (jDesktopPane1.getWidth() - ancho) / 2;
-    int y = (jDesktopPane1.getHeight() - alto) / 2;
-
-    dias.setBounds(Math.max(0, x), Math.max(0, y), ancho, alto);
-
-    // 6. Añadir al JDesktopPane (si no está ya dentro)
-    if (dias.getParent() == null) {
-        jDesktopPane1.add(dias);
-        
-    }
-    
-    jDesktopPane1.moveToFront(dias);
-    
-    // Si usas el método de botones para desactivar, llámalo aquí:
-    // desactivarTodosLosBotones();
-    this.desactivarTodosLosBotones();
+       jDesktopPane1.setLayer(dias, 100);
+       dias.setOpaque(true); 
+       dias.setVisible(true);
+       dias.setBackground(java.awt.Color.LIGHT_GRAY);
+       int ancho = 800, alto = 600;
+       int x = (jDesktopPane1.getWidth() - ancho) / 2;
+       int y = (jDesktopPane1.getHeight() - alto) / 2;
+       dias.setBounds(Math.max(0, x), Math.max(0, y), ancho, alto);
+       if (dias.getParent() == null) jDesktopPane1.add(dias);
+       jDesktopPane1.moveToFront(dias);
+       this.desactivarTodosLosBotones();
     }
 
-      private void abrirInstalaciones() {
+    private void abrirInstalaciones() {
         VistaInstalacion instalaciones = new VistaInstalacion();
         prepararInternalFrame(instalaciones);
     }
     
-    private void abrirMasajistas() {
-        VistaMasajistas masajistas = new VistaMasajistas();
-        prepararInternalFrame(masajistas);
-    }
+
     
-     private void abrirTratamiento() {
+    private void abrirTratamiento() {
         VistaTratamiento tratamientos = new VistaTratamiento();
         prepararInternalFrame(tratamientos);
     }
 
-     private void abrirVerTurnos() {
+    private void abrirVerTurnos() {
+        if (verturnoshechos == null) {       
+            verturnoshechos = new VistaTurnos(this);
+            verturnoshechos.setBounds((1600 - 700) / 2, 0, 700, 500);
+            jDesktopPane1.add(verturnoshechos, 30);
+        }
 
-    if (verturnoshechos == null) {       
-        verturnoshechos = new VistaTurnos(this);
-        verturnoshechos.setBounds((1600 - 700) / 2, 0, 700, 500);
-        jDesktopPane1.add(verturnoshechos, 30);
+        verturnoshechos.setVisible(true);
+        verturnoshechos.setEnabled(true);
+        jDesktopPane1.moveToFront(verturnoshechos);
+        desactivarTodosLosBotones();
     }
 
-    verturnoshechos.setVisible(true);
-    verturnoshechos.setEnabled(true);
-    jDesktopPane1.moveToFront(verturnoshechos);
-    desactivarTodosLosBotones();
-    }
-
-    
-    //--------------turnos--------------
     private void abrirTurnos() {
-        // se pone falso para que el panel pueda abrirse (si estan en la misma ubicacion el panel y el boton no deja)
         botonTurnos.setEnabled(false);
-        //set layer es nesesario importar, se usa para controlar la importancia de los paneles, si queres que se muestre uno por sobre otro usas set layer
-        
         jDesktopPane1.setLayer(VistaTurnos, 0);
 
-        //añadir el panel turnos a la vista del desktop frame
         if (VistaTurnos.getParent() == null) {
             jDesktopPane1.add(VistaTurnos);
 
-            //añadir botones (solo una vez)
             if (VistaTurnos.getComponentCount() == 0) {
                 VistaTurnos.add(agregar);  
                 VistaTurnos.add(verturnos);
@@ -497,30 +482,25 @@ public class menu extends javax.swing.JFrame {
             }
         }
 
-        //hacer visible cada vez que se da click
         VistaTurnos.setVisible(true);
         VistaTurnos.setEnabled(true);
         jDesktopPane1.moveToFront(VistaTurnos);
-        
     }
 
-    //---------------configuracion
     private void abrirConfiguracion() {
         botonConfiguracion.setEnabled(false);
         botonConfiguracion.setVisible(false);
-        // usar PALETTE_LAYER para que el panel quede por encima del fondo y los botones
         jDesktopPane1.setLayer(VistaConfiguracion, 0);
 
         if (VistaConfiguracion.getParent() == null) {
             jDesktopPane1.add(VistaConfiguracion);
-            VistaConfiguracion.setBounds(825, 100, 225, 220); 
+            VistaConfiguracion.setBounds(825, 100, 225, 220);
 
-            //añadir botones solo una vez
             if (VistaConfiguracion.getComponentCount() == 0) {
                 VistaConfiguracion.add(tratamientos);
                 VistaConfiguracion.add(instalaciones);
                 VistaConfiguracion.add(historial);
-                VistaConfiguracion.add(configuracionAvanzada);
+                VistaConfiguracion.add(botonConfigAvanzada);
             }
         }
 
@@ -545,67 +525,62 @@ public class menu extends javax.swing.JFrame {
     private void mostrarAyuda() {
         JOptionPane.showMessageDialog(this, "Centro de ayuda del Spa Entre Dedos 💆");
     }
-    
-    //----------------- botones internos de conf y turn--------------
+
     private void agregar() {
-           // constructor que recibe "this" (menu), según tu versión
         AgregarT agregarT = new AgregarT(this, this.con);
         agregarT.setBounds(0, 0,900, 500);
         jDesktopPane1.add(agregarT,30);
         agregarT.setLocation((1600 - agregarT.getWidth()) / 2, 20);
         jDesktopPane1.moveToFront(agregarT);
-        
-        
         desactivarTodosLosBotones();
     }
     
-    
-    private void configuracionAvanzada(){
-    ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1,this); 
-    jDesktopPane1.add(con, 40);
-    
-    con.setBounds(0, 0, 900, 380);
-    int x = (jDesktopPane1.getWidth() - con.getWidth()) / 2;
-    int y = (jDesktopPane1.getHeight() - con.getHeight()) / 2;
-    con.setLocation(x, y);
-    con.setVisible(true);
-    desactivarTodosLosBotones();
-    jDesktopPane1.moveToFront(con);
-    
-}
+    private void configuracionAvanzada() {
+        ConfiguracionAvanzada con = new ConfiguracionAvanzada(jDesktopPane1,this); 
+        jDesktopPane1.add(con, 40);
+        con.setBounds(0, 0, 900, 380);
+        int x = (jDesktopPane1.getWidth() - con.getWidth()) / 2;
+        int y = (jDesktopPane1.getHeight() - con.getHeight()) / 2;
+        con.setLocation(x, y);
+        con.setVisible(true);
+        desactivarTodosLosBotones();
+        jDesktopPane1.moveToFront(con);
+    }
+
     public void abrirConsultorio(){
-    if(cons == null){
-    cons = new VistaConsultorio(this);
-    cons.setBounds(0, 0, 1100, 400);
-    jDesktopPane1.add(cons);
-    int x = (this.getWidth() - cons.getWidth()) / 2;
-    int y = (this.getHeight() - cons.getHeight()) / 2;
-    cons.setLocation(x, y);
-    desactivarTodosLosBotones();
+        if(cons == null){
+            cons = new VistaConsultorio(this);
+            cons.setBounds(0, 0, 1100, 400);
+            jDesktopPane1.add(cons);
+            int x = (this.getWidth() - cons.getWidth()) / 2;
+            int y = (this.getHeight() - cons.getHeight()) / 2;
+            cons.setLocation(x, y);
+            desactivarTodosLosBotones();
+        }
+        jDesktopPane1.moveToFront(cons);
+        
+        cons.setEnabled(true);
+        cons.setVisible(true);
+        
+        desactivarTodosLosBotones();
     }
-    jDesktopPane1.moveToFront(cons);
-    
-    cons.setEnabled(true);
-    cons.setVisible(true);
-    
-    desactivarTodosLosBotones();
-    }
-    
-    
-    // se usa para cuando un panel se agranda y no quieres que interfiera con otros del panel abierto
+
     public void desactivarTodosLosBotones() {
         botonConfiguracion.setEnabled(false);
         botonTurnos.setEnabled(false);
         botonCerrarConfig.setEnabled(false);
         botonCerrarTurnos.setEnabled(false);
-        
+        abrirClientes.setEnabled(false);
+        abrirMasajistas.setEnabled(false);
     }
-    //volver a activar botones una vez que se cierra el panel
+
     public void activarTodosLosBotones() {
         botonConfiguracion.setEnabled(true);
         botonTurnos.setEnabled(true);
         botonCerrarConfig.setEnabled(true);
         botonCerrarTurnos.setEnabled(true);
+        abrirClientes.setEnabled(true);
+        abrirMasajistas.setEnabled(true);
     }
 
     private void uno(){ System.out.println("UNO"); }
@@ -652,3 +627,4 @@ public class menu extends javax.swing.JFrame {
         }
     }
 }
+
