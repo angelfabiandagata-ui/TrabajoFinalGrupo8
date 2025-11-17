@@ -1,5 +1,6 @@
 package Persistencia;
 
+import Modelo.Cliente;
 import Modelo.Conexion;
 import Modelo.DiaDeSpa;
 import Modelo.SesionTurno;
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.ResultSet;
 
 public class DiaDeSpaData {
     private java.sql.Connection con = null;
@@ -144,22 +146,70 @@ public class DiaDeSpaData {
         }
     }*/
     
-    public DiaDeSpa buscarPorCodigo(int codPack) {
-    for (DiaDeSpa d : listaspa) {
-        if (d.getCodPack() == codPack) {
-            return d;
+
+public DiaDeSpa buscarPorCodigo(int codPack) {
+    DiaDeSpa dia = null;
+    
+    String sql = "SELECT * FROM dia_de_spa WHERE codPack = ?";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, codPack);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            dia = new DiaDeSpa(
+                rs.getInt("codPack"),
+                rs.getTimestamp("fechaYHora").toLocalDateTime(),
+                rs.getString("preferencias"),
+                rs.getInt("codCliente"),
+                rs.getBoolean("estado"),
+                rs.getBoolean("estadoPago")
+            );
         }
+        
+        ps.close();
+    } catch (SQLException ex) {
+        System.out.println("Error al buscar Día de Spa: " + ex.getMessage());
     }
-    return null;
+    
+    return dia;
 }
 
 public List<DiaDeSpa> buscarPorCliente(int codCliente) {
     List<DiaDeSpa> encontrados = new ArrayList<>();
-    for (DiaDeSpa d : listaspa) {
-        if (d.getCodCliente() == codCliente) {
+    
+    String sql = "SELECT * FROM dia_de_spa WHERE codCliente = ?";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, codCliente);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            
+            DiaDeSpa d = new DiaDeSpa(
+                rs.getInt("codPack"),
+                rs.getTimestamp("fechaYHora").toLocalDateTime(),
+                rs.getString("preferencias"),
+                rs.getInt("codCliente"),
+                rs.getBoolean("estado"),
+                rs.getBoolean("estadoPago")
+            );
+            
+            // COMPLETAR CLIENTE
+            ClienteData cd = new ClienteData();
+            Cliente c = cd.buscarClientePorId(codCliente);
+            d.setCliente(c);
             encontrados.add(d);
         }
+        
+        ps.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error en buscarPorCliente(): " + ex.getMessage());
     }
+    
     return encontrados;
 }
 

@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class DiaDeSpa {
+    private Cliente cliente;
     private int codPack;
     private LocalDateTime  fechaHora;
     private String preferencia;
@@ -71,6 +73,14 @@ public class DiaDeSpa {
     public void setCliente(int codCliente) {
         this.codCliente = codCliente;
     }
+    
+    public Cliente getCliente() {
+    return cliente;
+}
+
+public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
+}
 
 
     @Override

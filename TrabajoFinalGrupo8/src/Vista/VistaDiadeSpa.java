@@ -34,8 +34,8 @@ private menu menu;
         mostrarClientes();
         this.menu = menu;
         
-        jButton3.addActionListener(evt -> jButton3ActionPerformed(evt));//guarda
-        jButton2.addActionListener(evt -> jButton2ActionPerformed(evt));//elimina
+      
+       
 
     }
 private void configurarTabla() {

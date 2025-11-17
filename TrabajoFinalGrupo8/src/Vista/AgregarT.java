@@ -4,10 +4,12 @@
  */
 package Vista;
 
+import Modelo.Cliente;
 import Modelo.Consultorio;
 import Modelo.DiaDeSpa;
 import Modelo.Masajista;
 import Modelo.Tratamiento;
+import Persistencia.ClienteData;
 import Persistencia.ConsultorioData;
 import Persistencia.DiaDeSpaData;
 import Persistencia.MasajistaData;
@@ -94,6 +96,7 @@ System.out.println("Consultorios encontrados: " + consultorios.size());
     jComboBoxTratamiento.addActionListener(e -> calcularTotal());
     jComboBoxHoraInicio.addActionListener(e -> calcularTotal());
     jComboBoxHoraFin.addActionListener(e -> calcularTotal());
+    jComboHoras.addActionListener(e -> actualizarTotalInstalacion());
 }
 
      
@@ -128,14 +131,84 @@ System.out.println("Consultorios encontrados: " + consultorios.size());
     jTextFieldTotal.setText(String.format("%.2f", total));
 }
 
-     private void configurarTablaDiaSpa() {
+private void configurarTablaDiaSpa() {
     modeloTablaDiaSpa = new DefaultTableModel(
-            new Object[]{"Código Día de Spa", "Cliente"}, 0
-    );
+            new Object[]{"Cod Pack", "Cliente"}, 0
+    ) {
+        @Override public boolean isCellEditable(int r, int c)
+        { return false; }
+    };
     jTableDiaDeSpa.setModel(modeloTablaDiaSpa);
 }
 
-private void buscarDiaDeSpa() {
+
+
+        private void buscarCliente() {
+    String texto = jTextFieldBuscar.getText().trim();
+    modeloTablaDiaSpa.setRowCount(0);
+
+    if (texto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingrese un código de pack o apellido.");
+        return;
+    }
+
+    try {
+        // Caso 1: buscar por codPack (número)
+        int cod = Integer.parseInt(texto);
+        DiaDeSpa dia = diaDeSpaData.buscarPorCodigo(cod);
+        
+        if (dia != null) {
+            modeloTablaDiaSpa.addRow(new Object[]{
+                dia.getCodPack(),
+                dia.getCliente().getApellido()
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "No existe un Día de Spa con ese código.");
+        }
+
+    } catch (NumberFormatException e) {
+    // buscar por apellido
+    ClienteData clienteData = new ClienteData();
+    List<Cliente> clientes = clienteData.buscarPorApellido(texto);
+
+    for (Cliente c : clientes) {
+        List<DiaDeSpa> packs = diaDeSpaData.buscarPorCliente(c.getCodCli());
+        for (DiaDeSpa d : packs) {
+            
+        
+            modeloTablaDiaSpa.addRow(new Object[]{
+                 d.getCodPack(),
+                c.getApellido()
+                    
+            });
+        }
+    
+
+    if (clientes.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No se encontraron clientes con ese apellido.");
+    }
+    }
+    }
+        }
+        
+   private void cargarHorasInstalacion() {
+    for (int i = 1; i <= 6; i++) {
+        jComboHoras.addItem(i + ""); // agrega "1", "2", "3"... "6"
+    }
+}
+   
+   private void actualizarTotalInstalacion() {
+    try {
+        int horas = Integer.parseInt(jComboHoras.getSelectedItem().toString());
+        double total = horas * PRECIO_POR_HORA;
+
+        jTextFieldTotal.setText(String.format("%.2f", total));
+    } catch (Exception ex) {
+        jTextFieldTotal.setText("0.00");
+    }
+}
+        private final double PRECIO_POR_HORA = 5000;
+    
  /*   modeloTablaDiaSpa.setRowCount(0);
     String texto = jTextFieldBuscar.getText().trim();
 
@@ -164,7 +237,6 @@ private void buscarDiaDeSpa() {
             JOptionPane.showMessageDialog(this, "No se encontraron clientes con ese nombre.");
         }
     }*/
-}
 
     menu men;
     
@@ -175,6 +247,7 @@ private void buscarDiaDeSpa() {
         initComponents();
         configurarTablaDiaSpa();
          this.men = men;
+         this.diaDeSpaData = new DiaDeSpaData();
         jComboBoxHoraInicio.removeAllItems();
         jComboBoxHoraFin.removeAllItems();
         cargarTratamientosComboBox();
@@ -182,8 +255,8 @@ private void buscarDiaDeSpa() {
         cargarConsultoriosComboBox();
         cargarHorarios();
         configurarEventos();
-
-estadoInicio();
+        estadoInicio();
+    cargarHorasInstalacion();
     }
     
     
@@ -200,7 +273,7 @@ estadoInicio();
         jComboBoxConsultorio.setEnabled(true);
         jComboBoxTratamiento.setEnabled(true);
         jComboBoxMasajista.setEnabled(true);
-jComboBox3.setEnabled(false);
+jComboHoras.setEnabled(false);
 
     }
     private void elegirInstalacion(){
@@ -209,7 +282,7 @@ jComboBox3.setEnabled(false);
         jComboBoxMasajista.setEnabled(false);
         
 
-jComboBox3.setEnabled(true);
+jComboHoras.setEnabled(true);
     }
     
     private void deshabilitarConsu(){
@@ -220,7 +293,7 @@ jComboBox3.setEnabled(true);
     
     }
      private void deshabilitarInsta(){
-        jComboBox3.setEnabled(false);
+        jComboHoras.setEnabled(false);
     }
     
     
@@ -260,7 +333,7 @@ jComboBox3.setEnabled(true);
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboHoras = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -375,8 +448,6 @@ jComboBox3.setEnabled(true);
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Instalacion");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel11.setText("Cantidad Horas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -387,7 +458,7 @@ jComboBox3.setEnabled(true);
                 .addGap(30, 30, 30)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 23, Short.MAX_VALUE))
             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -398,10 +469,16 @@ jComboBox3.setEnabled(true);
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addContainerGap(91, Short.MAX_VALUE))
         );
+
+        jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBuscarActionPerformed(evt);
+            }
+        });
 
         jTableDiaDeSpa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -623,6 +700,66 @@ botonTratamiento.setEnabled(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_botonInstalacionActionPerformed
 
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
+       buscar();
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
+
+    private void buscar() {
+
+    modeloTablaDiaSpa.setRowCount(0); // Limpia la tabla
+    String texto = jTextFieldBuscar.getText().trim();
+
+    if (texto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingresá un código o apellido.");
+        return;
+    }
+
+    DiaDeSpaData spaData = new DiaDeSpaData();
+    ClienteData clienteData = new ClienteData();
+
+    try {
+        //Buscar por CodPack 
+        int codPack = Integer.parseInt(texto);
+
+        DiaDeSpa dia = spaData.buscarPorCodigo(codPack);
+
+        if (dia != null) {
+            Cliente c = clienteData.buscarClientePorId(dia.getCodCliente());
+
+            modeloTablaDiaSpa.addRow(new Object[]{
+                dia.getCodPack(),
+                c.getApellido() + ", " + c.getNombre()
+            });
+
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "No existe un Día de Spa con ese código.");
+        }
+
+    } catch (NumberFormatException e) {
+
+        // Buscar por Apellido
+        List<Cliente> clientes = clienteData.buscarPorApellido(texto);
+
+        if (clientes.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "No se encontraron clientes con ese apellido.");
+            return;
+        }
+
+        for (Cliente c : clientes) {
+            List<DiaDeSpa> packs = spaData.buscarPorCliente(c.getCodCli());
+
+            for (DiaDeSpa d : packs) {
+                modeloTablaDiaSpa.addRow(new Object[]{
+                    d.getCodPack(),
+                    c.getApellido() + ", " + c.getNombre()
+                });
+            }
+        }
+    }
+}
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Masajista;
@@ -635,12 +772,12 @@ botonTratamiento.setEnabled(true);
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<Consultorio> jComboBoxConsultorio;
     private javax.swing.JComboBox<String> jComboBoxHoraFin;
     private javax.swing.JComboBox<String> jComboBoxHoraInicio;
     private javax.swing.JComboBox<Masajista> jComboBoxMasajista;
     private javax.swing.JComboBox<Tratamiento> jComboBoxTratamiento;
+    private javax.swing.JComboBox<String> jComboHoras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

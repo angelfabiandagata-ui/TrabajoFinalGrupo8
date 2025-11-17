@@ -57,7 +57,7 @@ public class ClienteData {
                 cliente.setCodCli(rs.getInt(1)); 
             }
              }
-            System.out.println("Cliente guardado correctamente. CodCli asignado: " + cliente.getCodCli());
+            System.out.println("Cliente guardado correctamente. CodCliente asignado: " + cliente.getCodCli());
             
         
         } catch (SQLException e) {
@@ -68,7 +68,7 @@ public class ClienteData {
     }
     
     public void modificarCliente(Cliente cliente) {
-        String sql = "UPDATE cliente SET dni=?, nombre=?,apellido=? telefono=?, edad=?, afecciones=?, estado=? WHERE codCli=?";
+        String sql = "UPDATE cliente SET dni=?, nombre=?,apellido=? telefono=?, edad=?, afecciones=?, estado=? WHERE codCliente=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, cliente.getDni());
             ps.setString(2, cliente.getNombre());
@@ -98,13 +98,13 @@ public class ClienteData {
      
      public Cliente buscarClientePorId(int codCli) {
         Cliente cliente = null;
-        String sql = "SELECT * FROM cliente WHERE codCli=?";
+        String sql = "SELECT * FROM cliente WHERE codCliente=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, codCli);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 cliente = new Cliente();
-                cliente.setCodCli(rs.getInt("codCli"));
+                cliente.setCodCli(rs.getInt("codCliente"));
                 cliente.setDni(rs.getLong("dni"));
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setApellido(rs.getString("nombre"));
@@ -128,7 +128,7 @@ public class ClienteData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 cliente = new Cliente();
-                cliente.setCodCli(rs.getInt("codCli"));
+                cliente.setCodCli(rs.getInt("codCliente"));
                 cliente.setDni(rs.getLong("dni"));
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setApellido(rs.getString("nombre"));
@@ -209,10 +209,12 @@ public void bajaCliente(int codCliente){
         while (rs.next()) {
             Cliente c = new Cliente();
             c.setCodCli(rs.getInt("codCliente"));
-            c.setDni(rs.getInt("dni"));
+            c.setDni(rs.getLong("dni"));
             c.setNombre(rs.getString("nombre"));
             c.setApellido(rs.getString("apellido"));
             c.setTelefono(rs.getLong("telefono"));
+            c.setEdad(rs.getInt("edad"));
+            c.setAfeciones(rs.getString("afecciones"));
             c.setEstado(rs.getBoolean("estado"));
             clientes.add(c);
         }
@@ -225,6 +227,40 @@ public void bajaCliente(int codCliente){
 
     return clientes;
 }
+        
+public List<Cliente> buscarPorApellido(String apellido) {
+    List<Cliente> clientes = new ArrayList<>();
 
+    String sql = "SELECT * FROM cliente WHERE apellido LIKE ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, apellido + "%");
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Cliente c = new Cliente();
+
+            c.setCodCli(rs.getInt("codCliente"));
+            c.setDni(rs.getLong("dni"));
+            c.setNombre(rs.getString("nombre"));
+            c.setApellido(rs.getString("apellido"));
+            c.setTelefono(rs.getLong("telefono"));
+            c.setEdad(rs.getInt("edad"));
+            c.setAfeciones(rs.getString("afecciones"));
+            c.setEstado(rs.getBoolean("estado"));
+
+            clientes.add(c);
+        }
+
+        rs.close();
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println("Error al buscar clientes por apellido: " + ex.getMessage());
+    }
+
+    return clientes;
+}
 }
 
