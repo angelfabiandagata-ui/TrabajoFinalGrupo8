@@ -419,7 +419,7 @@ public class menu extends javax.swing.JFrame {
         if(clientesboton == null){
         clientesboton = new VistaClientes(this);
         jDesktopPane1.add(clientesboton);
-        clientesboton.setBounds((this.getWidth()- clientesboton.getWidth()) /2, 0, 800, 470);
+        clientesboton.setBounds((this.getWidth()- clientesboton.getWidth()) /2, 30, 800, 470);
         }
         clientesboton.setEnabled(true);
         clientesboton.setVisible(true);
@@ -432,7 +432,7 @@ public class menu extends javax.swing.JFrame {
             if(masajistasboton == null){
          masajistasboton = new VistaMasajistas(this);
         jDesktopPane1.add(masajistasboton);
-        masajistasboton.setBounds((this.getWidth()- masajistasboton.getWidth()) /2, 25, 800, 500);
+        masajistasboton.setBounds((this.getWidth()- masajistasboton.getWidth()) /2, 15, 800, 500);
         }
         masajistasboton.setEnabled(true);
         masajistasboton.setVisible(true);
