@@ -124,25 +124,30 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
     }
     }
     public void ModificarTratamiento(Tratamiento tratamiento){
-         String sql = "UPDATE `tratamiento` SET `nombre` = ?,`detalle`=?,`productosDB`=?,`duracion`=?,`costo`=?,`estado`=? WHERE codTratamiento = ?";
-           try {
-                List<String> productosList = tratamiento.getProductos();
-            String productosDB = String.join(",", productosList);
-               
-              PreparedStatement ps =con.prepareStatement(sql);
-               ps.setInt(1, tratamiento.getCodTratamiento());
-            ps.setString(2, tratamiento.getNombre());
-            ps.setString(3, tratamiento.getDetalle());
-            ps.setString(4, productosDB);
-            ps.setTime(5, tratamiento.getDuracion());
-            ps.setDouble(6, tratamiento.getCosto());
-            ps.setBoolean(7, tratamiento.getEstado());
-            ps.executeUpdate();
-               System.out.println("Tratamiento correctamente modificado :)");
-           } catch (SQLException ex) {
-               System.out.println("Error al modificar el tratamiento" + ex.getMessage());
-           }
-       
+       String sql = "UPDATE `tratamiento` SET `nombre` = ?, `detalle` = ?, `productos` = ?, `duracion` = ?, `costo` = ?, `estado` = ? WHERE codTratamiento = ?";
+    
+    try {
+        List<String> productosList = tratamiento.getProductos();
+        // NOTA: Tu tabla de DB debe tener una columna 'productos', no 'productosDB'
+        String productosDB = String.join(",", productosList);
+        
+        PreparedStatement ps = con.prepareStatement(sql);
+        
+        // 🛑 ASIGNACIÓN DE PARÁMETROS CORREGIDA 🛑
+        ps.setString(1, tratamiento.getNombre());        // 1. nombre
+        ps.setString(2, tratamiento.getDetalle());       // 2. detalle
+        ps.setString(3, productosDB);                    // 3. productos
+        ps.setTime(4, tratamiento.getDuracion());        // 4. duracion
+        ps.setDouble(5, tratamiento.getCosto());         // 5. costo
+        ps.setBoolean(6, tratamiento.getEstado());       // 6. estado
+        ps.setInt(7, tratamiento.getCodTratamiento());   // 7. WHERE codTratamiento
+        
+        ps.executeUpdate();
+        System.out.println("Tratamiento correctamente modificado :)");
+        ps.close();
+    } catch (SQLException ex) {
+        System.out.println("Error al modificar el tratamiento: " + ex.getMessage());
+    }
     }
 
     public boolean existeTratamiento(int codTratamiento) {
