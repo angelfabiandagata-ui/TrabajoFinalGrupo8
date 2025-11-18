@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
         initComponents();
         configurarTabla();
         actulizarTabla();
+        configurarSeleccionTabla();
         this.menu = menu;
     }
     
@@ -106,6 +107,43 @@ private void configurarTabla(){
         });
     }
 }
+     
+      private void configurarSeleccionTabla() {
+
+    jTable1.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            cargarCamposDesdeTabla();
+        }
+    });
+}
+    
+    private void cargarCamposDesdeTabla() {
+    int filaSeleccionada = jTable1.getSelectedRow();
+    
+    if (filaSeleccionada >= 0) {
+        // Obtenemos el modelo de la tabla para acceder a los valores
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        
+        // 1. Cargar el Código (Columna 0)
+        String codInstal = modelo.getValueAt(filaSeleccionada, 0).toString();
+        txtCodins.setText(codInstal);
+        
+
+        txtNombreins.setText(modelo.getValueAt(filaSeleccionada, 1).toString());
+        txtDetalleins.setText(modelo.getValueAt(filaSeleccionada, 2).toString());
+        
+        // 3. Cargar Costo (Columna 5)
+        txtCostoins.setText(modelo.getValueAt(filaSeleccionada, 3).toString());
+
+        // 4. Cargar Estado (Columna 6)
+        boolean estado = (Boolean) modelo.getValueAt(filaSeleccionada, 4);
+        chkEstadoins.setSelected(estado);
+        
+        // 6. Deshabilitar la edición del código (ya que es la clave)
+        txtCodins.setEnabled(false);
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,6 +172,7 @@ private void configurarTabla(){
         checkBaja = new javax.swing.JRadioButton();
         checkAlta = new javax.swing.JRadioButton();
         jButton5 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -193,6 +232,13 @@ private void configurarTabla(){
             }
         });
 
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -230,6 +276,10 @@ private void configurarTabla(){
                         .addGap(40, 40, 40)
                         .addComponent(checkBaja)
                         .addGap(31, 31, 31))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(143, 143, 143)
+                .addComponent(btnModificar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,6 +307,8 @@ private void configurarTabla(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnModificar)
+                        .addGap(18, 18, 18)
                         .addComponent(labelTrat10)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -465,9 +517,36 @@ private void configurarTabla(){
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+          if (jTable1.getSelectedRow() == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una Instalacion para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    Instalacion instalacionModificada = obtenerInstalacion();
+    
+    if (instalacionModificada != null) {
+        try {
+  
+            instalacionData.modificarInstalacion(instalacionModificada);
+            
+            JOptionPane.showMessageDialog(this, "Instalacion modificada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            
+   
+            Limpiar();
+            txtCodins.setEnabled(true); 
+            actulizarTabla();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar la modificación: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnModificar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton checkAlta;
     private javax.swing.JRadioButton checkBaja;

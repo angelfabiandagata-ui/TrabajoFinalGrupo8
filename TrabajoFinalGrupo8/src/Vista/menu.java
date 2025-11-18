@@ -612,7 +612,9 @@ public class menu extends javax.swing.JFrame {
         botonCerrarTurnos.setEnabled(false);
         abrirClientes.setEnabled(false);
         abrirMasajistas.setEnabled(false);
-        tratamientosboton.setEnabled(false);
+        if (this.tratamientosboton != null) {
+        this.tratamientosboton.setEnabled(false); 
+    }
         instalacionesboton.setEnabled(false);
     }
 
@@ -623,8 +625,10 @@ public class menu extends javax.swing.JFrame {
         botonCerrarTurnos.setEnabled(true);
         abrirClientes.setEnabled(true);
         abrirMasajistas.setEnabled(true);
-        tratamientosboton.setEnabled(true);
         instalacionesboton.setEnabled(true);
+         if (this.tratamientosboton != null) {
+        this.tratamientosboton.setEnabled(true);
+         }
     }
 
     private void uno(){ System.out.println("UNO"); }
