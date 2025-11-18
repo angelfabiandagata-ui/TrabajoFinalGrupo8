@@ -248,40 +248,56 @@ public class SesionTurnoData {
         }*/
     }
 
-    public void ListarSesionesXDia(LocalDate fecha) throws SQLException {
-        System.out.println("Sesiones del dia: " + fecha);
-        
-        String sql = "SELECT codSesion, fechaHoraInicio, fechaHoraFin, codTratamiento, nroConsultorio, matricula, estado \"\n" +
-"                   + FROM sesion WHERE DATE(fechaHoraInicio) = ?";
-        
-        boolean encontrado = false;
-        try (PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setDate(1, java.sql.Date.valueOf(fecha));
-        
-            try (ResultSet rs = ps.executeQuery()){
-                while(rs.next()){
-                    System.out.println("Codigo de sesion: " + rs.getInt("codSesion"));
-                System.out.println("Hora de inicio: " + rs.getTimestamp("fechaHoraInicio").toLocalDateTime());
-                System.out.println("Hora de finalizacion:" + rs.getTimestamp("fechaHoraFin").toLocalDateTime());
-                System.out.println("Tratamiento:" + rs.getInt("codTratamiento"));
-                System.out.println("Consultorio:" + rs.getInt("nroConsultorio"));
-                System.out.println("Masajista:" + rs.getLong("matricula"));
-                System.out.println("Instalaciones: " + rs.getBoolean("estado"));
-                encontrado = true;
+        public List<Object[]> obtenerDatosTurnosXDia(LocalDate fecha) throws SQLException {
+           List<Object[]> datosTurnos = new ArrayList<>();
+    
+    // Convertimos la fecha a los límites del día
+    java.sql.Timestamp inicioDelDia = java.sql.Timestamp.valueOf(fecha.atStartOfDay());
+    java.sql.Timestamp inicioDelDiaSiguiente = java.sql.Timestamp.valueOf(fecha.plusDays(1).atStartOfDay());
+
+    String sql = "SELECT " +
+                 "TIME(s.fechaHoraInicio) AS H_Inicio, " +
+                 "TIME(s.fechaHoraFin) AS H_Fin, " +
+                 "COALESCE(i.nombre, c.nroConsultorio) AS Recurso, " + 
+                 "COALESCE(CONCAT(m.nombre, ' ', m.apellido), 'N/A') AS Masajista_Nombre, " + 
+                 "COALESCE(t.nombre, 'Instalación') AS Servicio_Nombre, " + 
+                 "s.monto AS Monto " +
+                 "FROM sesion s " +
+                 "LEFT JOIN consultorio c ON s.nroConsultorio = c.nroConsultorio " +
+                 "LEFT JOIN masajista m ON s.matricula = m.matricula " +
+                 "LEFT JOIN tratamiento t ON s.codTratamiento = t.codTratamiento " +
+                 "LEFT JOIN instalacion i ON s.codInstalacion = i.codInstalacion " + 
+                 "WHERE s.fechaHoraInicio >= ? AND s.fechaHoraInicio < ? AND s.estado = 1 " + 
+                 "ORDER BY H_Inicio ASC";
+    
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setTimestamp(1, inicioDelDia); 
+        ps.setTimestamp(2, inicioDelDiaSiguiente); 
+
+        try (ResultSet rs = ps.executeQuery()) {
+            // 🛑 DEBUG: Contar las filas que se encuentran 🛑
+            int count = 0;
+            while (rs.next()) {
+                count++;
+                // ... (El resto del código para llenar la fila)
+                Object[] fila = new Object[6];
+                fila[0] = rs.getString("H_Inicio").substring(0, 5); 
+                fila[1] = rs.getString("H_Fin").substring(0, 5); 
+                fila[2] = rs.getObject("Recurso"); 
+                fila[3] = rs.getString("Masajista_Nombre");
+                fila[4] = rs.getString("Servicio_Nombre");
+                fila[5] = rs.getDouble("Monto");
+                
+                datosTurnos.add(fila);
             }
-     
- 
-            } catch (SQLException ex) {
-                System.out.println("Erros al listar sesiones" + ex.getMessage());
         }
-            if (!encontrado) {
-
-                System.out.println("No hay sesiones agendadas para la fecha.");
-            }
-
-        }
-
+    } catch (SQLException ex) {
+        System.out.println("Error al listar sesiones por día: " + ex.getMessage());
+        throw ex;
     }
+    
+    return datosTurnos;
+}
 
 
     public void ListarMasajitas() {

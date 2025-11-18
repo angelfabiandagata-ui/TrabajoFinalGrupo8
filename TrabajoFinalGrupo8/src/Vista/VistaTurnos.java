@@ -8,19 +8,87 @@ package Vista;
  *
  * @author Ema
  */
+
+import com.toedter.calendar.JCalendar; 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import Persistencia.SesionTurnoData; 
+import java.sql.Connection; 
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
+
+
 public class VistaTurnos extends javax.swing.JPanel {
 
     /**
      * Creates new form VistaTurnos
      */
-    menu men;
+   private menu men;
+    private DefaultTableModel modeloTabla;
+    private SesionTurnoData sesionData;
 
 
     public VistaTurnos(menu menu) {
         initComponents();
         this.men = menu;
+        this.sesionData = new SesionTurnoData(); 
+        modeloTabla = (DefaultTableModel) jTable1.getModel();
+        configurarCalendarioListener();
+        cargarTurnosDiaSeleccionado(jCalendar1.getDate());
     }
+    
+    private void configurarCalendarioListener() {
+        // Agregamos el listener para escuchar cuando la propiedad 'date' cambie
+       jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            // 🛑 Asegúrate de que el nombre sea "date" 🛑
+            if ("date".equals(evt.getPropertyName())) {
+                Date fechaSeleccionada = jCalendar1.getDate();
+                cargarTurnosDiaSeleccionado(fechaSeleccionada);
+            }
+        }
+        });
+    }
+    
+    private void cargarTurnosDiaSeleccionado(Date date) {
+        // Limpiar filas existentes en la tabla antes de cargar nuevos datos
+        modeloTabla.setRowCount(0); 
 
+        // Convertir java.util.Date (del JCalendar) a java.time.LocalDate
+        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        // Actualizar el JLabel con la fecha seleccionada
+        jLabel2.setText(fecha.toString()); // El JLabel con texto "*DIA*" ahora mostrará la fecha
+
+        try {
+            // Obtener los datos de la base de datos como una lista de filas (Object[])
+            List<Object[]> turnosDelDia = sesionData.obtenerDatosTurnosXDia(fecha);
+
+            if (turnosDelDia.isEmpty()) {
+                // Opcional: Mostrar un mensaje en la tabla o en otro componente
+                System.out.println("No se encontraron turnos para la fecha: " + fecha);
+            } else {
+                // Llenar la tabla con los datos obtenidos
+                for (Object[] fila : turnosDelDia) {
+                    modeloTabla.addRow(fila);
+                }
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(this, 
+                    "Error al cargar los turnos de la base de datos: " + e.getMessage(), 
+                    "Error de Conexión", 
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,20 +104,21 @@ public class VistaTurnos extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "H.Inicio", "H.Fin", "Consultorio", "Masajista", "Tratamiento"
+                "H.Inicio", "H.Fin", "Consultorio", "Masajista", "Tratamiento", "Monto"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -71,6 +140,13 @@ public class VistaTurnos extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("*DIA*");
 
+        jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,7 +162,9 @@ public class VistaTurnos extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addGap(17, 17, 17))
             .addComponent(jScrollPane1)
         );
@@ -102,8 +180,13 @@ public class VistaTurnos extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jButton2)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 15, Short.MAX_VALUE)
@@ -121,9 +204,15 @@ public class VistaTurnos extends javax.swing.JPanel {
      men.activarTodosLosBotones();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    Date fechaSeleccionada = jCalendar1.getDate();
+    cargarTurnosDiaSeleccionado(fechaSeleccionada);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
