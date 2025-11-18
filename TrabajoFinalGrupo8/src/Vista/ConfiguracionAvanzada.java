@@ -39,6 +39,9 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
         jbabrirconsultorio = new javax.swing.JButton();
         jbsalir = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 204, 204));
+
+        jbabrirconsultorio.setBackground(new java.awt.Color(0, 204, 204));
         jbabrirconsultorio.setText("Abrir Consultorio");
         jbabrirconsultorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,6 +49,7 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
             }
         });
 
+        jbsalir.setBackground(new java.awt.Color(255, 102, 102));
         jbsalir.setText("Salir");
         jbsalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -91,6 +91,7 @@ for (Cliente c : clientes) {
 
         jLabel3.setText("FECHA");
 
+        jTable1.setBackground(new java.awt.Color(255, 153, 153));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -115,6 +116,9 @@ for (Cliente c : clientes) {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setText("Vista");
 
+        jCalendar1.setBackground(new java.awt.Color(255, 153, 153));
+
+        jButton1.setBackground(new java.awt.Color(255, 102, 102));
         jButton1.setText("SALIR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +126,7 @@ for (Cliente c : clientes) {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(255, 102, 102));
         jButton2.setText("Eliminar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +134,7 @@ for (Cliente c : clientes) {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(0, 204, 204));
         jButton3.setText("Guarda");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

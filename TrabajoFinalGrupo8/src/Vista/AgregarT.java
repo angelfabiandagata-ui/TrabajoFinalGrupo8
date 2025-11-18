@@ -385,12 +385,15 @@ jComboHoras.setEnabled(true);
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
 
+        setBackground(new java.awt.Color(255, 204, 204));
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Agregar Turno");
 
         jLabel6.setText("Horario Inicio");
 
+        jButton4.setBackground(new java.awt.Color(255, 102, 102));
         jButton4.setText("X Salir X");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -398,6 +401,7 @@ jComboHoras.setEnabled(true);
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(255, 153, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tratamiento"));
 
         jLabel3.setText("Consultorio");
@@ -449,6 +453,7 @@ jComboHoras.setEnabled(true);
 
         jLabel10.setText("Horario Fin");
 
+        jPanel2.setBackground(new java.awt.Color(255, 153, 153));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Instalacion"));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -487,6 +492,7 @@ jComboHoras.setEnabled(true);
             }
         });
 
+        jTableDiaDeSpa.setBackground(new java.awt.Color(255, 153, 153));
         jTableDiaDeSpa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -512,6 +518,7 @@ jComboHoras.setEnabled(true);
 
         Masajista1.setText("Total $");
 
+        BtnAgregar.setBackground(new java.awt.Color(0, 204, 204));
         BtnAgregar.setText("AGREGAR");
         BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

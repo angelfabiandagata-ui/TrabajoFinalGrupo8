@@ -159,7 +159,7 @@ public class VistaClientes extends javax.swing.JInternalFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(199, 154, 142));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
         jButton3.setText("Dar de Baja/Alta");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +179,7 @@ public class VistaClientes extends javax.swing.JInternalFrame {
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Alta Logica");
 
-        jButton1.setBackground(new java.awt.Color(153, 204, 255));
+        jButton1.setBackground(new java.awt.Color(0, 204, 204));
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,6 +252,7 @@ public class VistaClientes extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton4.setBackground(new java.awt.Color(255, 51, 51));
         jButton4.setText("Salir");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

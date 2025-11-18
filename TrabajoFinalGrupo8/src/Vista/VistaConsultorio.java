@@ -96,6 +96,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(jTable1);
 
+        setBackground(new java.awt.Color(255, 204, 204));
         setForeground(new java.awt.Color(153, 255, 102));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -109,6 +110,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        tablaequipamiento.setBackground(new java.awt.Color(255, 153, 153));
         tablaequipamiento.setForeground(new java.awt.Color(255, 51, 0));
         tablaequipamiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,6 +135,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
 
         jLabel5.setText("Apto");
 
+        crear.setBackground(new java.awt.Color(0, 204, 204));
         crear.setText("Crear");
         crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +143,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        borrar.setBackground(new java.awt.Color(255, 102, 102));
         borrar.setText("Borrar");
         borrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,6 +151,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 102, 102));
         jButton3.setText("Eliminar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +159,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        tablausos.setBackground(new java.awt.Color(255, 153, 153));
         tablausos.setForeground(new java.awt.Color(255, 51, 0));
         tablausos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,6 +182,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tablausos);
 
+        agregarusos.setBackground(new java.awt.Color(0, 204, 204));
         agregarusos.setText("Agregar");
         agregarusos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,6 +190,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        agregarequip.setBackground(new java.awt.Color(0, 204, 204));
         agregarequip.setText("Agregar");
         agregarequip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +210,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(255, 102, 102));
         jButton4.setText("Eliminar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,6 +218,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        salir.setBackground(new java.awt.Color(255, 51, 51));
         salir.setText("Salir");
         salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +226,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
-        consultorios.setBackground(new java.awt.Color(255, 204, 204));
+        consultorios.setBackground(new java.awt.Color(255, 153, 153));
         consultorios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -256,6 +266,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        selecionar.setBackground(new java.awt.Color(0, 204, 204));
         selecionar.setText("Selecionar");
         selecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,6 +274,7 @@ public class VistaConsultorio extends javax.swing.JPanel {
             }
         });
 
+        reset.setBackground(new java.awt.Color(255, 102, 102));
         reset.setText("Reset");
         reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
