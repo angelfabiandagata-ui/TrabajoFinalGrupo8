@@ -460,13 +460,14 @@ public class menu extends javax.swing.JFrame {
          if (instalacionesboton == null){
             
         instalacionesboton = new VistaInstalacion(this);
-        instalacionesboton.setBounds(0, 20, 700, 500);
+        instalacionesboton.setBounds((this.getWidth() - 850)/2 , 0, 800, 500);
         jDesktopPane1.add(instalacionesboton);
                 
         }
         instalacionesboton.setVisible(true);
         instalacionesboton.setEnabled(true);
         jDesktopPane1.moveToFront(instalacionesboton);
+        desactivarTodosLosBotones();
     }
     
 
@@ -482,6 +483,7 @@ public class menu extends javax.swing.JFrame {
         tratamientosboton.setVisible(true);
         tratamientosboton.setEnabled(true);
         jDesktopPane1.moveToFront(tratamientosboton);
+        desactivarTodosLosBotones();
     }
 
     private void abrirVerTurnos() {
