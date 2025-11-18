@@ -120,6 +120,31 @@ public void guardarInstalacion(Instalacion inst) {
     }
 }
     
+     public void modificarInstalacion(Instalacion inst){
+     try {
+        // Consulta: Quitamos codInstalacion del SET (solo lo dejamos en el WHERE)
+        String sql = "UPDATE `instalacion` SET `nombre`=?, `detalle_uso`=?, `precio30m`=?, `estado`=? WHERE `codInstalacion`=?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        
+        // 1. Asignación de valores (los nuevos datos)
+        ps.setString(1, inst.getNombre());        // 1. nombre
+        ps.setString(2, inst.getDetalleUso());     // 2. detalle_uso
+        ps.setDouble(3, inst.getPrecio30min());    // 3. precio30m
+        ps.setBoolean(4, inst.isEstado());         // 4. estado
+        
+        // 2. Condición WHERE (identificador)
+        ps.setInt(5, inst.getCodInstal());         // 5. codInstalacion (Identifica la fila)
+        
+        ps.executeUpdate();
+        ps.close();
+        System.out.println("Instalacion actualizada correctamente!!");
+    } catch (SQLException ex) {
+        System.out.println("Error al actualizar la Instalacion: " + ex.getMessage());
+    }
+     }
+     
+     
+     
     
     public void actualizarInstalacion(Instalacion inst) {
         try {

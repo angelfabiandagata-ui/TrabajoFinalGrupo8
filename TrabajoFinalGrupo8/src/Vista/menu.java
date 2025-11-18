@@ -612,7 +612,6 @@ public class menu extends javax.swing.JFrame {
         botonCerrarTurnos.setEnabled(false);
         abrirClientes.setEnabled(false);
         abrirMasajistas.setEnabled(false);
-
         if (this.tratamientosboton != null) {
         this.tratamientosboton.setEnabled(false); 
     }
@@ -626,7 +625,6 @@ public class menu extends javax.swing.JFrame {
         botonCerrarTurnos.setEnabled(true);
         abrirClientes.setEnabled(true);
         abrirMasajistas.setEnabled(true);
-
         instalacionesboton.setEnabled(true);
          if (this.tratamientosboton != null) {
         this.tratamientosboton.setEnabled(true);

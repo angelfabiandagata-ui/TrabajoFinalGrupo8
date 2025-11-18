@@ -528,7 +528,7 @@ private void configurarTabla(){
     if (instalacionModificada != null) {
         try {
   
-            instalacionData.actualizarInstalacion(instalacionModificada);
+            instalacionData.modificarInstalacion(instalacionModificada);
             
             JOptionPane.showMessageDialog(this, "Instalacion modificada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             
