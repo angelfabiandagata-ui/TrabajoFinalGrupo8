@@ -134,9 +134,9 @@ public void guardarInstalacion(Instalacion inst) {
             
             ps.executeUpdate();
             ps.close();
-            System.out.println("Alumno actualizado correctamente!!");
+            System.out.println("Instalacion actualizado correctamente!!");
         } catch (SQLException ex) {
-            System.out.println("Error al actualizar el alumno" + ex.getMessage()
+            System.out.println("Error al actualizar la Instalacion" + ex.getMessage()
             );
         }
 
