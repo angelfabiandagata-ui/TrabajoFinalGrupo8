@@ -18,16 +18,19 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author angel
  */
-public class VistaInstalacion extends javax.swing.JInternalFrame {
-private InstalacionData instalacionData = new InstalacionData();
+    public class VistaInstalacion extends javax.swing.JInternalFrame {
+    private InstalacionData instalacionData = new InstalacionData();
     private DefaultTableModel modeloTabla;
+    menu menu;
+    
     /**
      * Creates new form VistaInstalacion
      */
-    public VistaInstalacion() {
+    public VistaInstalacion(menu menu) {
         initComponents();
         configurarTabla();
         actulizarTabla();
+        this.menu = menu;
     }
     
       

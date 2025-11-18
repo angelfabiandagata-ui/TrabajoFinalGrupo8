@@ -245,6 +245,10 @@ public class menu extends javax.swing.JFrame {
     private JButton eliminar;
     private JButton turnosVacios;
     
+    //otro
+    VistaTratamiento tratamientosboton;
+    VistaInstalacion instalacionesboton;
+    
     //paneles simples
     private JButton abrirClientes;     
     private JButton abrirMasajistas;    
@@ -452,15 +456,32 @@ public class menu extends javax.swing.JFrame {
     }
 
     private void abrirInstalaciones() {
-        VistaInstalacion instalaciones = new VistaInstalacion();
-        prepararInternalFrame(instalaciones);
+        
+         if (instalacionesboton == null){
+            
+        instalacionesboton = new VistaInstalacion(this);
+        instalacionesboton.setBounds(0, 20, 700, 500);
+        jDesktopPane1.add(instalacionesboton);
+                
+        }
+        instalacionesboton.setVisible(true);
+        instalacionesboton.setEnabled(true);
+        jDesktopPane1.moveToFront(instalacionesboton);
     }
     
 
     
     private void abrirTratamiento() {
-        VistaTratamiento tratamientos = new VistaTratamiento();
-        prepararInternalFrame(tratamientos);
+        if (tratamientosboton == null){
+            
+        tratamientosboton = new VistaTratamiento(this);
+        tratamientosboton.setBounds(0, 20, 700, 500);
+        jDesktopPane1.add(tratamientosboton);
+                
+        }
+        tratamientosboton.setVisible(true);
+        tratamientosboton.setEnabled(true);
+        jDesktopPane1.moveToFront(tratamientosboton);
     }
 
     private void abrirVerTurnos() {
@@ -598,24 +619,6 @@ public class menu extends javax.swing.JFrame {
     private void seis(){ System.out.println("seis"); }
     private void siete(){ System.out.println("nueve"); }
     private void ocho(){ System.out.println("ocho"); }
-
-    private void prepararInternalFrame(JInternalFrame frame) {
-        try {
-            frame.setSize(800, 600);
-            frame.setClosable(true);
-            frame.setMaximizable(true);
-            frame.setIconifiable(true);
-            frame.setResizable(true);
-            jDesktopPane1.add(frame);
-            int x = (jDesktopPane1.getWidth() - frame.getWidth()) / 2;
-            int y = (jDesktopPane1.getHeight() - frame.getHeight()) / 2;
-            frame.setLocation(Math.max(0, x), Math.max(0, y));
-            frame.setVisible(true);
-            frame.toFront();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
         
           // ========= MÚSICA =========

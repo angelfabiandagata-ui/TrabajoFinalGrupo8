@@ -21,9 +21,11 @@ import java.util.List;
  */
 public class VistaTratamiento extends javax.swing.JInternalFrame {
 
- private TratamientoData tratamientoData = new TratamientoData();
+    private TratamientoData tratamientoData = new TratamientoData();
     private DefaultTableModel modeloTabla;
-    public VistaTratamiento() {
+    menu menu;
+    
+    public VistaTratamiento(menu menu) {
         initComponents();
         configurarTabla();
         actulizarTabla();
@@ -36,6 +38,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         int y = (desktopPane.getHeight() - this.getHeight()) / 2;
         
         this.setLocation(x, y);
+        this.menu = menu;
     }
     }
     
