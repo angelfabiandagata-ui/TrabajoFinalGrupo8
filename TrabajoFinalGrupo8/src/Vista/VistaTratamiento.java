@@ -161,14 +161,25 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     modelo.setRowCount(0); 
     List<Tratamiento> tratamientos = tratamientoData.listarTratamientos();
     System.out.println("Tratamientos cargados de DB: " + tratamientos.size());
-  
-    for (Tratamiento t : tratamientos) {
+
+     for (Tratamiento t : tratamientos) {
+        String productoMostrar;
+        List<String> productos = t.getProductos();
+        
+        if (productos != null && !productos.isEmpty()) {
+            
+            productoMostrar = productos.get(0); 
+            
+        } else {
+            productoMostrar = "N/A"; //valor si no hay producto
+        }
+   
 
         modelo.addRow(new Object[]{
             t.getCodTratamiento(),
             t.getNombre(),
             t.getDetalle(),
-            t.getProductos(),
+            productoMostrar,
             t.getDuracion(), 
             t.getCosto(),
             t.getEstado()
@@ -192,7 +203,6 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     if (filaSeleccionada >= 0) {
         // Obtenemos el modelo de la tabla para acceder a los valores
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-
         
         // 1. Cargar el Código (Columna 0)
         String codTrat = modelo.getValueAt(filaSeleccionada, 0).toString();
@@ -202,14 +212,18 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         txtNombreTrat.setText(modelo.getValueAt(filaSeleccionada, 1).toString());
         txtDetalleTrat.setText(modelo.getValueAt(filaSeleccionada, 2).toString());
         
-        // 3. Cargar Costo (Columna 5)
-        txtCostoTrat.setText(modelo.getValueAt(filaSeleccionada, 5).toString());
+        // 3. Cargar el Producto (Columna 3) <--- ¡SECCIÓN AÑADIDA/CORREGIDA!
+        Object productoDeTabla = modelo.getValueAt(filaSeleccionada, 3);
+        if (productoDeTabla != null) {
+            String productoString = productoDeTabla.toString();
+            // Esto selecciona el ítem en el ComboBox que coincida con la cadena.
+            boxProductos.setSelectedItem(productoString); 
+        } else {
+            // Manejar si el producto es nulo, por ejemplo, seleccionando el primer elemento.
+            boxProductos.setSelectedIndex(-1); // Opcional: Deseleccionar
+        }
 
-        // 4. Cargar Estado (Columna 6)
-        boolean estado = (Boolean) modelo.getValueAt(filaSeleccionada, 6);
-        chkEstado.setSelected(estado);
-        
-        // 5. Cargar Duración (Columna 4 - Necesita conversión de Time a minutos)
+        // 4. Cargar Duración (Columna 4 - Necesita conversión de Time a minutos)
         // El formato de JTable es java.sql.Time (hh:mm:ss)
         try {
             Time duracionSql = (Time) modelo.getValueAt(filaSeleccionada, 4);
@@ -218,11 +232,18 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
             // Asignar al spinner. Necesitarás un 'SpinnerNumberModel' para que esto funcione.
             spinnerDuracion.setValue(minutosTotales);
         } catch (Exception ex) {
-            System.err.println("Error al parsear la duración: " + ex.getMessage());
+            System.err.println("Error al parsear la duración (Columna 4): " + ex.getMessage());
             spinnerDuracion.setValue(0);
         }
+        
+        // 5. Cargar Costo (Columna 5)
+        txtCostoTrat.setText(modelo.getValueAt(filaSeleccionada, 5).toString());
 
-        // 6. Deshabilitar la edición del código (ya que es la clave)
+        // 6. Cargar Estado (Columna 6)
+        boolean estado = (Boolean) modelo.getValueAt(filaSeleccionada, 6);
+        chkEstado.setSelected(estado);
+        
+        // 7. Deshabilitar la edición del código (ya que es la clave)
         txtCodTrat.setEnabled(false);
     }
 }
