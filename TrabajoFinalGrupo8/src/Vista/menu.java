@@ -615,7 +615,8 @@ public class menu extends javax.swing.JFrame {
         if (this.tratamientosboton != null) {
         this.tratamientosboton.setEnabled(false); 
     }
-        instalacionesboton.setEnabled(false);
+        if (this.instalacionesboton != null) {
+     this.instalacionesboton.setEnabled(false);}
     }
 
     public void activarTodosLosBotones() {
@@ -625,7 +626,8 @@ public class menu extends javax.swing.JFrame {
         botonCerrarTurnos.setEnabled(true);
         abrirClientes.setEnabled(true);
         abrirMasajistas.setEnabled(true);
-        instalacionesboton.setEnabled(true);
+        if (this.instalacionesboton != null) {
+    this.instalacionesboton.setEnabled(false);}
          if (this.tratamientosboton != null) {
         this.tratamientosboton.setEnabled(true);
          }
