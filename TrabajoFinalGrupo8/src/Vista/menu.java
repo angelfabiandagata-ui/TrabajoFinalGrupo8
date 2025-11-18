@@ -409,7 +409,7 @@ public class menu extends javax.swing.JFrame {
         boton.setBounds(x, y, w, h);
         boton.setOpaque(false); 
         boton.setContentAreaFilled(false);
-        boton.setBorderPainted(true);
+        boton.setBorderPainted(false);
         boton.setFocusPainted(false);
         boton.setToolTipText(tooltip);
         boton.addActionListener(e -> accion.run());
