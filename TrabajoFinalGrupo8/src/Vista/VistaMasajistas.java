@@ -40,7 +40,7 @@ import javax.swing.table.DefaultTableModel;
     
     
       private Masajista obtenerMasajista(){
-  if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty() || jTextField5.getText().isEmpty()){
+  if (jTextField1.getText().isEmpty() || jTextFieldNombre.getText().isEmpty() || jTextFieldApellido.getText().isEmpty() || jTextFieldTel.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Todos los datos son OBLIGATORIOS.","Faltan datos", JOptionPane.WARNING_MESSAGE);
             return null;
         }
@@ -58,8 +58,8 @@ import javax.swing.table.DefaultTableModel;
         try {
             matricula = Integer.parseInt(jTextField1.getText().trim());
             
-            if (!jTextField5.getText().trim().isEmpty()) {
-                telefono = Long.parseLong(jTextField5.getText().trim());
+            if (!jTextFieldTel.getText().trim().isEmpty()) {
+                telefono = Long.parseLong(jTextFieldTel.getText().trim());
             }
             
         } catch (NumberFormatException e) {
@@ -72,8 +72,8 @@ import javax.swing.table.DefaultTableModel;
     
     Masajista nuevoMasajista = new Masajista();
  nuevoMasajista.setMatricula(matricula);
-        nuevoMasajista.setNombre(jTextField2.getText().trim());
-        nuevoMasajista.setApellido(jTextField3.getText().trim());
+        nuevoMasajista.setNombre(jTextFieldNombre.getText().trim());
+        nuevoMasajista.setApellido(jTextFieldApellido.getText().trim());
         nuevoMasajista.setTelefono(telefono);
         nuevoMasajista.setEspecialidad(especialidadSe);
         nuevoMasajista.setEstado(jCheckBox1.isSelected());
@@ -90,9 +90,9 @@ import javax.swing.table.DefaultTableModel;
     
     private void Limpiar(){
         jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField5.setText("");
+        jTextFieldNombre.setText("");
+        jTextFieldApellido.setText("");
+        jTextFieldTel.setText("");
         jCheckBox1.setSelected(true);
     }
     
@@ -146,9 +146,9 @@ import javax.swing.table.DefaultTableModel;
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldApellido = new javax.swing.JTextField();
+        jTextFieldTel = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -156,6 +156,8 @@ import javax.swing.table.DefaultTableModel;
         jLabel8 = new javax.swing.JLabel();
         BotonLogica = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
@@ -192,6 +194,12 @@ import javax.swing.table.DefaultTableModel;
         jCheckBox1.setMinimumSize(new java.awt.Dimension(30, 30));
 
         jLabel7.setText("Estado");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Alta Logica");
@@ -244,6 +252,20 @@ import javax.swing.table.DefaultTableModel;
             }
         });
 
+        jButton3.setText("Buscar Masajista");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Actualizar datos");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -270,25 +292,33 @@ import javax.swing.table.DefaultTableModel;
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldNombre)
+                                .addComponent(jTextFieldTel)
+                                .addComponent(jTextFieldApellido)
+                                .addComponent(jTextField1)
+                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(BotonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(BotonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(34, 34, 34)
-                                .addComponent(BotonLogica)
-                                .addGap(34, 34, 34)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jRadioButton2)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(BotonLogica)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(jRadioButton1)
+                                        .addGap(33, 33, 33))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(73, 73, 73))))
             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -306,15 +336,15 @@ import javax.swing.table.DefaultTableModel;
                         .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -330,11 +360,13 @@ import javax.swing.table.DefaultTableModel;
                             .addComponent(jRadioButton1)
                             .addComponent(jRadioButton2)
                             .addComponent(BotonLogica))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(100, Short.MAX_VALUE))
+                    .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         jButton2.setBackground(new java.awt.Color(255, 102, 102));
@@ -480,6 +512,73 @@ import javax.swing.table.DefaultTableModel;
        menu.activarTodosLosBotones();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+          String codigo = jTextField1.getText().trim();
+        
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese la matricula del masajista a buscar","Paso necesario",JOptionPane.WARNING_MESSAGE);
+        return;
+        }
+               try {
+
+        int codigoMas = Integer.parseInt(codigo);
+
+        Masajista masjistaEncontrado = masajistaData.buscarMasajistaPorMatricula(codigoMas);
+        
+
+        if (masjistaEncontrado != null) {
+
+            jTextField1.setText(String.valueOf(masjistaEncontrado.getMatricula()));
+            
+            jTextFieldNombre.setText(String.valueOf(masjistaEncontrado.getNombre()));
+jTextFieldApellido.setText(masjistaEncontrado.getApellido());
+jTextFieldTel.setText(String.valueOf(masjistaEncontrado.getTelefono()));  
+jComboBox1.setSelectedItem(masjistaEncontrado.getEspecialidad());
+       
+
+            jCheckBox1.setSelected(masjistaEncontrado.getEstado());
+
+            JOptionPane.showMessageDialog(this, "¡Masajista encontrado y cargado!", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            Limpiar();
+            jTextField1.setText(codigo);
+            JOptionPane.showMessageDialog(this, "No se encontró un masajista con esa matricula.", "No Encontrado", JOptionPane.WARNING_MESSAGE);
+ 
+        }
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese un codigo válido (un número entero).", "Error de Entrada", JOptionPane.WARNING_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al buscar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+          Masajista MasaAct = obtenerMasajista();
+      
+        if (MasaAct == null) {
+            return;
+        }
+        try {
+            masajistaData.modificarMasajista(MasaAct);
+            
+            JOptionPane.showMessageDialog(this, "Masajista modificado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            
+            Limpiar();
+            actualizarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonAgregar;
@@ -488,6 +587,8 @@ import javax.swing.table.DefaultTableModel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -503,8 +604,8 @@ import javax.swing.table.DefaultTableModel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextFieldApellido;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldTel;
     // End of variables declaration//GEN-END:variables
 }
