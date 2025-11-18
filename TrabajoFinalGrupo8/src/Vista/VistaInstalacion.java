@@ -413,6 +413,9 @@ private void configurarTabla(){
                 "Error al Guardar",
                 JOptionPane.ERROR_MESSAGE);
         }
+        
+        Limpiar();
+        actulizarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
