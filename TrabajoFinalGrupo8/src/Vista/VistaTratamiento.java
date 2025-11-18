@@ -29,6 +29,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         initComponents();
         configurarTabla();
         actulizarTabla();
+        configurarSeleccionTabla();
         javax.swing.JDesktopPane desktopPane = this.getDesktopPane();
         cargarProductosComboBox();
          this.menu = pmenu;
@@ -175,6 +176,57 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     }
 }
     
+    private void configurarSeleccionTabla() {
+    // Escucha los cambios de selección en la tabla (jTable1)
+    jTable1.getSelectionModel().addListSelectionListener(e -> {
+        // Evitar que el evento se dispare dos veces (típico en Swing) y que sea un ajuste final
+        if (!e.getValueIsAdjusting()) {
+            cargarCamposDesdeTabla();
+        }
+    });
+}
+    
+    private void cargarCamposDesdeTabla() {
+    int filaSeleccionada = jTable1.getSelectedRow();
+    
+    if (filaSeleccionada >= 0) {
+        // Obtenemos el modelo de la tabla para acceder a los valores
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        
+        // 1. Cargar el Código (Columna 0)
+        String codTrat = modelo.getValueAt(filaSeleccionada, 0).toString();
+        txtCodTrat.setText(codTrat);
+        
+        // 2. Cargar Nombre y Detalle (Columnas 1 y 2)
+        txtNombreTrat.setText(modelo.getValueAt(filaSeleccionada, 1).toString());
+        txtDetalleTrat.setText(modelo.getValueAt(filaSeleccionada, 2).toString());
+        
+        // 3. Cargar Costo (Columna 5)
+        txtCostoTrat.setText(modelo.getValueAt(filaSeleccionada, 5).toString());
+
+        // 4. Cargar Estado (Columna 6)
+        boolean estado = (Boolean) modelo.getValueAt(filaSeleccionada, 6);
+        chkEstado.setSelected(estado);
+        
+        // 5. Cargar Duración (Columna 4 - Necesita conversión de Time a minutos)
+        // El formato de JTable es java.sql.Time (hh:mm:ss)
+        try {
+            Time duracionSql = (Time) modelo.getValueAt(filaSeleccionada, 4);
+            // Convertir Time a minutos totales: (horas * 60) + minutos
+            int minutosTotales = duracionSql.getHours() * 60 + duracionSql.getMinutes();
+            // Asignar al spinner. Necesitarás un 'SpinnerNumberModel' para que esto funcione.
+            spinnerDuracion.setValue(minutosTotales);
+        } catch (Exception ex) {
+            System.err.println("Error al parsear la duración: " + ex.getMessage());
+            spinnerDuracion.setValue(0);
+        }
+
+        // 6. Deshabilitar la edición del código (ya que es la clave)
+        txtCodTrat.setEnabled(false);
+    }
+}
+    
     
     
 
@@ -213,6 +265,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         labelTrat4 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
@@ -321,6 +374,14 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
             }
         });
 
+        btnModificar.setBackground(new java.awt.Color(0, 204, 204));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -362,7 +423,6 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                     .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,11 +433,13 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                                                     .addGap(32, 32, 32)
                                                     .addComponent(buttomBajaTrat)))
                                             .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 77, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5)))
+                                            .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(58, 58, 58)
+                                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 26, Short.MAX_VALUE))
+                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -436,10 +498,15 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTrat5))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelTrat5)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -619,10 +686,37 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if (jTable1.getSelectedRow() == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un tratamiento para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    Tratamiento tratamientoModificado = obtenerTratamiento();
+    
+    if (tratamientoModificado != null) {
+        try {
+  
+            tratamientoData.ModificarTratamiento(tratamientoModificado);
+            
+            JOptionPane.showMessageDialog(this, "Tratamiento modificado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            
+   
+            Limpiar();
+            txtCodTrat.setEnabled(true); 
+            actulizarTabla();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar la modificación: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton ButtonAltaTrat;
     private javax.swing.JComboBox<String> boxProductos;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JRadioButton buttomBajaTrat;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chkEstado;
