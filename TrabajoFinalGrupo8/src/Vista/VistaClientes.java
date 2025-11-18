@@ -268,6 +268,11 @@ public class VistaClientes extends javax.swing.JInternalFrame {
         });
 
         jButton6.setText("Actualizar Datos");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -544,6 +549,7 @@ int codogoClinete = (int)valorCod;
         
         if (codigo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese el codigo del cliente a buscar","Paso necesario",JOptionPane.WARNING_MESSAGE);
+        return;
         }
                try {
 
@@ -582,6 +588,26 @@ jTextFieldAfe.setText(cleinteEncontrado.getAfeciones());
         JOptionPane.showMessageDialog(this, "Error al buscar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+           Cliente cliAct = obtenerCliente();
+      
+        if (cliAct == null) {
+            return;
+        }
+        try {
+            clienteData.modificarCliente(cliAct);
+            
+            JOptionPane.showMessageDialog(this, "Cliente modificado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            
+            Limpiar();
+            actulizarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }  String codigo = Jtext7.getText().trim();
+        
+
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
