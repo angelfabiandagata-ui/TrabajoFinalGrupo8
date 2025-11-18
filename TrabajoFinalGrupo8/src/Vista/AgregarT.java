@@ -709,10 +709,6 @@ botonTratamiento.setEnabled(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_botonInstalacionActionPerformed
 
-    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
-       buscar();
-    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
-
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
     try {
         // SUPOSICIÓN 1: Código de Sesión (jTextFieldCodSesion)
@@ -823,6 +819,10 @@ botonTratamiento.setEnabled(true);
         e.printStackTrace();
     }
     }//GEN-LAST:event_BtnAgregarActionPerformed
+
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
+        buscar();
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void buscar() {
 
