@@ -6,6 +6,10 @@ package Vista;
 
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -19,14 +23,13 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
     JDesktopPane desktop;
     VistaConsultorio cons;
     menu menu;
-    
+
     public ConfiguracionAvanzada(JDesktopPane jk, menu menu) {
-    initComponents();
-    desktop = jk;
-    this.menu = menu;
+        initComponents();
+        desktop = jk;
+        this.menu = menu;
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +41,8 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
 
         jbabrirconsultorio = new javax.swing.JButton();
         jbsalir = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 204, 204));
 
@@ -57,44 +62,115 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moderno", "Clásico", "Antiguo", "Windows", "Sistema Operativo" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Aplicar tema");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbsalir)
-                    .addComponent(jbabrirconsultorio))
-                .addContainerGap(553, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 416, Short.MAX_VALUE)
+                        .addComponent(jbabrirconsultorio)
+                        .addGap(50, 50, 50))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jbabrirconsultorio)
-                .addGap(126, 126, 126)
-                .addComponent(jbsalir)
-                .addContainerGap(191, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(198, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(108, 108, 108)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbabrirconsultorio)
+                    .addComponent(jbsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbsalirActionPerformed
-      
-       
-      this.setVisible(false);
-    this.setEnabled(false);
-   menu.activarTodosLosBotones();
-    
-    
+
+        this.setVisible(false);
+        this.setEnabled(false);
+        menu.activarTodosLosBotones();
+
+
     }//GEN-LAST:event_jbsalirActionPerformed
 
     private void jbabrirconsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbabrirconsultorioActionPerformed
 
     }//GEN-LAST:event_jbabrirconsultorioActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String TemSeleccionafo = (String) jComboBox1.getSelectedItem();
+        String clase = "";
+
+        try {
+            switch (TemSeleccionafo) {
+                case "Moderno":
+                    clase = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+                    break;
+                case "Clásico":
+                    clase = UIManager.getCrossPlatformLookAndFeelClassName();
+                    break;
+                case "Antiguo":
+                    clase = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+                    break;
+                case "Windows":
+                    clase = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+                    break;
+                case "Sistema Operativo":
+                    clase = UIManager.getSystemLookAndFeelClassName();
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(this, "Tema no reconocido.", "Error", JOptionPane.ERROR_MESSAGE);
+return;
+            }
+            
+            UIManager.setLookAndFeel(clase);
+            SwingUtilities.updateComponentTreeUI(this.menu);
+            SwingUtilities.updateComponentTreeUI(this);
+            
+            JOptionPane.showMessageDialog(this, "Tema cambiado a " + TemSeleccionafo, "Cambio Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            JOptionPane.showMessageDialog(this, 
+            "El tema seleccionado no es compatible o hubo un error: " + e.getMessage(), 
+            "Error de Tema", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JButton jbabrirconsultorio;
     private javax.swing.JButton jbsalir;
     // End of variables declaration//GEN-END:variables
@@ -130,6 +206,5 @@ public class ConfiguracionAvanzada extends javax.swing.JPanel {
     public void setJbsalir(JButton jbsalir) {
         this.jbsalir = jbsalir;
     }
-
 
 }
