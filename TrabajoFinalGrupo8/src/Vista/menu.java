@@ -385,7 +385,7 @@ public class menu extends javax.swing.JFrame {
         tratamientos = crearBotonInvisible(120, 0, 110, 110, this::abrirVerTurnos , "d");
         instalaciones = crearBotonInvisible(120, 110, 117,110,  this::abrirDiaDeSpa, "e");
         historial = crearBotonInvisible(0, 110, 117, 110,  this::siete , "f");
-        botonConfigAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::configuracionAvanzada , "g");
+        botonConfigAvanzada = crearBotonInvisible(0, 0, 110, 110,  this::agregar , "g");
         
         
         VistaTurnos.setLayout(null);
