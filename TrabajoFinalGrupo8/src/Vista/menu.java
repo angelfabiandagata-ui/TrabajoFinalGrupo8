@@ -475,7 +475,7 @@ public class menu extends javax.swing.JFrame {
         if (tratamientosboton == null){
             
         tratamientosboton = new VistaTratamiento(this);
-        tratamientosboton.setBounds(0, 20, 700, 500);
+        tratamientosboton.setBounds((this.getWidth() - 850) /2, 0 , 870, 500);
         jDesktopPane1.add(tratamientosboton);
                 
         }
@@ -487,7 +487,7 @@ public class menu extends javax.swing.JFrame {
     private void abrirVerTurnos() {
         if (verturnoshechos == null) {       
             verturnoshechos = new VistaTurnos(this);
-            verturnoshechos.setBounds((1600 - 700) / 2, 0, 700, 500);
+            verturnoshechos.setBounds((1600 - 700) / 2, 0, 700, 300);
             jDesktopPane1.add(verturnoshechos, 30);
         }
 
