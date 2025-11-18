@@ -134,9 +134,9 @@ private void configurarTabla(){
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        jPanel1.setBackground(new java.awt.Color(199, 154, 142));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
-        jButton1.setBackground(new java.awt.Color(153, 204, 255));
+        jButton1.setBackground(new java.awt.Color(0, 204, 204));
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

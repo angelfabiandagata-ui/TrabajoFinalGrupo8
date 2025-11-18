@@ -212,9 +212,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         labelTrat4 = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(199, 154, 142));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
-        jButton1.setBackground(new java.awt.Color(153, 204, 255));
+        jButton1.setBackground(new java.awt.Color(0, 204, 204));
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,6 +273,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
 
         labelTrat10.setText("Producto");
 
+        jButton4.setBackground(new java.awt.Color(255, 102, 102));
         jButton4.setText("Salir");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,6 +281,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
             }
         });
 
+        jTable1.setBackground(new java.awt.Color(255, 153, 153));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -423,11 +425,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelTrat7)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelTrat7))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))

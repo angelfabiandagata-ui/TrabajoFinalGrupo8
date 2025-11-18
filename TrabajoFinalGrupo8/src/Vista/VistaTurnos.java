@@ -106,6 +106,9 @@ public class VistaTurnos extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 204, 204));
+
+        jTable1.setBackground(new java.awt.Color(255, 153, 153));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -130,6 +133,7 @@ public class VistaTurnos extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Ver Turnos");
 
+        jButton1.setBackground(new java.awt.Color(255, 102, 102));
         jButton1.setText("SALIR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +144,7 @@ public class VistaTurnos extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("*DIA*");
 
+        jButton2.setBackground(new java.awt.Color(0, 204, 204));
         jButton2.setText("Buscar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
