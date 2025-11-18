@@ -212,7 +212,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         txtNombreTrat.setText(modelo.getValueAt(filaSeleccionada, 1).toString());
         txtDetalleTrat.setText(modelo.getValueAt(filaSeleccionada, 2).toString());
         
-        // 3. Cargar el Producto (Columna 3) <--- ¡SECCIÓN AÑADIDA/CORREGIDA!
+        // 3. Cargar el Producto (Columna 3) 
         Object productoDeTabla = modelo.getValueAt(filaSeleccionada, 3);
         if (productoDeTabla != null) {
             String productoString = productoDeTabla.toString();
