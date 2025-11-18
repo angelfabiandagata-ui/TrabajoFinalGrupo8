@@ -177,7 +177,7 @@ String sql = "INSERT INTO `tratamiento`(`codTratamiento`, `nombre`, `detalle`, `
 
         List<Tratamiento> tratamientos = new ArrayList<>();
 
-        String sql = "SELECT * FROM tratamiento WHERE estado = true";
+        String sql = "SELECT codTratamiento, nombre, detalle, duracion, costo, estado, productos FROM tratamiento";
         PreparedStatement ps = null;
         ResultSet rs = null;
 

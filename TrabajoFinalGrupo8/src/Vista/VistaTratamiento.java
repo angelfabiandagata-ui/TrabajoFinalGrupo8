@@ -187,6 +187,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -211,6 +212,7 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         boxProductos = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         labelTrat4 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
@@ -254,8 +256,10 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
             }
         });
 
+        buttonGroup1.add(ButtonAltaTrat);
         ButtonAltaTrat.setText("Alta Logica");
 
+        buttonGroup1.add(buttomBajaTrat);
         buttomBajaTrat.setText("Baja Logica");
         buttomBajaTrat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,6 +314,13 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
 
         labelTrat4.setText("Duracion");
 
+        jButton5.setText("Dar de Baja/Alta");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -345,23 +356,29 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombreTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(ButtonAltaTrat))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(txtDetalleTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(32, 32, 32)
-                                            .addComponent(buttomBajaTrat)))
-                                    .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                                    .addComponent(txtNombreTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtCostoTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(boxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(ButtonAltaTrat))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(txtDetalleTrat, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(32, 32, 32)
+                                                    .addComponent(buttomBajaTrat)))
+                                            .addComponent(spinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(chkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 77, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -403,7 +420,9 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
                             .addComponent(buttomBajaTrat))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton5)
+                                .addGap(18, 18, 18)
                                 .addComponent(ButtonAltaTrat))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
@@ -558,16 +577,60 @@ public class VistaTratamiento extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int filaSelec = jTable1.getSelectedRow();
+        try {
+            if (filaSelec == -1) {
+                JOptionPane.showMessageDialog(this,"Debe elegir un tratamiento de la tabla apra elimarlo", "Requierido" ,JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Object valorCod = modeloTabla.getValueAt(filaSelec, 0);
+
+            int codigoTratamiento = (int)valorCod;
+
+            if (ButtonAltaTrat.isSelected()) {
+                tratamientoData.altaTratamiento(codigoTratamiento);
+                JOptionPane.showMessageDialog(this, "Tratamiento dado de ALTA correctamente.", "Estado Cambiado", JOptionPane.INFORMATION_MESSAGE);
+
+            } else if (buttomBajaTrat.isSelected()) {
+                int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea dar de BAJA LÓGICA al Tratamiento con Codigo: " + codigoTratamiento + "?",
+                    "Confirmar Baja", JOptionPane.YES_NO_OPTION);
+
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    tratamientoData.bajaTratamiento(codigoTratamiento);
+                    JOptionPane.showMessageDialog(this, "Tratamiento dado de BAJA correctamente.", "Estado Cambiado", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar Alta o Baja.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            actulizarTabla();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Debe cargar el Codigo de Tratamiento en el primer campo para cambiar su estado.", "Error", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cambiar el estado: " + ex.getMessage(), "Error de BD", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton ButtonAltaTrat;
     private javax.swing.JComboBox<String> boxProductos;
     private javax.swing.JRadioButton buttomBajaTrat;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chkEstado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
