@@ -158,31 +158,38 @@ public void guardarInstalacion(Instalacion inst) {
     }
 
      public List<Instalacion> listarInstalaciones() {
-        List<Instalacion> instalaciones = new ArrayList<>();
-        String sql = "SELECT * FROM `instalacion` WHERE `estado` = true";
-        
-          try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+       List<Instalacion> instalaciones = new ArrayList<>();
+
+    String sql = "SELECT codInstalacion, nombre, detalle_uso, precio30m, estado FROM instalacion";
+    
+    try (PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) { 
+
 
         while (rs.next()) {
-            Instalacion inst = new Instalacion();    
+            Instalacion inst = new Instalacion();  
             
-            inst.setCodInstal(rs.getInt(1));
-            inst.setNombre(rs.getString(2));
-            inst.setDetalleUso(rs.getString(3));
-            inst.setPrecio30min(rs.getDouble(4));
-            inst.setEstado(rs.getBoolean(5)); 
-                       
+            // Verificación del mapeo
+            inst.setCodInstal(rs.getInt("codInstalacion"));
+            inst.setNombre(rs.getString("nombre"));
+
+            inst.setDetalleUso(rs.getString("detalle_uso")); 
+            inst.setPrecio30min(rs.getDouble("precio30m"));
+            inst.setEstado(rs.getBoolean("estado")); 
+                        
             instalaciones.add(inst);
         }
-          ps.close();
+        
+        System.out.println("Instalaciones cargadas: " + instalaciones.size()); // Muestra cuántas se cargaron
+        
     } catch (SQLException ex) {
-        System.out.println("Error al listar Instalaciones: " + ex.getMessage());
+        // 🛑 PUNTO CRÍTICO 🛑
+        System.err.println("❌ ERROR SQL al listar Instalaciones: " + ex.getMessage());
+        ex.printStackTrace(); // Imprime la traza completa para ver dónde falló el SQL.
     }
     return instalaciones;
-
     }
+     
      public void altaLogica(int cod) {
         try {
             String sql = "UPDATE `instalacion` SET `estado`='1' WHERE `codInstalacion` = ?";
@@ -190,24 +197,25 @@ public void guardarInstalacion(Instalacion inst) {
             ps.setInt(1, cod);
             ps.executeUpdate();
             ps.close();
-            System.out.println("Alumno dado de alta correctamente!!");
+            System.out.println("Instalacion dado de alta correctamente!!");
         } catch (SQLException ex) {
             System.out.println("Error al dar de alta el alumno" + ex.getMessage()
             );
         }
     }
-    public void bahaLogica(int cod) {
+    public void bajaLogica(int cod) {
         try {
             String sql = "UPDATE `instalacion` SET `estado`='0' WHERE `codInstalacion` = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, cod);
             ps.executeUpdate();
             ps.close();
-            System.out.println("Alumno dado de alta correctamente!!");
+            System.out.println("Instalacion dado de baja correctamente!!");
         } catch (SQLException ex) {
             System.out.println("Error al dar de alta el alumno" + ex.getMessage()
             );
         }
+        
     }
         
 //final    
