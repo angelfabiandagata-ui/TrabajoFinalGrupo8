@@ -266,6 +266,8 @@ public class menu extends javax.swing.JFrame {
     ConsultorioData consultoriod = new ConsultorioData();
     VistaConsultorio vistaconsultorio = new VistaConsultorio(this);
     
+    //agregar
+    AgregarT agregarT;
     
     // constructor
     public menu() {
@@ -559,10 +561,16 @@ public class menu extends javax.swing.JFrame {
     }
 
     private void agregar() {
-        AgregarT agregarT = new AgregarT(this, this.con);
-        agregarT.setBounds(0, 0,900, 500);
+        if(agregarT == null){
+           agregarT = new AgregarT(this, this.con);
+           agregarT.setBounds(0, 0,900, 500);
         jDesktopPane1.add(agregarT,30);
         agregarT.setLocation((1600 - agregarT.getWidth()) / 2, 20);
+        }
+        
+        agregarT.setVisible(true);
+        agregarT.setEnabled(true);
+        
         jDesktopPane1.moveToFront(agregarT);
         desactivarTodosLosBotones();
     }
@@ -604,6 +612,8 @@ public class menu extends javax.swing.JFrame {
         botonCerrarTurnos.setEnabled(false);
         abrirClientes.setEnabled(false);
         abrirMasajistas.setEnabled(false);
+        tratamientosboton.setEnabled(false);
+        instalacionesboton.setEnabled(false);
     }
 
     public void activarTodosLosBotones() {
@@ -613,6 +623,8 @@ public class menu extends javax.swing.JFrame {
         botonCerrarTurnos.setEnabled(true);
         abrirClientes.setEnabled(true);
         abrirMasajistas.setEnabled(true);
+        tratamientosboton.setEnabled(true);
+        instalacionesboton.setEnabled(true);
     }
 
     private void uno(){ System.out.println("UNO"); }
