@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import javax.swing.JOptionPane;
 
 public class DiaDeSpaData {
     private java.sql.Connection con = null;
@@ -211,6 +213,51 @@ public List<DiaDeSpa> buscarPorCliente(int codCliente) {
     }
     
     return encontrados;
+}
+
+public DiaDeSpa[] obtenerDiasDeSpa() {
+    DiaDeSpa[] diasdespa = new DiaDeSpa[0];
+    ResultSet rs;
+    String sql = "SELECT * FROM `dia_de_spa` ORDER BY fechaYHora DESC";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        rs = ps.executeQuery();
+        
+        // contar la cantidad de filas
+        int contador = 0;
+        while (rs.next()) {
+            contador++;
+        }
+
+        // asignarle ese tamaño al arreglo
+        diasdespa = new DiaDeSpa[contador];
+
+        // volver al inicio del ResultSet
+        rs.beforeFirst();
+
+        int rellenar = 0;
+        while (rs.next()) {
+            java.sql.Timestamp ts = rs.getTimestamp("fechaYHora");
+
+            DiaDeSpa d = new DiaDeSpa(
+                rs.getInt("codPack"),
+                rs.getTimestamp("fechaYHora").toLocalDateTime(),
+                rs.getString("preferencias"),
+                rs.getInt("codCliente"),
+                rs.getBoolean("estado"),
+                rs.getBoolean("estadoPago")
+            );
+
+            diasdespa[rellenar] = d;
+            rellenar++;
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "La conexion con la base de datos no funciono");
+    }
+
+    return diasdespa;
 }
 
 
